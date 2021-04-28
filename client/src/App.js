@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import classes from './App.scss';
 
-function App() {
+const App = () => {
   return (
     <div>
-      <h1>TESTING - ECOMMERCE</h1>
+      <h1 className={classes.h1}>TESTING - ECOMMERCE</h1>
     </div>
   );
 }

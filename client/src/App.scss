@@ -1,0 +1,6 @@
+@import './sass/theme.scss';
+
+h1 {
+  @include h1;
+  font-family: 'Cabin';
+}

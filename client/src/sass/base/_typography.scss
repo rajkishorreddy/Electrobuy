@@ -1,0 +1,211 @@
+/// TYPOGRPAHY-DEFAULT
+/// @group Typography
+///
+/// @param {String} $weight [normal] - Defines the weight of the font
+/// @param {String} $style [normal] - Defines the styles of the font
+/// @param {String} $color [#C4C4C4] - Color of the text
+/// @example Set font-face to `.foo`
+///   .foo {
+///         @include font-face($weight: bold, $style: normal, $color: white);
+///   }
+@mixin font-face($weight: normal, $style: normal) {
+  src: url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'), url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+	font-weight: $weight;
+	font-style: $style;
+}
+
+/// HEADING-1
+/// @group Typography
+@mixin h1 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 2.75rem; //44px
+	line-height: 3.375rem; //54px
+}
+
+/// HEADING-2
+/// @group Typography
+@mixin h2 {
+	@include font-face($weight: bold, $style: normal);
+	font-weight: bold;
+	font-size: 2rem; //32px
+	line-height: 2.5rem; //40px
+}
+
+/// HEADING-3
+/// @group Typography
+@mixin h3 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 1.5rem; //24px
+	line-height: 1.875rem; //40px
+	letter-spacing: 0.2px;
+}
+
+/// HEADING-4
+/// @group Typography
+@mixin h4 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 1.25rem; //20px
+	line-height: 1.75rem; //28px
+	letter-spacing: 0.16px;
+}
+
+/// HEADING-5
+/// @group Typography
+@mixin h5 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 1.125rem; //18px
+	line-height: 1.5rem; //24px
+	letter-spacing: 0.16px;
+}
+
+/// HEADING-6
+/// @group Typography
+@mixin h6 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 1rem; //16px
+	line-height: 1.135rem; //22px
+	letter-spacing: 0.3px;
+}
+
+/// SUB-HEADING
+/// @group Typography
+@mixin subheading {
+	@include font-face($weight: 600, $style: normal);
+	font-size: 0.75rem; //12px
+	line-height: 1.125rem; //18px
+	letter-spacing: 0.26px;
+	text-transform: uppercase;
+}
+
+/// BODY-1
+/// @group Typography
+@mixin body-1 {
+	@include font-face($weight: normal, $style: normal);
+	font-size: 1rem; //16px
+	line-height: 1.5rem; //24px
+	letter-spacing: 0.16px;
+}
+
+/// BODY-2
+/// @group Typography
+@mixin body-2 {
+	@include font-face($weight: normal, $style: normal);
+	// font-weight: 'Lato';
+	font-size: 0.875rem; //14px
+	line-height: 1.25rem; //20px
+	letter-spacing: 0.26px;
+}
+
+/// BODY-3 / LINK
+/// @group Typography
+@mixin body-3 {
+	// BODY-3 / LINK
+	@include font-face($weight: normal, $style: normal);
+	font-size: 0.75rem; //12px
+	line-height: 1rem; //16px
+	letter-spacing: 0.32px;
+}
+
+/// SUBTITLE
+/// @group Typography
+@mixin subtitle {
+	//SUBTITLE
+	@include font-face($weight: 600, $style: normal);
+	font-size: 0.625rem; //10px
+	line-height: 0.625rem; //10px
+	letter-spacing: 0.32px;
+	text-transform: uppercase;
+}
+
+/// CAPTION / HELPER
+/// @group Typography
+@mixin caption {
+	// CAPTION / HELPER
+	@include font-face($weight: normal, $style: normal);
+	font-size: 0.75rem; //12px
+	line-height: 1rem; //16px
+	letter-spacing: 0.32px;
+}
+
+/// CTA-BUTTON-1
+/// @group Typography
+@mixin cta-button-1 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 1rem; //16px
+	line-height: 1.25rem; //20px
+	letter-spacing: 0.26px;
+}
+
+/// CTA-BUTTON-2
+/// @group Typography
+@mixin cta-button-2 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 0.875rem; //14px
+	line-height: 1.125rem; //18px
+	letter-spacing: 0.26px;
+}
+
+/// CTA-BUTTON-3
+/// @group Typography
+@mixin cta-button-3 {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 0.75rem; //12px
+	line-height: 0.875rem; //14px
+	letter-spacing: 0.32px;
+}
+
+/// TEXT-BUTTON
+/// @group Typography
+@mixin text-button {
+	@include font-face($weight: bold, $style: normal);
+	font-size: 0.625rem; //10px
+	line-height: 0.625rem; //10px
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+/// INFO-1
+/// @group Typography
+@mixin info-1 {
+	@include font-face($weight: normal, $style: normal);
+	font-size: 0.625; //10px
+	line-height: 0.875rem; //14px;
+	letter-spacing: 0.32px;
+}
+
+/// INFO-2
+/// @group Typography
+@mixin info-2 {
+	@include font-face($weight: normal, $style: normal);
+	font-size: 0.5rem; //8px
+	line-height: 0.75rem; //12px
+	letter-spacing: 0.32px;
+}
+
+/// LABEL-1
+/// @group Typography
+@mixin label-1 {
+	@include font-face($weight: normal, $style: normal);
+	font-size: 0.75rem; //12px
+	line-height: 1rem; //16px
+	letter-spacing: 0.32px;
+}
+
+/// LABEL-2
+/// @group Typography
+@mixin label-2 {
+	@include font-face($weight: normal, $style: normal);
+	font-size: 0.625rem; //10px
+	line-height: 0.625rem; //10px
+	letter-spacing: 0.32px;
+}
+
+/// SUPERSCRIPT
+/// @group Typography
+@mixin sup {
+	@include font-face($weight: 600, $style: normal);
+	font-size: 0.25rem; //4px
+	line-height: 138%;
+	letter-spacing: 0.32px;
+	text-transform: uppercase;
+}
