@@ -1,9 +1,19 @@
-import classes from "./App.scss";
-
+import { Router, Route, Switch } from 'react-router-dom';
+import history from './history';
+import ScrollToTop from './ScrollToTop';
+import LandingPg from './components/landing/LandingPg';
+import SearchResults from './components/searchResults/SearchResults';
 const App = () => {
   return (
     <div>
-      <h1 className={classes.h1}>TESTING</h1>
+      <Router history={history}>
+        <ScrollToTop>
+          <Switch>
+            <Route path="/" exact component={LandingPg} />
+            <Route path="/results/:id" exact component={SearchResults} />
+          </Switch>
+        </ScrollToTop>
+      </Router>
     </div>
   );
 };
