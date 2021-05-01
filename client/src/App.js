@@ -3,6 +3,7 @@ import history from './history';
 import ScrollToTop from './ScrollToTop';
 import LandingPg from './components/landing/LandingPg';
 import SearchResults from './components/searchResults/SearchResults';
+import './App.scss';
 const App = () => {
   return (
     <div>

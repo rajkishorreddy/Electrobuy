@@ -1,4 +1,10 @@
+import Header from '../Header';
 const LandingPg = () => {
-  return <div>this is landing page</div>;
+  return (
+    <div>
+      <Header />
+      <div></div>
+    </div>
+  );
 };
 export default LandingPg;
