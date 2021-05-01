@@ -145,7 +145,7 @@
   align-items: center;
   justify-content: space-evenly;
   &_item {
-    @include h3;
+    @include h4;
     text-decoration: none;
     color: white;
     font-family: 'Montserrat', sans-serif;
