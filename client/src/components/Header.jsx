@@ -31,11 +31,11 @@ const Header = () => {
               className="header_wishlist-img"
               alt={wishlist}
             />
-            wishlist
+            <span className="header_wishlist-name">wishlist</span>
           </button>
           <button className="header_cart">
             <img src={cart} className="header_cart-img" alt={wishlist} />
-            cart
+            <span className="header_cart-name">cart</span>
           </button>
           <button className="header_login">login</button>
         </div>
