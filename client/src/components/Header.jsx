@@ -1,16 +1,20 @@
 import { useState } from 'react';
-import './header.scss';
-import logo from '../assets/Logo.svg';
-import search from '../assets/searchIcon.svg';
-import wishlist from '../assets/wishlist.svg';
-import cart from '../assets/cart.svg';
 import { Link } from 'react-router-dom';
+
+// import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
+import './header.scss';
+
+import { ReactComponent as Logo } from '../assets/Logo.svg';
+import { ReactComponent as SearchIcon } from '../assets/searchIcon.svg';
+import { ReactComponent as WishList } from '../assets/wishlist.svg';
+import { ReactComponent as Cart } from '../assets/cart.svg';
+
 const Header = () => {
   const [term, setTerm] = useState('');
   return (
     <div>
       <div className="header">
-        <img src={logo} className="header_logo" alt="company logo" />
+        <Logo className="header_logo" />
         <div className="flex header_right">
           {' '}
           <form className="header_form">
@@ -22,19 +26,20 @@ const Header = () => {
               onChange={(e) => setTerm(e.target.value)}
             />
             <button className="header_form-btn">
-              <img src={search} className="header_form-btn-img" alt={search} />
+              <SearchIcon className="header_form-btn-img" />
             </button>
           </form>
           <button className="header_wishlist">
-            <img
-              src={wishlist}
-              className="header_wishlist-img"
-              alt={wishlist}
-            />
+            <WishList className="header_wishlist-img" />
+            {/* <FavoriteRoundedIcon 
+              classes={{
+                root: "header_wishlist-img",
+              }}
+            /> */}
             <span className="header_wishlist-name">wishlist</span>
           </button>
           <button className="header_cart">
-            <img src={cart} className="header_cart-img" alt={wishlist} />
+            <Cart className="header_cart-img" />
             <span className="header_cart-name">cart</span>
           </button>
           <button className="header_login">login</button>
