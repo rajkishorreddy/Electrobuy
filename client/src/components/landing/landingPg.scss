@@ -1,0 +1,56 @@
+@import '../../sass/theme.scss';
+.slide {
+  width: 100%;
+  height: 70vh;
+  position: relative;
+
+  @media only screen and (max-width: 36.5em) {
+    height: 40vh;
+  }
+  @media only screen and (max-width: 26em) {
+    height: 25vh;
+  }
+  @media only screen and (min-width: 112.5em) {
+    height: 50vh;
+  }
+  &_img {
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+  }
+  &_text {
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+    z-index: 2;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
+
+    @media only screen and (max-width: 26em) {
+      font-size: 3.5rem;
+    }
+    @media only screen and (max-width: 26em) {
+      font-size: 2.5rem;
+    }
+  }
+  &_shade {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(
+      179.54deg,
+      rgba(0, 0, 0, 0.19) -19.45%,
+      #000000 101.2%
+    );
+  }
+}
+.cards {
+  height: 200vh;
+  background: linear-gradient(180deg, #765970 41.06%, #000000 96.22%);
+  transform: rotate(-180deg);
+}
