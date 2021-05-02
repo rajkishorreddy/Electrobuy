@@ -4,9 +4,9 @@
   padding: 2rem 1rem;
   display: flex;
   align-items: center;
-  font-family: Montserrat;
+  font-family: 'Montserrat', sans-serif;
   justify-content: space-between;
-  
+
   &_logo {
     height: 5rem;
     width: 5rem;
@@ -105,8 +105,8 @@
     }
     &-img {
       // font-size: 100px;
-      height: 3rem !important;
-      width: 3rem !important;
+      height: 2.5rem !important;
+      width: 2.5rem !important;
       margin: 0.5rem;
     }
     &-name {
