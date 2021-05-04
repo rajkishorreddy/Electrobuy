@@ -1,0 +1,26 @@
+{
+  "name": "electrobuy",
+  "version": "1.0.0",
+  "description": "<!-- API -->",
+  "main": "server.js",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express-mongo-sanitize": "^2.0.2",
+    "express-rate-limit": "^5.2.6",
+    "helmet": "^4.6.0",
+    "hpp": "^0.2.3",
+    "mongoose": "^5.12.7",
+    "morgan": "^1.10.0",
+    "xss": "^1.0.8",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Sujay Jami",
+  "license": "ISC"
+}
