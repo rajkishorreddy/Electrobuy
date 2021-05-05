@@ -42,7 +42,9 @@ const Header = () => {
             <Cart className="header_cart-img" />
             <span className="header_cart-name">cart</span>
           </button>
-          <button className="header_login">login</button>
+          <Link to={'/login'} className="header_login">
+            login
+          </Link>
         </div>
       </div>
       <nav className="nav">

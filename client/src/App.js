@@ -3,6 +3,8 @@ import history from './history';
 import ScrollToTop from './ScrollToTop';
 import LandingPg from './components/Landing/LandingPg';
 import SearchResults from './components/SearchResults/SearchResults';
+import Signup from './components/Signup/Signup.jsx';
+import Login from './components/Login/Login.jsx';
 import './App.scss';
 const App = () => {
   return (
@@ -11,6 +13,8 @@ const App = () => {
         <ScrollToTop>
           <Switch>
             <Route path="/" exact component={LandingPg} />
+            <Route path="/signup" exact component={Signup} />
+            <Route path="/login" exact component={Login} />
             <Route path="/results/:id" exact component={SearchResults} />
           </Switch>
         </ScrollToTop>
