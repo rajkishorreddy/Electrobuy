@@ -85,6 +85,7 @@
   }
 
   &_wishlist {
+    text-decoration: none;
     display: flex;
     align-items: center;
     font-family: 'Cabin', sans-serif;
@@ -105,8 +106,8 @@
     }
     &-img {
       // font-size: 100px;
-      height: 2.5rem !important;
-      width: 2.5rem !important;
+      height: 2rem !important;
+      width: 2rem !important;
       margin: 0.5rem;
     }
     &-name {
@@ -128,6 +129,7 @@
     border: none;
     cursor: pointer;
     margin: 0 1.5rem;
+    text-decoration: none;
     @media only screen and (max-width: 36.5em) {
       margin: 0 1rem;
     }

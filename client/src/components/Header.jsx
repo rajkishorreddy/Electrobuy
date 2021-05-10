@@ -29,7 +29,7 @@ const Header = () => {
               <SearchIcon className="header_form-btn-img" />
             </button>
           </form>
-          <button className="header_wishlist">
+          <Link to={'/wishlist'} className="header_wishlist">
             <WishList className="header_wishlist-img" />
             {/* <FavoriteRoundedIcon 
               classes={{
@@ -37,11 +37,11 @@ const Header = () => {
               }}
             /> */}
             <span className="header_wishlist-name">wishlist</span>
-          </button>
-          <button className="header_cart">
+          </Link>
+          <Link to={'/cart'} className="header_cart">
             <Cart className="header_cart-img" />
             <span className="header_cart-name">cart</span>
-          </button>
+          </Link>
           <Link to={'/login'} className="header_login">
             login
           </Link>

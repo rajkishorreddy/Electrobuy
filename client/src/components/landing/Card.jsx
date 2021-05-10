@@ -35,9 +35,11 @@ const Card = (props) => {
         ></img>
         <div className="card_item-name">{props.obj[3].name} </div>
       </div>
-      <Link className="card_title">
+      <Link to={'/'} className="card_title">
         <div className="card_title-name">{props.obj[4].title}</div>
-        <Link className="card_title-btn">&rarr;</Link>
+        <Link to={'/'} className="card_title-btn">
+          &rarr;
+        </Link>
       </Link>
     </div>
   );

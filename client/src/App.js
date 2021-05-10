@@ -7,6 +7,8 @@ import SearchResults from './components/searchResults/SearchResults';
 import Signup from './components/Signup/Signup.jsx';
 import Login from './components/Login/Login.jsx';
 import ProductInfo from './components/ProductInfo/ProductInfo.jsx'
+import Wishlist from './components/Wishlist/Wishlist.jsx';
+import Cart from './components/Cart/Cart.jsx';
 
 import './App.scss';
 
@@ -19,6 +21,8 @@ const App = () => {
             <Route path="/" exact component={LandingPg} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/login" exact component={Login} />
+            <Route path="/wishlist" exact component={Wishlist} />
+            <Route path="/cart" exact component={Cart} />
             <Route path="/results/:id" exact component={SearchResults} />
             <Route path="/productInfo/:id" exact component={ProductInfo} />
           </Switch>
