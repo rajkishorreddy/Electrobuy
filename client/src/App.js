@@ -5,6 +5,9 @@ import LandingPg from './components/Landing/LandingPg';
 import SearchResults from './components/SearchResults/SearchResults';
 import Signup from './components/Signup/Signup.jsx';
 import Login from './components/Login/Login.jsx';
+import Wishlist from './components/Wishlist/Wishlist.jsx';
+import Cart from './components/Cart/Cart.jsx';
+
 import './App.scss';
 const App = () => {
   return (
@@ -15,6 +18,8 @@ const App = () => {
             <Route path="/" exact component={LandingPg} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/login" exact component={Login} />
+            <Route path="/wishlist" exact component={Wishlist} />
+            <Route path="/cart" exact component={Cart} />
             <Route path="/results/:id" exact component={SearchResults} />
           </Switch>
         </ScrollToTop>
