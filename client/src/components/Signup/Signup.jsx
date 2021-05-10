@@ -17,9 +17,7 @@ const Signup = () => {
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={'/'} className="signup_left-goback">
-          back to home
-        </Link>
+        <Link to={'/'} className="signup_left-goback">←</Link>
         <Logo className="signup-logo" />
         <div className="signup-main">
           <form className="signup-form" onSubmit={(e) => onSubmit(e)}>

@@ -13,9 +13,7 @@ const Signup = () => {
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={'/'} className="signup_left-goback">
-          back to home
-        </Link>
+        <Link to={'/'} className="signup_left-goback">←</Link>
         <Logo
           style={{ transform: 'translate(-50%,8rem)' }}
           className="signup-logo"
