@@ -1,0 +1,149 @@
+.hr {
+  border: 0.5px solid #909090;
+}
+
+.info {
+  background: linear-gradient(180.18deg, #000000 -1.18%, #2E2E2E -1.18%, rgba(109, 43, 148, 0.81) 93%);
+}
+
+.product-display {
+  display: flex;
+  justify-content: space-around;
+
+
+  &-left {
+    flex: 0.5;
+    background-color: #fff;
+  }
+
+  &--carousel {
+
+    & > div {
+      // height: 80vh;
+
+      & > ul {
+        // transform: translateY(2rem);
+
+        & > li {
+          background-color: #930696 !important;
+        }
+      }
+
+      // & > div > ul > li > img{
+      //   height: 50vw;
+      // }
+    }
+  }
+  
+  &--content {
+    flex: 0.5;
+    width: 50vw;
+    height: calc(100vh - 11.85rem);
+
+    &__heading {
+      padding: 3.2rem;
+
+      &-title {
+        font-size: 24px;
+        font-family: 'Montserrat', monospace;
+        font-weight: 700;
+        line-height: 2.9rem;
+        color: #FFF;
+      }
+      
+      &-rating {
+        color: #EBEBEB;
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1.6rem;
+        line-height: 2rem;
+        text-align: end;
+        padding: 1rem;
+      }
+
+      &-prices {
+        color: #FFF;
+        padding-top: 1.25rem;
+
+        .mrp {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 1.6rem;
+          line-height: 1.95rem;
+
+          del {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+          }
+        }
+        
+        .selling {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 1.6rem;
+          line-height: 1.95rem;
+
+          span {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 2.2rem;
+            line-height: 2.682rem;
+          }
+        }
+        
+        .saved {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 1.6rem;
+          line-height: 1.95rem;
+
+          span {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+          }
+        }
+      }
+
+      &-description {
+        padding-top: 0.5rem;
+        
+        & p {
+          color: #FFF;
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 1.6rem;
+          line-height: 2rem;
+        }
+        
+        & ul {
+          padding-top: 1rem;
+
+          & li {
+            transform: translateX(2em);
+            color: #FFF;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.img {
+  padding: 2rem;
+}
