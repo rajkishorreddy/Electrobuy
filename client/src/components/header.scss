@@ -148,12 +148,8 @@
     }
   }
   &_login {
-    font-size: 1.5rem;
-    line-height: 1.25rem;
-    letter-spacing: 0.26px;
-    font-weight: 500;
+    @include font-face('Cabin', 1.5rem, 500);
     padding: 1rem 2rem;
-    font-family: 'Cabin', sans-serif;
     background-color: rgba(0, 0, 0, 0.521);
     color: white;
     border: none;
@@ -176,10 +172,11 @@
   align-items: center;
   justify-content: space-evenly;
   &_item {
-    @include h4;
+    @include font-face('Montserrat', 1.25rem, 600);
+    // font-size: 1.25rem;
     text-decoration: none;
     color: white;
-    font-family: 'Montserrat', sans-serif;
+    // font-family: 'Montserrat', sans-serif;
     @media only screen and (max-width: 26em) {
       font-size: 1.3rem;
       letter-spacing: 0;
