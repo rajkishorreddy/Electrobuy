@@ -9,7 +9,8 @@ const User = require("./../models/UserModel");
 
 var extractCookieFn = function (req) {
   let jwtToken = null;
-  if (req && req.cookies) {
+  console.log("req.headers", req.headers.authorization);
+  if (req && req.cookies["jwt-cookie"]) {
     console.log("all cokkies present now are", req.cookies);
     jwtToken = req.cookies["jwt-cookie"];
     console.log(
@@ -23,9 +24,12 @@ var extractCookieFn = function (req) {
     req.headers.authorization.startsWith("Bearer ")
   ) {
     //THE JAVASCRIPT IS with let and const is BLOCK SCOPED, NOT FUNCTION SCOPED
+    console.log("oh yeahhh");
     jwtToken = req.headers.authorization.split(" ")[1];
+    console.log("jwtToken is ", jwtToken);
     return jwtToken;
   }
+  console.log("jwtToken is ", jwtToken);
   return jwtToken;
 };
 passport.use(
