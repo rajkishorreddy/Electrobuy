@@ -9,16 +9,25 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
+const passport = require("passport");
 
 const AppError = require("./utils/AppError");
 
+require("./config/passportConfig");
 const productRouter = require("./routes/productRoutes");
+const userRouter = require("./routes/userRouter");
+
+const globalErrorHandler = require("./controllers/errorControllers");
 
 const app = express();
 
 //Middleware functions
 
 //General middleware functions
+
+//Passport Initialization
+app.use(passport.initialize());
+
 //Logging middleware function
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
@@ -58,6 +67,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 //Prevent paramter pollution
+// NOTE: Need to change this accordingly
 app.use(
   hpp({
     whitelist: [
@@ -81,17 +91,16 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/products", productRouter);
+app.use("/api/v1/users", userRouter);
 
 // error handler
 app.all(
   "*",
   (req, res, next) => {
-    res
-      .status(404)
-      .json({
-        status: "error",
-        message: `the route ${req.originalUrl} is not defined`,
-      });
+    res.status(404).json({
+      status: "error",
+      message: `the route ${req.originalUrl} is not defined`,
+    });
   }
   // res.status(404).render("errorTemplate", () => {
   //   next(new AppError(404, `the route ${req.originalUrl} is not defined`));
@@ -99,6 +108,6 @@ app.all(
 );
 
 //Global error handler
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 
 module.exports = app;
