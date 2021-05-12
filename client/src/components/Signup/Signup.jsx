@@ -3,21 +3,38 @@ import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as Style } from '../../assets/signup.svg';
 import './Signup.scss';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 const Signup = () => {
   const [FirstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const [CnPassword, setCnPassword] = useState('');
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(FirstName, LastName, Email, Password, CnPassword);
+    try {
+      const data = await axios({
+        method: 'post',
+        url: 'http://127.0.0.1:8080/api/v1/users/signup-basic',
+        data: {
+          name: `${FirstName} ${LastName}`,
+          email: Email,
+          password: Password,
+          confirmPassword: CnPassword,
+        },
+      });
+      console.log(data.data);
+      window.localStorage.setItem('token', data.data.jwtToken);
+    } catch (err) {
+      console.log(err.response.data);
+    }
   };
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={'/'} className="signup_left-goback">←</Link>
+        <Link to={'/'} className="signup_left-goback">
+          ←
+        </Link>
         <Logo className="signup-logo" />
         <div className="signup-main">
           <form className="signup-form" onSubmit={(e) => onSubmit(e)}>

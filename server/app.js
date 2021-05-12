@@ -10,7 +10,7 @@ const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
 const passport = require("passport");
-
+const cors = require("cors");
 const AppError = require("./utils/AppError");
 
 require("./config/passportConfig");
@@ -27,7 +27,10 @@ const app = express();
 
 //Passport Initialization
 app.use(passport.initialize());
-
+//Adding CORS support
+app.use(cors());
+//Sending options support for all routes
+app.use("*", cors());
 //Logging middleware function
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
@@ -89,7 +92,16 @@ app.use((req, res, next) => {
   console.log("this is the middleware function talking");
   next();
 });
-
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000/login");
+//   next();
+// });
+app.use((req, res, next) => {
+  res.setHeader("Acces-Control-Allow-Origin", "*");
+  res.setHeader("Acces-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+  res.setHeader("Acces-Contorl-Allow-Methods", "Content-Type", "Authorization");
+  next();
+});
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/users", userRouter);
 

@@ -2,18 +2,33 @@ import { useState } from 'react';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as Style } from '../../assets/signup.svg';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 const Signup = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(Email, Password);
+    const token = window.localStorage.getItem('token');
+    console.log(token);
+    try {
+      const data = await axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8080/api/v1/users/connect/google',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data);
+    } catch (err) {
+      console.log(err.response?.data);
+    }
   };
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={'/'} className="signup_left-goback">←</Link>
+        <Link to={'/'} className="signup_left-goback">
+          ←
+        </Link>
         <Logo
           style={{ transform: 'translate(-50%,8rem)' }}
           className="signup-logo"
