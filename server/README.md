@@ -8,6 +8,31 @@ This server application exposes only an API that provides the details of the pro
 /products/category/:categoryName ==> Gives all the products of the respective category available
 /products/:productId ==> Gives the detailed info of the product
 
+API Features
+
+FILTER ==> <feildName>[<mongoDB operator>]=<value>
+?finalPrice[lte]=5000
+Please use this only in very specific cases
+
+MATCH ==> true/false
+?verified=true
+This is used to filter out all the unverified products
+
+FILTERSPECIFIC ==> <feildName>=<value>
+?brand=MI
+Make sure that the url is encoded for the spaces
+
+SORT ==>
+?sort=finalPrice,fullName
+
+SELECT ==> low/high
+?select=low
+
+PAGINATION ==>
+?page=5&limit=10
+The default values for limit is 5
+The total product count is present in the response
+
 /users/login-basic => Logs in with the provided email and password and returns you back the jwt
 /users/signup-basic => Creates a new user with the provided email and password and returns you back the jwt
 /users/google + /users/google/redirect => Logs in with the google and returns back the jwt
