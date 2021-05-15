@@ -4,6 +4,7 @@ This server application exposes only an API that provides the details of the pro
 
 /products ==> Gives all the products of all categories available
 /products/category ==> Returns a array of all categories available
+/products/category/:categoryName/brands ==> Gives an array of all brands of the product
 /products/category/:categoryName ==> Gives all the products of the respective category available
 /products/:productId ==> Gives the detailed info of the product
 

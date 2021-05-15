@@ -11,6 +11,11 @@ router.get(
   productController.getProductsFromCategory,
   productController.getProducts
 );
+router.get(
+  "/category/:categoryName/brands",
+  productController.getProductsFromCategory,
+  productController.getAllBrandNamesOfCategory
+);
 router.get("/:productId", productController.getSingleProduct);
 
 module.exports = router;

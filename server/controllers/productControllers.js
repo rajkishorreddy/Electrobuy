@@ -3,6 +3,7 @@ const path = require("path");
 
 const AppError = require("./../utils/AppError");
 const Product = require("./../models/productModel");
+const APIFeatures = require("./../utils/APIFeatures");
 
 exports.getAllCategoryNames = (req, res, next) => {
   // 1) Send back a arry of categories available
@@ -21,6 +22,42 @@ exports.getAllCategoryNames = (req, res, next) => {
   });
 };
 
+exports.getAllBrandNamesOfCategory = async (req, res, next) => {
+  // 1) Get the search query from the req.body
+  const searchObj = req.body;
+
+  // 2) Get all the products available in this category with the match filter
+  const allProducts = await Product.find(searchObj).find({
+    technicalDetails: { $exists: true, $ne: [] },
+  });
+
+  const brandMap = new Map();
+  // console.log(allProducts.length);
+
+  allProducts.forEach((product) => {
+    const brandObj = product.technicalDetails.find((key) => {
+      // console.log("the key is ", key);
+      return key.detail === "Brand";
+    });
+    if (brandObj) {
+      if (brandMap.has(brandObj.value)) {
+        const prevValue = brandMap.get(brandObj.value);
+        brandMap.set(brandObj.value, prevValue + 1);
+      } else {
+        brandMap.set(brandObj.value, 1);
+      }
+    }
+  });
+  console.log(brandMap.values());
+
+  // 2) Send back the response
+  res.status(200).json({
+    status: "success",
+    totalCount: brandMap.size,
+    data: [...brandMap],
+  });
+};
+
 exports.getProductsFromCategory = (req, res, next) => {
   // 1) Set a searchobj as a part of req.body extracting it from the query params
   req.body.category = req.params.categoryName;
@@ -32,25 +69,34 @@ exports.getProducts = async (req, res, next) => {
   try {
     // 1) Get the search query from the req.body
     const searchObj = req.body;
-    console.log(searchObj);
+    console.log("searchObj is ", searchObj);
 
     // 2) Get all the products with the searchObj
-    const allProducts = await Product
-      // .find(searchObj)
-      .aggregate([
-        {
-          $match: { category: searchObj.category },
-        },
-        {
-          $sort: { technicalDetails: -1 },
-        },
-      ]);
+    // here the productscount is the amouunt of products that passed the filter
+    const allProducts = await new APIFeatures(
+      Product.find(searchObj),
+      req.query
+    )
+      .filter()
+      .match()
+      .filterSpecific()
+      .sort()
+      .select()
+      .pagination().query;
+    const productsCount = await new APIFeatures(
+      Product.find(searchObj),
+      req.query
+    )
+      .filter()
+      .match()
+      .query.countDocuments();
 
     // 3) Send back a response with the array of products
     res.status(200).json({
       status: "success",
-      count: allProducts.length,
+      totalCount: productsCount,
       data: {
+        count: allProducts.length,
         products: allProducts,
       },
     });
