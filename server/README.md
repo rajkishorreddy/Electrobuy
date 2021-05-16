@@ -26,7 +26,7 @@ SORT ==>
 ?sort=finalPrice,fullName
 
 SELECT ==> low/high
-?select=low
+?feildsCapacity=low
 
 PAGINATION ==>
 ?page=5&limit=10

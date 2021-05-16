@@ -64,6 +64,12 @@ const userSchema = mongoose.Schema(
       default: true,
       select: false,
     },
+    wishlistArr: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
   {
     toJSON: {
@@ -157,6 +163,14 @@ userSchema.methods.createPasswordResetToken = function () {
 // This middleware only selects all users that are active
 userSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "wishlistArr",
+    select: "-__v -technicalDetails -additionalDetails -reviewArr -id",
+  });
   next();
 });
 

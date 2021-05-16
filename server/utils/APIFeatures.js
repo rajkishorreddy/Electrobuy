@@ -83,7 +83,7 @@ class APIFeatures {
     console.log("select called");
     if (this.queryObj.feildsCapacity === "low") {
       this.query = this.query.select(
-        "-__v -_id -technicalDetails -additionalDetails -reviewArr -id"
+        "-__v -technicalDetails -additionalDetails -reviewArr -id"
       );
     } else if (this.queryObj.feildsCapacity === "high") {
       this.query = this.query.select("-__v");
