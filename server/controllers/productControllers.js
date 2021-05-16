@@ -5,12 +5,19 @@ const AppError = require("./../utils/AppError");
 const Product = require("./../models/productModel");
 const APIFeatures = require("./../utils/APIFeatures");
 
-exports.getAllCategoryNames = (req, res, next) => {
+exports.getAllCategoryNames = async (req, res, next) => {
   // 1) Send back a arry of categories available
-  const availableCategories = JSON.parse(
-    fs.readFileSync(path.join(__dirname, "./../utils/availableCategories.json"))
-  );
-  console.log(availableCategories);
+  // const availableCategories = JSON.parse(
+  //   fs.readFileSync(path.join(__dirname, "./../utils/availableCategories.json"))
+  // );
+  // console.log(availableCategories);
+  const availableCategories = await Product.aggregate([
+    {
+      $group: {
+        _id: "$category",
+      },
+    },
+  ]);
 
   // 2) Send back the response
   res.status(200).json({

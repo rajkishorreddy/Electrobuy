@@ -7,7 +7,6 @@ const connectRouter = require("./../routes/connectRoutes");
 
 const authController = require("../controllers/authControllers");
 const userController = require("../controllers/userControllers");
-const AppError = require("./../utils/AppError");
 
 const router = express.Router();
 
@@ -36,7 +35,7 @@ router.patch(
 
 router.patch(
   "/updateMyPassword",
-  userController.passportWrapperMiddleware,
+  authController.passportWrapperMiddleware,
   authController.updatePassword
 );
 
@@ -53,7 +52,7 @@ router.get(
 );
 router.get(
   "/google/redirect",
-  userController.passportWrapperMiddleware,
+  authController.passportWrapperMiddleware,
   passport.authenticate("google", {
     session: false,
     scope: ["profile", "email"],
@@ -65,25 +64,25 @@ router.get(
 
 router.use(
   "/protected",
-  userController.passportWrapperMiddleware,
+  authController.passportWrapperMiddleware,
   (req, res, next) => {
     res.send(req.user);
   }
 );
 
 router.get(
-  "/addWishlistProduct",
-  userController.passportWrapperMiddleware,
+  "/getAllWishlistProduct",
+  authController.passportWrapperMiddleware,
   userController.getAllWishlistItems
 );
 router
   .route("/addWishlistProduct/:productId")
   .post(
-    userController.passportWrapperMiddleware,
+    authController.passportWrapperMiddleware,
     userController.addWishlistItem
   )
   .delete(
-    userController.passportWrapperMiddleware,
+    authController.passportWrapperMiddleware,
     userController.deleteWishlistItem
   );
 

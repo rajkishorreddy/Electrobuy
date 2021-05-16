@@ -16,6 +16,7 @@ const AppError = require("./utils/AppError");
 require("./config/passportConfig");
 const productRouter = require("./routes/productRoutes");
 const userRouter = require("./routes/userRouter");
+const paymentRouter = require("./routes/paymentRouter");
 // const wishlistRouter = require("./routes/wishlistRouter");
 
 const globalErrorHandler = require("./controllers/errorControllers");
@@ -116,6 +117,7 @@ app.use((req, res, next) => {
 });
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/payments", paymentRouter);
 
 // error handler
 app.all(
