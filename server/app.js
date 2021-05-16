@@ -16,6 +16,7 @@ const AppError = require("./utils/AppError");
 require("./config/passportConfig");
 const productRouter = require("./routes/productRoutes");
 const userRouter = require("./routes/userRouter");
+// const wishlistRouter = require("./routes/wishlistRouter");
 
 const globalErrorHandler = require("./controllers/errorControllers");
 
@@ -27,6 +28,7 @@ const app = express();
 
 //Passport Initialization
 app.use(passport.initialize());
+
 //Adding CORS support
 app.use("*", function (req, res, next) {
   //replace localhost:8080 to the ip address:port of your server
@@ -82,12 +84,14 @@ app.use(xss());
 app.use(
   hpp({
     whitelist: [
-      "price",
-      "duration",
-      "ratingsAverage",
-      "ratingsQuantity",
-      "maxGroupSize",
-      "difficulty",
+      "finalPrice",
+      "originalPrice",
+      "savingPrice",
+      "fullName",
+      "description",
+      "technicalDetails",
+      "additionalDetails",
+      "imageArr",
     ],
   })
 );
