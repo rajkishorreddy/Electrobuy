@@ -23,8 +23,14 @@ const App = () => {
             <Route path="/login" exact component={Login} />
             <Route path="/wishlist" exact component={Wishlist} />
             <Route path="/cart" exact component={Cart} />
-            <Route path="/results/:id" exact component={SearchResults} />
+            {/* <Route path="/results/:id" exact component={SearchResults} /> */}
             <Route path="/productInfo/:id" exact component={ProductInfo} />
+            <Route
+              path={`/results/:id`}
+              render={(props) => (
+                <SearchResults key={props.match.params.id} {...props} />
+              )}
+            />
           </Switch>
         </ScrollToTop>
       </Router>

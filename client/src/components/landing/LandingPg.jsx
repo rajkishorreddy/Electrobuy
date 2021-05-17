@@ -39,7 +39,7 @@ import wm1 from '../../assets/wms/wm1.jpg';
 import wm2 from '../../assets/wms/wm2.jpg';
 import wm3 from '../../assets/wms/wm3.jpg';
 import wm4 from '../../assets/wms/wm4.jpg';
-const LandingPg = () => {
+const LandingPg = (props) => {
   const laps = [
     { item: lap1, name: 'Macbooks' },
     { item: lap2, name: 'Touch laptops' },
@@ -82,6 +82,7 @@ const LandingPg = () => {
     { item: wm4, name: 'Fully automatic' },
     { title: 'WASHING MACHINES' },
   ];
+
   return (
     <div>
       <Header />
@@ -139,5 +140,4 @@ const LandingPg = () => {
     </div>
   );
 };
-
 export default LandingPg;

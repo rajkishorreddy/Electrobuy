@@ -14,7 +14,10 @@ const Header = () => {
   return (
     <div>
       <div className="header">
-        <Logo className="header_logo" />
+        <Link to={'/'} className="Link">
+          {' '}
+          <Logo className="header_logo" />
+        </Link>
         <div className="flex header_right">
           {' '}
           <form className="header_form">
@@ -48,19 +51,19 @@ const Header = () => {
         </div>
       </div>
       <nav className="nav">
-        <Link to={'/'} className="nav_item">
+        <Link to={'/results/laptops'} className="nav_item">
           LAPTOPS
         </Link>
-        <Link to={'/'} className="nav_item">
+        <Link to={'/results/mobiles'} className="nav_item">
           MOBILES
         </Link>
-        <Link to={'/'} className="nav_item">
+        <Link to={'/results/cameras'} className="nav_item">
           CAMERAS
         </Link>
-        <Link to={'/'} className="nav_item">
+        <Link to={'/results/headphones'} className="nav_item">
           HEADPHONES & SOUND SYSTEMS
         </Link>
-        <Link to={'/'} className="nav_item">
+        <Link to={'/results/tvs'} className="nav_item">
           TVS
         </Link>
       </nav>
