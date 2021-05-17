@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as Style } from '../../assets/signup.svg';
 import { Link } from 'react-router-dom';
+
 import axios from 'axios';
 const Signup = () => {
   const [Email, setEmail] = useState('');
