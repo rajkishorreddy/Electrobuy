@@ -43,10 +43,15 @@ The total product count is present in the response
 
 /users/updatePassword => Updates the password when the user is authenticated only
 
+/users/addWishlistProduct/:productId => Adds a new product to the wishlist
+/users/getAllWishlistProduct => Gets all the products available in the wishlist
+
 /forgetPassword => Allows the user to be sent a mail enabling him to recover his password with a special token
 /resetPassword => Allows the user to update his password when the valid reset token is provided
 
 /me => Returns the basic profile information of the user, if AUTHENTICATED
+
+/payments => Iniaties a transaction and returns the transactionId and the checksum with the other parameters
 
 <!-- DATABASES -->
 

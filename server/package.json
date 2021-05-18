@@ -19,6 +19,7 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
+    "redis": "^3.1.2",
     "validator": "^13.6.0",
     "xss": "^1.0.8",
     "xss-clean": "^0.1.1"

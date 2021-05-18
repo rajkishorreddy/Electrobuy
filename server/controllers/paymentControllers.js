@@ -16,7 +16,6 @@ exports.initiateTransaction = async (req, res, next) => {
 
     // Make sure to conver the integer value to the string
     transactionAmount = JSON.stringify(transactionAmount);
-    console.log(req.user.email, email);
 
     if (req.user.email !== email) {
       return next(
@@ -59,38 +58,49 @@ exports.initiateTransaction = async (req, res, next) => {
     paytmTransactionParams.head = {
       signature: paytmChecksumResultHash,
     };
+    console.log(paytmTransactionParams.head.signature);
+    // console.log(
+    //   paytmTransactionParams.head.signature === paytmChecksumResultHash
+    // );
+    console.log(paytmTransactionParams.body.orderId);
+    // console.log(
+    //   `${JSON.stringify({
+    //     mid: process.env.PAYTM_MERCHANT_ID,
+    //     orderId: paytmTransactionParams.body.orderId,
+    //   })}`
+    // );
+    // console.log("key is ", process.env.PAYTM_MERCHANT_KEY);
+
+    // const isVerifySignature = await PaytmChecksum.verifySignature(
+    //   JSON.stringify(paytmTransactionParams.body),
+    //   process.env.PAYTM_MERCHANT_KEY,
+    //   paytmChecksumResultHash
+    // );
+    // if (!isVerifySignature)
 
     const post_data = JSON.stringify(paytmTransactionParams);
-
-    // const options = {
-    //   /* for Staging */
-    //   hostname: "securegw-stage.paytm.in",
-    //   /* for Production */
-    //   // hostname: 'securegw.paytm.in',
-
-    //   port: 443,
-    //   path: `/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`,
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Content-Length": post_data.length,
-    //   },
-    // };
+    console.log(
+      `https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`
+    );
+    console.log(JSON.stringify(paytmTransactionParams));
 
     const transactionResponse = await axios({
-      url: `securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`,
+      url: `https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`,
       method: "POST",
-      port: 1234,
+      body: paytmTransactionParams,
+      // port: 1234,
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": post_data.length,
+        "Content-Length": JSON.stringify(paytmTransactionParams).length,
+        Accept: "*/*",
       },
     });
 
     // 4) Send back the response
-    res.status(200).json({
-      status: "success",
-      data: transactionResponse,
+    console.log(transactionResponse.data.data);
+    res.status(transactionResponse.status).json({
+      status: transactionResponse.statusText,
+      data: transactionResponse.data,
     });
   } catch (error) {
     next(error);
