@@ -16,7 +16,7 @@ exports.initiateTransaction = async (req, res, next) => {
 
     // Make sure to conver the integer value to the string
     transactionAmount = JSON.stringify(transactionAmount);
-    // console.log("the transaction amount is " + transactionAmount);
+    console.log("the transaction amount is " + transactionAmount);
 
     // if (req.user.email !== email) {
     //   return next(
@@ -50,7 +50,7 @@ exports.initiateTransaction = async (req, res, next) => {
 
       // add goods key too ..
     };
-
+    console.log(paytmTransactionParams);
     const paytmChecksumResultHash = await PaytmChecksum.generateSignature(
       JSON.stringify(paytmTransactionParams.body),
       process.env.PAYTM_MERCHANT_KEY
