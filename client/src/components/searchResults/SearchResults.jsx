@@ -6,37 +6,69 @@ import React from 'react';
 import Header from '../Header';
 import { ReactComponent as WishList } from '../../assets/wishlistcard.svg';
 import { fetchCategoryProducts } from '../../actions';
+import history from '../../history';
+import axios from 'axios';
+import loader from '../../assets/loading.gif';
 const SearchResults = (props) => {
   useEffect(() => {
     props.fetchCategoryProducts(props.match.params.id, 1);
     console.log(props.data[0]);
   }, []);
+  const addWishlist = async (el) => {
+    const token = window.localStorage.getItem('token');
+    if (!token) {
+      history.push('/login');
+    } else {
+      try {
+        const data = await axios.post(
+          `http://127.0.0.1:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (data.data.status === 'success') {
+          alert('item added successfully to wishlist');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   const renderProductItems = () => {
-    if (!props.data[0]) return <div>Loading..</div>;
+    if (!props.data[0])
+      return <img className="loading" src={loader} alt="loading.." />;
     else if (props.data[0].category !== props.match.params.id)
-      return <div>loading ...</div>;
+      return <img className="loading" src={loader} alt="loading.." />;
     else {
       return props.data.map((el) => {
         return (
-          <Link className="Link" to={`/productInfo/${el.id}`} key={el.id}>
-            <div className="procard">
+          <div className="procard" key={el.id}>
+            <Link className="Link" to={`/productInfo/${el.id}`}>
               <img src={el.imageArr[0]} alt="product" className="procard-img" />
-              <div className="procard-bottom">
-                <div className="procard-info">
-                  <div className="procard-info-name">
-                    {el.fullName.slice(0, 150)}
-                  </div>
-                  <div className="procard-info-price">₹{el.finalPrice}</div>
+            </Link>
+            <div className="procard-bottom">
+              <div className="procard-info">
+                <div className="procard-info-name">
+                  {el.fullName.slice(0, 150)}
                 </div>
-                <div className="procard-btns">
-                  <button className="procard-btns-wishlist">
-                    <WishList className="procard-btns-wishlist-icon" />
-                  </button>
-                  <button className="procard-btns-cart">Add to cart</button>
-                </div>
+                <div className="procard-info-price">₹{el.finalPrice}</div>
+              </div>
+              <div className="procard-btns">
+                <button
+                  onClick={(el) => addWishlist(el)}
+                  data-id={el.id}
+                  className="procard-btns-wishlist"
+                >
+                  <WishList
+                    data-id={el.id}
+                    className="procard-btns-wishlist-icon"
+                  />
+                </button>
+                <button className="procard-btns-cart">Add to cart</button>
               </div>
             </div>
-          </Link>
+          </div>
         );
       });
     }

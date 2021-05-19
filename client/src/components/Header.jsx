@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import history from '../history';
 // import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import './header.scss';
-
 import { ReactComponent as Logo } from '../assets/Logo.svg';
 import { ReactComponent as SearchIcon } from '../assets/searchIcon.svg';
 import { ReactComponent as WishList } from '../assets/wishlist.svg';
@@ -11,6 +10,12 @@ import { ReactComponent as Cart } from '../assets/cart.svg';
 
 const Header = () => {
   const [term, setTerm] = useState('');
+  const [user, setUser] = useState(window.localStorage.getItem('token'));
+  const logout = () => {
+    window.localStorage.removeItem('token');
+    setUser(window.localStorage.getItem('token'));
+    history.push('/');
+  };
   return (
     <div>
       <div className="header">
@@ -45,9 +50,15 @@ const Header = () => {
             <Cart className="header_cart-img" />
             <span className="header_cart-name">cart</span>
           </Link>
-          <Link to={'/login'} className="header_login">
-            login
-          </Link>
+          {user ? (
+            <button onClick={() => logout()} className="header_login">
+              logout
+            </button>
+          ) : (
+            <Link to={'/login'} className="header_login">
+              login
+            </Link>
+          )}
         </div>
       </div>
       <nav className="nav">
@@ -70,4 +81,5 @@ const Header = () => {
     </div>
   );
 };
+
 export default Header;
