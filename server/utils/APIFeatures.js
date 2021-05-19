@@ -99,6 +99,11 @@ class APIFeatures {
     //console.log(this.pageValue);
     return this;
   }
+
+  cache() {
+    this.useCache = true;
+    return this;
+  }
 }
 
 module.exports = APIFeatures;

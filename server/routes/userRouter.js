@@ -55,6 +55,7 @@ router.get(
   authController.passportWrapperMiddleware,
   passport.authenticate("google", {
     session: false,
+    // display: "popup",
     scope: ["profile", "email"],
     failureRedirect: "/",
   }),

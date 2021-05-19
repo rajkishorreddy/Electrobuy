@@ -13,8 +13,9 @@ const passport = require("passport");
 const cors = require("cors");
 const AppError = require("./utils/AppError");
 
-require("./config/passportConfig");
-const productRouter = require("./routes/productRoutes");
+require("./services/passportServices");
+require("./services/cacheServices");
+const productRouter = require("./routes/productRouter");
 const userRouter = require("./routes/userRouter");
 const paymentRouter = require("./routes/paymentRouter");
 // const wishlistRouter = require("./routes/wishlistRouter");

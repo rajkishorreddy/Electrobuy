@@ -7,10 +7,7 @@ const APIFeatures = require("./../utils/APIFeatures");
 
 exports.getAllCategoryNames = async (req, res, next) => {
   // 1) Send back a arry of categories available
-  // const availableCategories = JSON.parse(
-  //   fs.readFileSync(path.join(__dirname, "./../utils/availableCategories.json"))
-  // );
-  // console.log(availableCategories);
+
   const availableCategories = await Product.aggregate([
     {
       $group: {
