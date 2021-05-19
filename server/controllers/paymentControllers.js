@@ -12,19 +12,20 @@ exports.initiateTransaction = async (req, res, next) => {
     }
 
     // 2) Get the total amount and the email from the req.body
-    let { transactionAmount, email } = req.body;
+    let { transactionAmount } = req.body;
 
     // Make sure to conver the integer value to the string
     transactionAmount = JSON.stringify(transactionAmount);
+    // console.log("the transaction amount is " + transactionAmount);
 
-    if (req.user.email !== email) {
-      return next(
-        new AppError(
-          401,
-          "The transaction initiated doesnt seem to be coming from the same user"
-        )
-      );
-    }
+    // if (req.user.email !== email) {
+    //   return next(
+    //     new AppError(
+    //       401,
+    //       "The transaction initiated doesnt seem to be coming from the same user"
+    //     )
+    //   );
+    // }
 
     // 3) Get all the details required for the transaction
     let paytmTransactionParams = {};
@@ -78,16 +79,15 @@ exports.initiateTransaction = async (req, res, next) => {
     // );
     // if (!isVerifySignature)
 
-    const post_data = JSON.stringify(paytmTransactionParams);
-    console.log(
-      `https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`
-    );
-    console.log(JSON.stringify(paytmTransactionParams));
+    // const post_data = JSON.stringify(paytmTransactionParams);
+    // console.log(
+    //   `https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`
+    // );
 
     const transactionResponse = await axios({
       url: `https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`,
       method: "POST",
-      body: paytmTransactionParams,
+      data: paytmTransactionParams,
       // port: 1234,
       headers: {
         "Content-Type": "application/json",
@@ -95,12 +95,41 @@ exports.initiateTransaction = async (req, res, next) => {
         Accept: "*/*",
       },
     });
+    // console.log(transactionResponse.data);
+    paytmTransactionParams.head = {
+      txnToken: transactionResponse.data.body.txnToken,
+    };
+
+    // const x = await axios({
+    //   url: `https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`,
+    //   method: "POST",
+    //   data: {
+    //     mid: paytmTransactionParams.body.mid,
+    //     orderId: paytmTransactionParams.body.orderId,
+    //     txnToken: paytmTransactionParams.head.txnToken,
+    //   },
+    //   // port: 1234,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     // "Content-Length": JSON.stringify(paytmTransactionParams).length,
+    //     Accept: "*/*",
+    //   },
+    // });
 
     // 4) Send back the response
-    console.log(transactionResponse.data.data);
-    res.status(transactionResponse.status).json({
-      status: transactionResponse.statusText,
-      data: transactionResponse.data,
+    // console.log(x.data);
+    //NOTE: change the error handling
+    if (transactionResponse.data.body.resultInfo.resultStatus !== "S") {
+      return next(new AppError(500, "Some internal error"));
+    }
+    res.status(200).json({
+      status: "success",
+      data: {
+        result: transactionResponse.data.body.resultInfo,
+        mid: paytmTransactionParams.body.mid,
+        orderId: paytmTransactionParams.body.orderId,
+        txnToken: paytmTransactionParams.head.txnToken,
+      },
     });
   } catch (error) {
     next(error);
