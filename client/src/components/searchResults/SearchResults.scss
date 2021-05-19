@@ -78,3 +78,11 @@
 .Link {
   text-decoration: none;
 }
+.loading {
+  height: 7rem;
+  width: 7rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

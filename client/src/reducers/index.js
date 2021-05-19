@@ -15,7 +15,17 @@ const productInfoReducer = (data = {}, action) => {
       return { ...data };
   }
 };
+// const userReducer = (data = {}, action) => {
+//   switch (action.type) {
+//     case 'USER_IN': {
+//       return { ...action.payload };
+//     }
+//     default:
+//       return { ...data };
+//   }
+// };
 export default combineReducers({
   productCatogery: productReducer,
   productInfo: productInfoReducer,
+  // user: userReducer,
 });

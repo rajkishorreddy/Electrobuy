@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import { fetchProductInfo } from '../../actions';
 import Header from '../Header';
 import Footer from '../Footer';
-
+import loader from '../../assets/loading.gif';
 import './ProductInfo.scss';
-
-import img2 from '../../assets/cameras/camera2.jpg';
-import img3 from '../../assets/cameras/camera3.jpg';
 
 const ProductInfo = (props) => {
   useEffect(() => {
@@ -16,9 +13,9 @@ const ProductInfo = (props) => {
   }, []);
   const renderInfo = () => {
     if (!props.data.description) {
-      return <div>Loading...</div>;
+      return <img className="loading" src={loader} alt="loading.." />;
     } else if (props.data.id !== props.match.params.id)
-      return <div>loading...</div>;
+      return <img className="loading" src={loader} alt="loading.." />;
     else {
       return (
         <div>

@@ -2,26 +2,30 @@ import { useState } from 'react';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as Style } from '../../assets/signup.svg';
 import { Link } from 'react-router-dom';
-
+import history from '../../history';
 import axios from 'axios';
 const Signup = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const onSubmit = async (e) => {
     e.preventDefault();
-    const token = window.localStorage.getItem('token');
-    console.log(token);
     try {
-      const data = await axios({
-        method: 'get',
-        url: 'http://127.0.0.1:8080/api/v1/users/connect/google',
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const { data } = await axios({
+        method: 'post',
+        url: 'http://127.0.0.1:8080/api/v1/users/login-basic',
+        data: {
+          email: Email,
+          password: Password,
         },
       });
-      console.log(data);
+      console.log(data.data.user);
+      window.localStorage.setItem('token', data.jwtToken);
+      setTimeout(() => {
+        history.push('/');
+      }, 1000);
     } catch (err) {
       console.log(err.response?.data);
+      alert(err.response?.data.message);
     }
   };
   return (

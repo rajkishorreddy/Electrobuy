@@ -3,6 +3,7 @@ import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as Style } from '../../assets/signup.svg';
 import './Signup.scss';
 import { Link } from 'react-router-dom';
+import history from '../../history';
 import axios from 'axios';
 const Signup = () => {
   const [FirstName, setFirstName] = useState('');
@@ -13,7 +14,7 @@ const Signup = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios({
+      const { data } = await axios({
         method: 'post',
         url: 'http://127.0.0.1:8080/api/v1/users/signup-basic',
         data: {
@@ -23,10 +24,14 @@ const Signup = () => {
           confirmPassword: CnPassword,
         },
       });
-      console.log(data.data);
-      window.localStorage.setItem('token', data.data.jwtToken);
+      console.log(data.data.user);
+      window.localStorage.setItem('token', data.jwtToken);
+      setTimeout(() => {
+        history.push('/');
+      }, 1000);
     } catch (err) {
       console.log(err.response.data);
+      alert(err.response?.data.message);
     }
   };
   return (
@@ -124,4 +129,5 @@ const Signup = () => {
     </div>
   );
 };
+
 export default Signup;
