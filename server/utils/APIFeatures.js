@@ -2,6 +2,7 @@ class APIFeatures {
   constructor(query, queryObj) {
     this.query = query;
     this.queryObj = queryObj;
+    query.splObj = queryObj;
   }
 
   countTotalDocuments() {
@@ -11,7 +12,7 @@ class APIFeatures {
 
   filter() {
     // This query method depends on the exact text present on the query key value
-    console.log("filter called");
+    // console.log("filter called");
     let queryObjTwin = { ...this.queryObj };
     const excludeKeysArr = [
       "page",
@@ -32,7 +33,7 @@ class APIFeatures {
       (match) => `$${match}`
     );
 
-    console.log(JSON.parse(filterStr));
+    // console.log(JSON.parse(filterStr));
     // We are chaining a new query, to the previous query that is present in this.query
     this.query = this.query.find(JSON.parse(filterStr));
     //console.log(this);
@@ -41,7 +42,7 @@ class APIFeatures {
 
   match() {
     if (this.queryObj.verified) {
-      console.log("match called");
+      // console.log("match called");
       this.query = this.query.find({
         technicalDetails: { $exists: true, $ne: [] },
       });
@@ -65,7 +66,7 @@ class APIFeatures {
   }
 
   sort() {
-    console.log("sort called");
+    // console.log("sort called");
     // If we have the query parameter to sort the results, we will appned to the query,
     // or else, we can simply sort them based on the verified products
     if (this.queryObj.sort) {
@@ -80,10 +81,10 @@ class APIFeatures {
   }
 
   select() {
-    console.log("select called");
+    // console.log("select called");
     if (this.queryObj.feildsCapacity === "low") {
       this.query = this.query.select(
-        "-__v -technicalDetails -additionalDetails -reviewArr -id"
+        "-__v -technicalDetails -additionalDetails -reviewArr -id -description"
       );
     } else if (this.queryObj.feildsCapacity === "high") {
       this.query = this.query.select("-__v");
@@ -92,6 +93,9 @@ class APIFeatures {
   }
 
   pagination() {
+    if (this.queryObj.feildsCapacity === "low") {
+      return this;
+    }
     this.pageValue = this.queryObj.page * 1 || 1;
     this.limitValue = this.queryObj.limit * 1 || 5;
     this.skipValue = (this.pageValue - 1) * this.limitValue;
@@ -100,10 +104,10 @@ class APIFeatures {
     return this;
   }
 
-  cache() {
-    this.useCache = true;
-    return this;
-  }
+  // cache() {
+  //   this.useCache = true;
+  //   return this;
+  // }
 }
 
 module.exports = APIFeatures;

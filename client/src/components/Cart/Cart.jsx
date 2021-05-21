@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
-import './cart.scss';
-import mobile3 from '../../assets/mobiles/mobile3.jpg';
-import axios from 'axios';
+import { useState, useRef } from "react";
+import Header from "../Header";
+import Footer from "../Footer";
+import "./cart.scss";
+import mobile3 from "../../assets/mobiles/mobile3.jpg";
+import axios from "axios";
 const Cart = () => {
   // const [mid, setMid] = useState('');
   // const [txntoken, setTxntoken] = useState('');
@@ -11,10 +11,10 @@ const Cart = () => {
   // const formTo = useRef();
 
   const shipping = async () => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.post(
-        'http://127.0.0.1:8080/api/v1/payments',
+        "http://127.0.0.1:8080/api/v1/payments",
         {
           transactionAmount: 500,
         },
@@ -23,24 +23,24 @@ const Cart = () => {
         }
       );
 
-      const form = document.createElement('form');
-      form.setAttribute('method', 'post');
+      const form = document.createElement("form");
+      form.setAttribute("method", "post");
       form.setAttribute(
-        'action',
+        "action",
         `https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?mid=${data.data.mid}&orderId=${data.data.orderId}`
       );
-      const input1 = document.createElement('input');
-      input1.setAttribute('type', 'hidden');
-      input1.setAttribute('name', 'mid');
-      input1.setAttribute('value', data.data.mid);
-      const input2 = document.createElement('input');
-      input2.setAttribute('type', 'hidden');
-      input2.setAttribute('name', 'orderId');
-      input2.setAttribute('value', data.data.orderId);
-      const input3 = document.createElement('input');
-      input3.setAttribute('type', 'hidden');
-      input3.setAttribute('name', 'txnToken');
-      input3.setAttribute('value', data.data.txnToken);
+      const input1 = document.createElement("input");
+      input1.setAttribute("type", "hidden");
+      input1.setAttribute("name", "mid");
+      input1.setAttribute("value", data.data.mid);
+      const input2 = document.createElement("input");
+      input2.setAttribute("type", "hidden");
+      input2.setAttribute("name", "orderId");
+      input2.setAttribute("value", data.data.orderId);
+      const input3 = document.createElement("input");
+      input3.setAttribute("type", "hidden");
+      input3.setAttribute("name", "txnToken");
+      input3.setAttribute("value", data.data.txnToken);
       form.appendChild(input1);
       form.appendChild(input2);
       form.appendChild(input3);
@@ -67,7 +67,7 @@ const Cart = () => {
                 Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Storage)
               </div>
               <div className="cart_cont-item-price">
-                Price :{' '}
+                Price :{" "}
                 <span className="cart_cont-item-price-get"> ₹23210</span> /
                 <span className="cart_cont-item-price-original"> ₹29000</span>
               </div>
@@ -89,7 +89,7 @@ const Cart = () => {
                 Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Storage)
               </div>
               <div className="cart_cont-item-price">
-                Price :{' '}
+                Price :{" "}
                 <span className="cart_cont-item-price-get"> ₹23210</span> /
                 <span className="cart_cont-item-price-original"> ₹29000</span>
               </div>
@@ -111,7 +111,7 @@ const Cart = () => {
                 Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Storage)
               </div>
               <div className="cart_cont-item-price">
-                Price :{' '}
+                Price :{" "}
                 <span className="cart_cont-item-price-get"> ₹23210</span> /
                 <span className="cart_cont-item-price-original"> ₹29000</span>
               </div>

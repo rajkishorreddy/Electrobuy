@@ -65,6 +65,7 @@ exports.getAllBrandNamesOfCategory = async (req, res, next) => {
 exports.getProductsFromCategory = (req, res, next) => {
   // 1) Set a searchobj as a part of req.body extracting it from the query params
   req.body.category = req.params.categoryName;
+
   // 2) Pass onto the next middleware
   next();
 };
@@ -87,10 +88,8 @@ exports.getProducts = async (req, res, next) => {
       .sort()
       .select()
       .pagination().query;
-    const productsCount = await new APIFeatures(
-      Product.find(searchObj),
-      req.query
-    )
+
+    const productsCount = await new APIFeatures(Product.find(searchObj), {})
       .filter()
       .match()
       .query.countDocuments();
