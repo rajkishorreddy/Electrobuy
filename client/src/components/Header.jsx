@@ -8,6 +8,7 @@ import { ReactComponent as SearchIcon } from '../assets/searchIcon.svg';
 import { ReactComponent as WishList } from '../assets/wishlist.svg';
 import { ReactComponent as Cart } from '../assets/cart.svg';
 import { ReactComponent as Down } from '../assets/downarrow.svg';
+import axios from 'axios';
 const Header = () => {
   const [term, setTerm] = useState('');
   const [user, setUser] = useState(window.localStorage.getItem('token'));
@@ -17,8 +18,8 @@ const Header = () => {
     setUser(window.localStorage.getItem('token'));
     history.push('/');
   };
-  const buttonhover = () => {
-    more.classList.add('active');
+  const googletry = async () => {
+    await axios.get('http://127.0.0.1:8080/api/v1/users/google');
   };
   return (
     <div>
@@ -78,6 +79,7 @@ const Header = () => {
         <Link to={'/results/headphones'} className="nav_item">
           HEADPHONES
         </Link>
+        <button onClick={googletry}>google</button>
         {/* <div className="nav_more"> */}
         <div className="nav_more-btn">
           <span className="nav_more-btn-span">
