@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../history';
 // import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
@@ -7,14 +7,18 @@ import { ReactComponent as Logo } from '../assets/Logo.svg';
 import { ReactComponent as SearchIcon } from '../assets/searchIcon.svg';
 import { ReactComponent as WishList } from '../assets/wishlist.svg';
 import { ReactComponent as Cart } from '../assets/cart.svg';
-
+import { ReactComponent as Down } from '../assets/downarrow.svg';
 const Header = () => {
   const [term, setTerm] = useState('');
   const [user, setUser] = useState(window.localStorage.getItem('token'));
+  const more = useRef();
   const logout = () => {
     window.localStorage.removeItem('token');
     setUser(window.localStorage.getItem('token'));
     history.push('/');
+  };
+  const buttonhover = () => {
+    more.classList.add('active');
   };
   return (
     <div>
@@ -65,18 +69,42 @@ const Header = () => {
         <Link to={'/results/laptops'} className="nav_item">
           LAPTOPS
         </Link>
-        <Link to={'/results/mobiles'} className="nav_item">
-          MOBILES
+        <Link to={'/results/televisions'} className="nav_item">
+          TVS
         </Link>
-        <Link to={'/results/cameras'} className="nav_item">
+        <Link to={'/results/DSLR'} className="nav_item">
           CAMERAS
         </Link>
         <Link to={'/results/headphones'} className="nav_item">
-          HEADPHONES & SOUND SYSTEMS
+          HEADPHONES
         </Link>
-        <Link to={'/results/tvs'} className="nav_item">
-          TVS
-        </Link>
+        {/* <div className="nav_more"> */}
+        <div className="nav_more-btn">
+          <span className="nav_more-btn-span">
+            MORE <Down className="nav_more-btn-down" />
+          </span>
+          <ui className="nav_more-list">
+            <Link to={'/results/speakers'} className="nav_more_item">
+              SPEAKERS
+            </Link>
+            <Link to={'/results/mobiles'} className="nav_more_item">
+              MOBILES
+            </Link>
+            <Link to={'/results/smartWatches'} className="nav_more_item">
+              SMART WATCHES
+            </Link>
+            <Link to={'/results/AC'} className="nav_more_item">
+              AC
+            </Link>
+            <Link to={'/results/cameras'} className="nav_more_item">
+              CAMERA ACCESSORIES
+            </Link>
+            <Link to={'/results/refrigerators'} className="nav_more_item">
+              REFRIGERATORS
+            </Link>
+          </ui>
+        </div>
+        {/* </div> */}
       </nav>
     </div>
   );

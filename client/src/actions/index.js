@@ -5,7 +5,10 @@ export const fetchCategoryProducts = (categoryName, page) => {
   return async (dispatch) => {
     const { data } = await axios.get(`${baseUrl}/category/${categoryName}`, {
       params: {
+
+
         feildsCapacity: "low",
+
       },
     });
     dispatch({ type: "PRODUCT", payload: data.data.products });
