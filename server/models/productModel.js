@@ -70,7 +70,7 @@ const productSchema = mongoose.Schema(
           type: Number,
           min: 1,
           max: 5,
-          default: 4,
+          default: 3.5,
         },
         description: {
           type: String,
