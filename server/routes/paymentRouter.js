@@ -13,6 +13,7 @@ router.post(
   authController.passportWrapperMiddleware,
   paymentController.initiateTransaction
 );
+
 router.post("/redirect", (req, res, next) => {
   console.log("yo bitch");
   const form = new formidable.IncomingForm();

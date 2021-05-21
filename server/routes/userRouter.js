@@ -1,12 +1,11 @@
 const express = require("express");
 const passport = require("passport");
 
-const User = require("./../models/UserModel");
-
 const connectRouter = require("./../routes/connectRoutes");
 
 const authController = require("../controllers/authControllers");
-const userController = require("../controllers/userControllers");
+const wishlistController = require("../controllers/wishlistControllers");
+const cartController = require("../controllers/cartControllers");
 
 const router = express.Router();
 
@@ -74,17 +73,30 @@ router.use(
 router.get(
   "/getAllWishlistProduct",
   authController.passportWrapperMiddleware,
-  userController.getAllWishlistItems
+  wishlistController.getAllWishlistItems
 );
 router
   .route("/addWishlistProduct/:productId")
   .post(
     authController.passportWrapperMiddleware,
-    userController.addWishlistItem
+    wishlistController.addWishlistItem
   )
   .delete(
     authController.passportWrapperMiddleware,
-    userController.deleteWishlistItem
+    wishlistController.deleteWishlistItem
+  );
+
+router.get(
+  "/getAllCartProduct",
+  authController.passportWrapperMiddleware,
+  cartController.getAllCartItems
+);
+router
+  .route("/addCartProduct/:productId")
+  .post(authController.passportWrapperMiddleware, cartController.addCartItem)
+  .delete(
+    authController.passportWrapperMiddleware,
+    cartController.deleteCartItem
   );
 
 module.exports = router;

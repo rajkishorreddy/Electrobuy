@@ -33,11 +33,6 @@ const addProductsToCache = async () => {
       },
     },
   ]);
-  console.log(
-    "cate are",
-    allCategories.map((el) => el._id)
-  );
-  // allCategories = allCategories.slice(0, 1);
 
   // flush out the cache
   await redisClient.flushall();
@@ -50,7 +45,7 @@ const addProductsToCache = async () => {
 
   // should not use foreach
   for (let i = 0; i < allCategories.length; i++) {
-    console.log("Adding the data for the category", allCategories[i]._id);
+    // console.log("Adding the data for the category", allCategories[i]._id);
     const features = new APIFeatures(
       Product.find({ category: allCategories[i]._id }),
       {
@@ -65,9 +60,9 @@ const addProductsToCache = async () => {
       .pagination();
 
     const data = await features.query;
-    console.log("data is fetched from mongo", allCategories[i]._id);
+    // console.log("data is fetched from mongo", allCategories[i]._id);
 
-    console.log("data for", allCategories[i]._id, data.length);
+    // console.log("data for", allCategories[i]._id, data.length);
     redisClient.set(
       JSON.stringify({
         ...features.query.getQuery(),
