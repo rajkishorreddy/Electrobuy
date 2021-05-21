@@ -86,7 +86,7 @@ const productSchema = mongoose.Schema(
       type: String,
       enum: [
         "laptops",
-        "cameras",
+        "AC",
         "headphones",
         "speakers",
         "televisions",
@@ -95,7 +95,6 @@ const productSchema = mongoose.Schema(
         "refrigerators",
         "mobiles",
         "smartWatches",
-        "televisions",
       ],
       required: [true, "Every product must belong to a category"],
     },

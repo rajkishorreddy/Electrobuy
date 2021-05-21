@@ -11,7 +11,7 @@ const APIFeatures = require("./../utils/APIFeatures");
 const redisClient = redis.createClient({
   host: process.env.REDIS_DATABASE_URL.split(":")[0],
   port: process.env.REDIS_DATABASE_URL.split(":")[1],
-  // password: process.env.REDIS_DATABASE_PASSWORD,
+  password: process.env.REDIS_DATABASE_PASSWORD,
 });
 let get = util.promisify(redisClient.get).bind(redisClient);
 redisClient.on("connect", () => {

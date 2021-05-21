@@ -41,7 +41,7 @@ const SearchResults = (props) => {
     else if (props.data[0].category !== props.match.params.id)
       return <img className="loading" src={loader} alt="loading.." />;
     else {
-      return props.data.map((el) => {
+      return props.data.reverse().map((el) => {
         return (
           <div className="procard" key={el.id}>
             <Link className="Link" to={`/productInfo/${el.id}`}>
