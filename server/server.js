@@ -16,19 +16,19 @@ console.log("Mode =>", process.env.NODE_ENV);
 
 const app = require("./app");
 
-const DBString = process.env.DATABASE_URL.replace(
+const mongoDbUrl = process.env.MONGO_DATABASE_URL.replace(
   "<password>",
-  process.env.DATABASE_PASSWORD
+  process.env.MONGO_DATABASE_PASSWORD
 );
 mongoose
-  .connect(DBString, {
+  .connect(mongoDbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
   .then((con) => {
-    console.log("the DB is connected successfully");
+    console.log("the Mongo DB is connected successfully");
   })
   .catch((err) => {
     console.log(err);

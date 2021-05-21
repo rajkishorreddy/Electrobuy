@@ -70,6 +70,12 @@ const userSchema = mongoose.Schema(
         ref: "Product",
       },
     ],
+    cartArr: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
   {
     toJSON: {
@@ -169,6 +175,14 @@ userSchema.pre(/^find/, function (next) {
 userSchema.pre(/^find/, function (next) {
   this.populate({
     path: "wishlistArr",
+    select: "-__v -technicalDetails -additionalDetails -reviewArr -id",
+  });
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "cartArr",
     select: "-__v -technicalDetails -additionalDetails -reviewArr -id",
   });
   next();
