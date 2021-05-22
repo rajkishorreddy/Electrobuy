@@ -1,17 +1,16 @@
 @import '../../sass/theme.scss';
 
 .hr {
-  border: 0.5px solid #909090;
+  border: 0.5px solid #c2c2c2;
 }
 
 .info {
-  background: linear-gradient(180.18deg, #000000 -1.18%, #2E2E2E -1.18%, rgba(109, 43, 148, 0.81) 93%);
+  background: linear-gradient(180deg, #000000 -3.48%, #2E2E2E -3.47%, rgba(109, 43, 148, 0.81) 20.54%, rgba(109, 43, 148, 0.81) 78.21%, #000000 99.03%);
 }
 
 .product-display {
   display: flex;
   justify-content: space-around;
-  border-bottom: .5rem solid #000;
 
   @media screen and (max-width: 700px) {
     flex-direction: column;  
@@ -79,59 +78,6 @@
         padding: 1rem;
       }
 
-      &-prices {
-        color: #FFF;
-        padding-top: 1.25rem;
-
-        .mrp {
-          font-family: 'Montserrat';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 1.6rem;
-          line-height: 1.95rem;
-
-          del {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 1.8rem;
-            line-height: 2.2rem;
-          }
-        }
-        
-        .selling {
-          font-family: 'Montserrat';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 1.6rem;
-          line-height: 1.95rem;
-
-          span {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 2.2rem;
-            line-height: 2.682rem;
-          }
-        }
-        
-        .saved {
-          font-family: 'Montserrat';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 1.6rem;
-          line-height: 1.95rem;
-
-          span {
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 1.8rem;
-            line-height: 2.2rem;
-          }
-        }
-      }
-
       &-description {
         padding-top: 0.5rem;
         
@@ -157,6 +103,91 @@
           }
         }
       }
+
+      &-priceAndBtn {
+        display: flex;
+        justify-content: space-between;
+        // align-items: baseline;
+
+        &--prices {
+          color: #FFF;
+          padding-top: 1.25rem;
+    
+          .mrp {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 1.95rem;
+    
+            del {
+              font-family: 'Montserrat';
+              font-style: normal;
+              font-weight: 600;
+              font-size: 1.8rem;
+              line-height: 2.2rem;
+            }
+          }
+          
+          .selling {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 1.95rem;
+    
+            span {
+              font-family: 'Montserrat';
+              font-style: normal;
+              font-weight: 700;
+              font-size: 2.2rem;
+              line-height: 2.682rem;
+            }
+          }
+          
+          .saved {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 1.95rem;
+    
+            span {
+              font-family: 'Montserrat';
+              font-style: normal;
+              font-weight: 600;
+              font-size: 1.8rem;
+              line-height: 2.2rem;
+            }
+          }
+        }
+    
+        &--btns {
+          display: flex;
+          // justify-content: flex-end;
+          align-items: flex-end;
+          // padding-top: 2rem;
+    
+          &-wishlist {
+            background: transparent;
+            border: none;
+            color: none;
+            cursor: pointer;
+            margin-right: 2rem;
+          }
+          
+          &-cart {
+            @include font-face('Montserrat', 1.6rem, 400);
+            width: 12rem;
+            height: 4rem;
+            background: #5A1782;
+            border-radius: 1rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 }
@@ -172,10 +203,15 @@
   .tech-details {
     border-radius: 1rem;
     margin-bottom: 2rem;
-    background-color: rgba(0, 0, 0, 0.25);
+    // background-color: rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    box-shadow: 0px 8px 32px rgba(31, 38, 135, 0.0037);
+    backdrop-filter: blur(4px);
 
     & h1 {
-      @include font-face('Montserrat', 2.4rem, 800);
+      @include font-face('Montserrat', 2rem, 800);
       color: #FFFFFF;
       padding: 2rem 0 0 2rem;
     }
@@ -198,13 +234,13 @@
         }
 
         &-key {
-          @include font-face('Montserrat', 1.8rem, 400);
-          color: #d8d8d8;
+          @include font-face('Montserrat', 1.2rem, 400);
+          color: #ffffff;
           flex: 0.2;
         }
         
         &-value {
-          @include font-face('Montserrat', 2rem, 600);
+          @include font-face('Montserrat', 1.5rem, 400);
           color: #ffffff;
           flex: 0.8;
         }
@@ -214,8 +250,13 @@
   
   .additional-details {
     border-radius: 1rem;
-    background-color: rgba(0, 0, 0, 0.25);
+    // background-color: rgba(0, 0, 0, 0.25);
     margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    box-shadow: 0px 8px 32px rgba(31, 38, 135, 0.0037);
+    backdrop-filter: blur(4px);
 
     & h1 {
       @include font-face('Montserrat', 2.4rem, 800);
@@ -258,8 +299,13 @@
 
 .reviews {
   border-radius: 1rem;
-  background-color: rgba(0, 0, 0, 0.25);
+  // background-color: rgba(0, 0, 0, 0.25);
   padding-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-sizing: border-box;
+  box-shadow: 0px 8px 32px rgba(31, 38, 135, 0.0037);
+  backdrop-filter: blur(4px);
 
   & h1 {
     @include font-face('Montserrat', 2.4rem, 800);
@@ -303,8 +349,9 @@
     }
     
     &__comment {
-      @include font-face('Montserrat', 1.6rem, 600);
+      @include font-face('Montserrat', 1.2rem, 600);
       color: #FFFFFF;      
+      font-weight: 300;
     }
 
     &__customer {
@@ -313,7 +360,8 @@
       justify-content: flex-end;
 
       & p {
-        @include font-face('Montserrat', 1.6rem, 400);
+        @include font-face('Montserrat', 1.3rem, 400);
+        text-transform: uppercase;
         color: #FFF;
       }
     }
