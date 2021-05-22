@@ -54,13 +54,21 @@ exports.addCartItem = async (req, res, next) => {
     }
     console.log(req.user._id, req.params.productId);
 
-    const { cartArr } = await User.findById(req.user._id);
+    let { cartArr } = await User.findById(req.user._id);
 
     if (!cartArr) {
       return next(new AppError(400, "Please login/ signup again"));
     }
 
+    const productIndex = cartArr.findIndex(
+      (el) => el.id === req.params.productId
+    );
+    if (productIndex !== -1) {
+      return next(new AppError(400, "Cannot add the same product twice"));
+    }
+
     cartArr.push(req.params.productId);
+    cartArr = cartArr.map((el) => el._id);
     // console.log(cartArr);
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -105,7 +113,7 @@ exports.deleteCartItem = async (req, res, next) => {
     }
     console.log(req.user._id, req.params.productId);
 
-    const { cartArr } = await User.findById(req.user._id);
+    let { cartArr } = await User.findById(req.user._id);
     if (!cartArr) {
       return next(new AppError(400, "Please login/ signup again"));
     }
@@ -115,10 +123,24 @@ exports.deleteCartItem = async (req, res, next) => {
     }
 
     // Delete that item from the arr
-    const productIndex = cartArr.findIndex((el) => el === req.params.productId);
-    console.log(cartArr.length);
+
+    const productIndex = cartArr.findIndex(
+      (el) => el.id === req.params.productId
+    );
+    // console.log("prod index is", productIndex);
+
+    if (productIndex === -1) {
+      return next(
+        new AppError(
+          400,
+          "There is no product in the cart initially, to delete it"
+        )
+      );
+    }
+
     cartArr.splice(productIndex, 1);
-    console.log(cartArr.length);
+    // console.log(cartArr.length);
+    cartArr = cartArr.map((el) => el._id);
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
