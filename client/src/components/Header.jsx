@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../history';
 // import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
@@ -12,7 +12,6 @@ import axios from 'axios';
 const Header = () => {
   const [term, setTerm] = useState('');
   const [user, setUser] = useState(window.localStorage.getItem('token'));
-  const more = useRef();
   const logout = () => {
     window.localStorage.removeItem('token');
     setUser(window.localStorage.getItem('token'));
@@ -85,7 +84,7 @@ const Header = () => {
           <span className="nav_more-btn-span">
             MORE <Down className="nav_more-btn-down" />
           </span>
-          <ui className="nav_more-list">
+          <div className="nav_more-list">
             <Link to={'/results/speakers'} className="nav_more_item">
               SPEAKERS
             </Link>
@@ -104,7 +103,7 @@ const Header = () => {
             <Link to={'/results/refrigerators'} className="nav_more_item">
               REFRIGERATORS
             </Link>
-          </ui>
+          </div>
         </div>
         {/* </div> */}
       </nav>
