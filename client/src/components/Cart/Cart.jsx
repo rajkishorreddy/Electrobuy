@@ -1,46 +1,71 @@
-import { useState, useRef } from "react";
-import Header from "../Header";
-import Footer from "../Footer";
-import "./cart.scss";
-import mobile3 from "../../assets/mobiles/mobile3.jpg";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import Header from '../Header';
+import Footer from '../Footer';
+import './cart.scss';
+import axios from 'axios';
+import history from '../../history';
+import loader from '../../assets/loading.gif';
+import { ReactComponent as Nologin } from '../../assets/nologin.svg';
 const Cart = () => {
-  // const [mid, setMid] = useState('');
-  // const [txntoken, setTxntoken] = useState('');
-  // const [orderId, setOrderId] = useState('');
-  // const formTo = useRef();
-
+  const [arr, setArr] = useState(null);
+  const [final, setFinal] = useState(0);
+  const [dis, setDis] = useState(0);
+  const [original, setOriginal] = useState(0);
+  useEffect(() => {
+    const getdata = async () => {
+      const token = window.localStorage.getItem('token');
+      try {
+        const { data } = await axios.get(
+          `http://127.0.0.1:8080/api/v1/users/getAllCartProduct`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(data);
+        setArr(data.data);
+        setFinal(data.totalFinalPrice);
+        setDis(data.totalSavingPrice);
+        setOriginal(data.totalOriginalPrice);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getdata();
+  }, []);
+  const loginclick = () => {
+    history.push('/login');
+  };
   const shipping = async () => {
-    const token = window.localStorage.getItem("token");
+    const token = window.localStorage.getItem('token');
     try {
       const { data } = await axios.post(
-        "http://127.0.0.1:8080/api/v1/payments",
+        'http://127.0.0.1:8080/api/v1/payments',
         {
-          transactionAmount: 500,
+          transactionAmount: final,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      const form = document.createElement("form");
-      form.setAttribute("method", "post");
+      const form = document.createElement('form');
+      form.setAttribute('method', 'post');
       form.setAttribute(
-        "action",
+        'action',
         `https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?mid=${data.data.mid}&orderId=${data.data.orderId}`
       );
-      const input1 = document.createElement("input");
-      input1.setAttribute("type", "hidden");
-      input1.setAttribute("name", "mid");
-      input1.setAttribute("value", data.data.mid);
-      const input2 = document.createElement("input");
-      input2.setAttribute("type", "hidden");
-      input2.setAttribute("name", "orderId");
-      input2.setAttribute("value", data.data.orderId);
-      const input3 = document.createElement("input");
-      input3.setAttribute("type", "hidden");
-      input3.setAttribute("name", "txnToken");
-      input3.setAttribute("value", data.data.txnToken);
+      const input1 = document.createElement('input');
+      input1.setAttribute('type', 'hidden');
+      input1.setAttribute('name', 'mid');
+      input1.setAttribute('value', data.data.mid);
+      const input2 = document.createElement('input');
+      input2.setAttribute('type', 'hidden');
+      input2.setAttribute('name', 'orderId');
+      input2.setAttribute('value', data.data.orderId);
+      const input3 = document.createElement('input');
+      input3.setAttribute('type', 'hidden');
+      input3.setAttribute('name', 'txnToken');
+      input3.setAttribute('value', data.data.txnToken);
       form.appendChild(input1);
       form.appendChild(input2);
       form.appendChild(input3);
@@ -51,120 +76,132 @@ const Cart = () => {
       console.log(err.response.data);
     }
   };
-
+  const removeitem = async (curr) => {
+    const token = window.localStorage.getItem('token');
+    try {
+      console.log(curr.target?.dataset?.id);
+      const { data } = await axios.delete(
+        `http://127.0.0.1:8080/api/v1/users/addCartProduct/${curr.target?.dataset?.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(data.data);
+      setArr(data.data);
+      setFinal(data.totalFinalPrice);
+      setDis(data.totalSavingPrice);
+      setOriginal(data.totalOriginalPrice);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const renderCart = () => {
+    if (!arr) return <img className="loading" src={loader} alt="loading.." />;
+    else if (arr.length === 0) {
+      return (
+        <div className="NO_ITEMS">No items in your cart.Start shopping!!</div>
+      );
+    } else {
+      return arr.map((el) => {
+        return (
+          <div key={el.id} className="cart_cont-item">
+            <img
+              src={el.imageArr[0]}
+              className="cart_cont-item-img"
+              alt="product"
+            />
+            <div className="cart_cont-item-info">
+              <div className="cart_cont-item-title">{el.fullName}</div>
+              <div className="cart_cont-item-price">
+                Price :{' '}
+                <span className="cart_cont-item-price-get">
+                  ₹{el.finalPrice}
+                </span>{' '}
+                /
+                <span className="cart_cont-item-price-original">
+                  ₹{el.originalPrice}
+                </span>
+              </div>
+              <div className="cart_cont-item-btns">
+                <button
+                  data-id={el.id}
+                  onClick={(curr) => removeitem(curr)}
+                  className="cart_cont-item-remove"
+                >
+                  Remove
+                </button>
+                <button className="cart_cont-item-move">
+                  Move to wishlist
+                </button>
+              </div>
+              <div className="cart_cont-item-rating">
+                <span className="cart_cont-item-rating-none">Rating:</span> ★{' '}
+                {el.averageRating}
+              </div>
+            </div>
+          </div>
+        );
+      });
+    }
+  };
   return (
     <div>
       <Header />
       <div className="cart">
-        <div className="cart-heading">
-          My cart <span className="cart-heading-count">3 items</span>
-        </div>
-        <div className="cart_cont">
-          <div className="cart_cont-item">
-            <img src={mobile3} className="cart_cont-item-img" alt="product" />
-            <div className="cart_cont-item-info">
-              <div className="cart_cont-item-title">
-                Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Storage)
-              </div>
-              <div className="cart_cont-item-price">
-                Price :{" "}
-                <span className="cart_cont-item-price-get"> ₹23210</span> /
-                <span className="cart_cont-item-price-original"> ₹29000</span>
-              </div>
-              <div className="cart_cont-item-btns">
-                <button className="cart_cont-item-remove">Remove</button>
-                <button className="cart_cont-item-move">
-                  Move to wishlist
+        {window.localStorage.getItem('token') ? (
+          <div>
+            <div className="cart-heading">
+              My cart{' '}
+              <span className="cart-heading-count">{arr?.length} items</span>
+            </div>
+            <div className="cart_cont">{renderCart()}</div>
+            {arr?.length !== 0 ? (
+              <div className="order">
+                <div className="order-title">Order Details</div>
+                <div className="order-price">
+                  <div className="order-price-title">Total Price</div>
+                  <div className="order-price-value">
+                    &#8377; {original?.toLocaleString()}
+                  </div>
+                </div>
+                <div className="order-discount">
+                  <div className="order-discount-title">Discount</div>
+                  <div className="order-discount-value">
+                    &#8377; {dis?.toLocaleString()}
+                  </div>
+                </div>
+                <div className="order-delivery">
+                  <div className="order-delivery-title">Delivery</div>
+                  <div className="order-delivery-value">&#8377; 50</div>
+                </div>
+                <div className="order-total">
+                  <div className="order-total-title">Total Amount</div>
+                  <div className="order-total-value">
+                    &#8377; {(final + 50)?.toLocaleString()}
+                  </div>
+                </div>
+                <button onClick={() => shipping()} className="order-btn">
+                  Proceed to sipping &rarr;
                 </button>
               </div>
-              <div className="cart_cont-item-rating">
-                <span className="cart_cont-item-rating-none">Rating:</span> ★4.2
+            ) : (
+              <div></div>
+            )}
+          </div>
+        ) : (
+          <div className="nologin">
+            <Nologin className="nologin-img" />
+            <div className="nologin-info">
+              <button onClick={loginclick} className="nologin-info-btn">
+                login
+              </button>
+              <div className="nologin-info-txt">
+                To get access to wishlist, cart and more!
               </div>
             </div>
           </div>
-          <div className="cart_cont-item">
-            <img src={mobile3} className="cart_cont-item-img" alt="product" />
-            <div className="cart_cont-item-info">
-              <div className="cart_cont-item-title">
-                Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Storage)
-              </div>
-              <div className="cart_cont-item-price">
-                Price :{" "}
-                <span className="cart_cont-item-price-get"> ₹23210</span> /
-                <span className="cart_cont-item-price-original"> ₹29000</span>
-              </div>
-              <div className="cart_cont-item-btns">
-                <button className="cart_cont-item-remove">Remove</button>
-                <button className="cart_cont-item-move">
-                  Move to wishlist
-                </button>
-              </div>
-              <div className="cart_cont-item-rating">
-                <span className="cart_cont-item-rating-none">Rating:</span> ★4.2
-              </div>
-            </div>
-          </div>
-          <div className="cart_cont-item">
-            <img src={mobile3} className="cart_cont-item-img" alt="product" />
-            <div className="cart_cont-item-info">
-              <div className="cart_cont-item-title">
-                Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Storage)
-              </div>
-              <div className="cart_cont-item-price">
-                Price :{" "}
-                <span className="cart_cont-item-price-get"> ₹23210</span> /
-                <span className="cart_cont-item-price-original"> ₹29000</span>
-              </div>
-              <div className="cart_cont-item-btns">
-                <button className="cart_cont-item-remove">Remove</button>
-                <button className="cart_cont-item-move">
-                  Move to wishlist
-                </button>
-              </div>
-              <div className="cart_cont-item-rating">
-                <span className="cart_cont-item-rating-none">Rating:</span> ★4.2
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="order">
-          <div className="order-title">Order Details</div>
-          <div className="order-price">
-            <div className="order-price-title">Total Price</div>
-            <div className="order-price-value"> ₹23210</div>
-          </div>
-          <div className="order-discount">
-            <div className="order-discount-title">Discount</div>
-            <div className="order-discount-value"> ₹1000</div>
-          </div>
-          <div className="order-delivery">
-            <div className="order-delivery-title">Delivery</div>
-            <div className="order-delivery-value"> ₹50</div>
-          </div>
-          <div className="order-total">
-            <div className="order-total-title">Total Amount</div>
-            <div className="order-total-value"> ₹25210</div>
-          </div>
-          <button onClick={() => shipping()} className="order-btn">
-            Proceed to sipping &rarr;
-          </button>
-        </div>
+        )}
       </div>
-
-      {/* <form
-        ref={formTo}
-        method="post"
-        action={`https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?mid=${mid}&orderId=${orderId}`}
-        // action="https://www.youtube.com"
-        name="paytm"
-      >
-        <input type="hidden" name="mid" value={mid} />
-        <input type="hidden" name="orderId" value={orderId} />
-        <input type="hidden" name="txnToken" value={txntoken} />
-        <button type="submit" onClick={(e) => handlesubmit(e)}>
-          paytm karo
-        </button>
-      </form> */}
       <Footer />
     </div>
   );

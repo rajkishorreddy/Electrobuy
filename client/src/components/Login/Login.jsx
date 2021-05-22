@@ -18,7 +18,7 @@ const Signup = () => {
           password: Password,
         },
       });
-      console.log(data.data.user);
+      console.log(data.data);
       window.localStorage.setItem('token', data.jwtToken);
       setTimeout(() => {
         history.push('/');

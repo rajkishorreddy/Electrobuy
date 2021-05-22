@@ -12,7 +12,7 @@ import loader from '../../assets/loading.gif';
 const SearchResults = (props) => {
   useEffect(() => {
     props.fetchCategoryProducts(props.match.params.id, 1);
-    console.log(props.data[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addWishlist = async (el) => {
     const token = window.localStorage.getItem('token');
@@ -29,6 +29,28 @@ const SearchResults = (props) => {
         );
         if (data.data.status === 'success') {
           alert('item added successfully to wishlist');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+  const addCart = async (el) => {
+    const token = window.localStorage.getItem('token');
+    if (!token) {
+      history.push('/login');
+    } else {
+      try {
+        const data = await axios.post(
+          `http://127.0.0.1:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(data);
+        if (data.data.status === 'success') {
+          alert('item added successfully to Cart');
         }
       } catch (err) {
         console.log(err);
@@ -65,7 +87,13 @@ const SearchResults = (props) => {
                     className="procard-btns-wishlist-icon"
                   />
                 </button>
-                <button className="procard-btns-cart">Add to cart</button>
+                <button
+                  onClick={(el) => addCart(el)}
+                  data-id={el.id}
+                  className="procard-btns-cart"
+                >
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>

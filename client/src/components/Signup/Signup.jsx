@@ -1,23 +1,22 @@
-import { useState } from "react";
-import { ReactComponent as Logo } from "../../assets/Logo.svg";
-import { ReactComponent as Style } from "../../assets/signup.svg";
-import "./Signup.scss";
-import { Link } from "react-router-dom";
-import history from "../../history";
-import axios from "axios";
+import { useState } from 'react';
+import { ReactComponent as Logo } from '../../assets/Logo.svg';
+import { ReactComponent as Style } from '../../assets/signup.svg';
+import './Signup.scss';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 const Signup = () => {
-  const [FirstName, setFirstName] = useState("");
-  const [LastName, setLastName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-  const [CnPassword, setCnPassword] = useState("");
+  const [FirstName, setFirstName] = useState('');
+  const [LastName, setLastName] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [CnPassword, setCnPassword] = useState('');
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("assasas");
+      console.log('assasas');
       const data = await axios({
-        method: "get",
-        url: "http://127.0.0.1:8080/api/v1/users/google",
+        method: 'get',
+        url: 'http://127.0.0.1:8080/api/v1/users/google',
         // data: {
         //   name: `${FirstName} ${LastName}`,
         //   email: Email,
@@ -38,7 +37,7 @@ const Signup = () => {
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={"/"} className="signup_left-goback">
+        <Link to={'/'} className="signup_left-goback">
           ←
         </Link>
         <Logo className="signup-logo" />
@@ -113,8 +112,8 @@ const Signup = () => {
             <button className="signup-form-btn">Sign Up</button>
           </form>
           <div className="signup-already">
-            If already a user, then{" "}
-            <Link className="signup-already-link" to={"/login"}>
+            If already a user, then{' '}
+            <Link className="signup-already-link" to={'/login'}>
               Login here! →
             </Link>
           </div>

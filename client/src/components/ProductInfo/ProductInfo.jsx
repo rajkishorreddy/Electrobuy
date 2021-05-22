@@ -10,6 +10,7 @@ import './ProductInfo.scss';
 const ProductInfo = (props) => {
   useEffect(() => {
     props.fetchProductInfo(props.match.params.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const renderInfo = () => {
     if (!props.data.description) {
