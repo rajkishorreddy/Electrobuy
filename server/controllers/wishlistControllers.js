@@ -46,14 +46,22 @@ exports.addWishlistItem = async (req, res, next) => {
     }
     console.log(req.user._id, req.params.productId);
 
-    const { wishlistArr } = await User.findById(req.user._id);
+    let { wishlistArr } = await User.findById(req.user._id);
 
     if (!wishlistArr) {
       return next(new AppError(400, "Please login/ signup again"));
     }
 
+    const productIndex = wishlistArr.findIndex(
+      (el) => el.id === req.params.productId
+    );
+    if (productIndex !== -1) {
+      return next(new AppError(400, "Cannot add the same product twice"));
+    }
+
     wishlistArr.push(req.params.productId);
-    // console.log(wishlistArr);
+    wishlistArr = wishlistArr.map((el) => el._id);
+    // console.log("asasasas", wishlistArr);
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
@@ -97,7 +105,8 @@ exports.deleteWishlistItem = async (req, res, next) => {
     }
     console.log(req.user._id, req.params.productId);
 
-    const { wishlistArr } = await User.findById(req.user._id);
+    let { wishlistArr } = await User.findById(req.user._id);
+
     if (!wishlistArr) {
       return next(new AppError(400, "Please login/ signup again"));
     }
@@ -107,12 +116,24 @@ exports.deleteWishlistItem = async (req, res, next) => {
     }
 
     // Delete that item from the arr
+
     const productIndex = wishlistArr.findIndex(
-      (el) => el === req.params.productId
+      (el) => el.id === req.params.productId
     );
-    console.log(wishlistArr.length);
+    // console.log("prod index is", productIndex);
+
+    if (productIndex === -1) {
+      return next(
+        new AppError(
+          400,
+          "There is no product in the wishlist initially, to delete it"
+        )
+      );
+    }
+
     wishlistArr.splice(productIndex, 1);
-    console.log(wishlistArr.length);
+    // console.log(wishlistArr.length);
+    wishlistArr = wishlistArr.map((el) => el._id);
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
