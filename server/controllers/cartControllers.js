@@ -90,6 +90,15 @@ exports.addCartItem = async (req, res, next) => {
     res.status(200).json({
       status: "success",
       count: updatedUser.cartArr.length,
+      totalFinalPrice: updatedUser.cartArr.reduce((acc, currentVal) => {
+        return acc + currentVal.finalPrice;
+      }, 0),
+      totalSavingPrice: updatedUser.cartArr.reduce((acc, currentVal) => {
+        return acc + currentVal.savingPrice;
+      }, 0),
+      totalOriginalPrice: updatedUser.cartArr.reduce((acc, currentVal) => {
+        return acc + currentVal.originalPrice;
+      }, 0),
       data: updatedUser.cartArr,
     });
   } catch (error) {
@@ -161,6 +170,15 @@ exports.deleteCartItem = async (req, res, next) => {
     res.status(200).json({
       status: "success",
       count: updatedUser.cartArr.length,
+      totalFinalPrice: updatedUser.cartArr.reduce((acc, currentVal) => {
+        return acc + currentVal.finalPrice;
+      }, 0),
+      totalSavingPrice: updatedUser.cartArr.reduce((acc, currentVal) => {
+        return acc + currentVal.savingPrice;
+      }, 0),
+      totalOriginalPrice: updatedUser.cartArr.reduce((acc, currentVal) => {
+        return acc + currentVal.originalPrice;
+      }, 0),
       data: updatedUser.cartArr,
     });
   } catch (error) {

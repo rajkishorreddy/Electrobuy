@@ -1,6 +1,8 @@
 const express = require("express");
 
 const productController = require("./../controllers/productControllers");
+const searchController = require("./../controllers/searchControllers");
+// const test = require("./../test");
 
 const router = express.Router();
 
@@ -17,5 +19,7 @@ router.get(
   productController.getAllBrandNamesOfCategory
 );
 router.get("/:productId", productController.getSingleProduct);
+
+router.post("/searchText", searchController.searchText);
 
 module.exports = router;
