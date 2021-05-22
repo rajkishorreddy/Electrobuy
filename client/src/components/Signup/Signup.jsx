@@ -4,6 +4,7 @@ import { ReactComponent as Style } from '../../assets/signup.svg';
 import './Signup.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import history from '../../history';
 const Signup = () => {
   const [FirstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
@@ -15,20 +16,20 @@ const Signup = () => {
     try {
       console.log('assasas');
       const data = await axios({
-        method: 'get',
-        url: 'http://127.0.0.1:8080/api/v1/users/google',
-        // data: {
-        //   name: `${FirstName} ${LastName}`,
-        //   email: Email,
-        //   password: Password,
-        //   confirmPassword: CnPassword,
-        // },
+        method: 'post',
+        url: 'http://127.0.0.1:8080/api/v1/users/signup-basic',
+        data: {
+          name: `${FirstName} ${LastName}`,
+          email: Email,
+          password: Password,
+          confirmPassword: CnPassword,
+        },
       });
       console.log(data);
-      // window.localStorage.setItem('token', data.jwtToken);
-      // setTimeout(() => {
-      //   history.push('/');
-      // }, 1000);
+      window.localStorage.setItem('token', data.jwtToken);
+      setTimeout(() => {
+        history.push('/');
+      }, 1000);
     } catch (err) {
       console.log(err.response.data);
       alert(err.response?.data.message);

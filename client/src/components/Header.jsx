@@ -20,6 +20,20 @@ const Header = () => {
   const googletry = async () => {
     await axios.get('http://127.0.0.1:8080/api/v1/users/google');
   };
+  const SearchSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await axios.post(
+        'http://127.0.0.1:8080/api/v1/products/searchText',
+        {
+          searchText: term,
+        }
+      );
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       <div className="header">
@@ -29,7 +43,7 @@ const Header = () => {
         </Link>
         <div className="flex header_right">
           {' '}
-          <form className="header_form">
+          <form onSubmit={(e) => SearchSubmit(e)} className="header_form">
             <input
               value={term}
               type="text"
