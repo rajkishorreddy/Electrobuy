@@ -26,7 +26,7 @@ exports.searchText = async (req, res, next) => {
     },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         fullName: 1,
         score: { $meta: "searchScore" },
       },
