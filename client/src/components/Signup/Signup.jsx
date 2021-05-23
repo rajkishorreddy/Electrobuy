@@ -31,7 +31,7 @@ const Signup = () => {
         history.push('/');
       }, 1000);
     } catch (err) {
-      console.log(err.response?.data);
+      console.log(err);
       alert(err.response?.data.message);
     }
   };

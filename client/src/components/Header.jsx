@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../history';
 // import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
@@ -8,14 +8,16 @@ import { ReactComponent as SearchIcon } from '../assets/searchIcon.svg';
 import { ReactComponent as WishList } from '../assets/wishlist.svg';
 import { ReactComponent as Cart } from '../assets/cart.svg';
 import { ReactComponent as Down } from '../assets/downarrow.svg';
+
 import axios from 'axios';
 const Header = () => {
   const [term, setTerm] = useState('');
+  const [visible, setVisible] = useState(false);
 
   const [user, setUser] = useState(window.localStorage.getItem('token'));
   const [searchResults, setSearchResults] = useState([]);
   const [timeout, settimeout1] = useState(undefined);
-  const listRef = useRef(null);
+  // const listRef = useRef(null);
   const logout = () => {
     window.localStorage.removeItem('token');
     setUser(window.localStorage.getItem('token'));
@@ -57,6 +59,13 @@ const Header = () => {
     }, 500);
     settimeout1(timeout1);
   };
+
+  const onEnter = (e) => {
+    e.preventDefault();
+    if(searchResults.length) 
+      history.push(`/productInfo/${searchResults[0]._id}`)
+  }
+
   return (
     <div>
       <div className="header">
@@ -67,15 +76,18 @@ const Header = () => {
         <div className="flex header_right">
           {' '}
           <div className="header_form_container">
-            <form onSubmit={SearchSubmit} className="header_form">
+            <form onSubmit={onEnter} className="header_form">
               <input
                 value={term}
                 onBlur={() => {
-                  listRef.current.style.visibility = 'hidden';
+                  setTimeout(()=> {
+                    setVisible(false);
+                  }, 500)
+                  // listRef.current.style.visibility = 'hidden';
                 }}
                 onFocus={() => {
-                  if (searchResults.length)
-                    listRef.current.style.visibility = 'visible';
+                    setVisible(true);
+                    // listRef.current.style.visibility = 'visible';
                 }}
                 type="text"
                 className="header_form-input"
@@ -89,25 +101,37 @@ const Header = () => {
                 <SearchIcon className="header_form-btn-img" />
               </button>
             </form>
-            <div
-              className="header_form_searchlist"
-              ref={listRef}
-              style={{
-                visibility: `${searchResults.length ? 'visible' : 'hidden'}`,
-              }}
-            >
-              {searchResults.map((result) => {
-                return (
-                  <Link
-                    to={`/productInfo/${result._id}`}
-                    className="header_form_searchlist_item"
-                    key={result._id}
-                  >
-                    {result.fullName}
-                  </Link>
-                );
-              })}
-            </div>
+            {
+              searchResults.length ? (
+                <div
+                  className={visible ? 'header_form_searchlist' : 'header_form_searchlist hidden'}
+                  //   classnames({
+                  //     "header_form_searchlist": true,
+                  //     'visible': visible,
+                  //     'hidden': !visible
+                  //   }
+                  // )
+                  // ref={listRef}
+                  // style={{
+                  //   visibility: `${searchResults.length ? 'visible' : 'hidden'}`,
+                  // }}
+                >
+                  {searchResults.map((result) => {
+                    return (
+                      <Link
+                        to={`/productInfo/${result._id}`}
+                        className="header_form_searchlist_item"
+                        key={result._id}
+                      >
+                        {result.fullName}
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : (
+                null
+              )
+            }
           </div>
           <Link to={'/wishlist'} className="header_wishlist">
             <WishList className="header_wishlist-img" />

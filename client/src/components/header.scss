@@ -36,13 +36,18 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    background: black;
+    background: linear-gradient(
+      270deg,
+      #333333 1.38%,
+      rgba(#51236e, 1) 104.69%
+    );
     padding: 1rem 1rem 1rem 0.5rem;
     font-size: 1.25rem;
     font-weight: 600;
-    top: 4rem;
+    top: 3rem;
+    border-radius: 0 0 1rem 1rem;
     max-width: 100%;
-    visibility: visible;
+    // visibility: visible;
     z-index: 1;
     &_item {
       text-decoration: none;
@@ -290,4 +295,15 @@
 }
 .nav_more-list:hover {
   visibility: visible;
+}
+
+
+.visible {
+  // display: block;
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+  // display: hidden;
 }
