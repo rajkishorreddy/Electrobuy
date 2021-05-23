@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../history';
 // import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
@@ -12,6 +12,9 @@ import axios from 'axios';
 const Header = () => {
   const [term, setTerm] = useState('');
   const [user, setUser] = useState(window.localStorage.getItem('token'));
+  const [searchResults,setSearchResults]= useState([]);
+  const [timeout,settimeout1]=useState(undefined);
+  const listRef = useRef(null);
   const logout = () => {
     window.localStorage.removeItem('token');
     setUser(window.localStorage.getItem('token'));
@@ -22,17 +25,38 @@ const Header = () => {
   };
   const SearchSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const data = await axios.post(
-        'http://127.0.0.1:8080/api/v1/products/searchText',
-        {
-          searchText: term,
-        }
-      );
-      console.log(data);
-    } catch (err) {
-      console.log(err);
+    let value;
+    if(e.target.nodeName==='INPUT'){
+      value=e.target.value;
     }
+    else{
+      value=term;
+    }
+    if(value==='') {
+      setSearchResults([]);
+      return ;
+    }
+    // console.log(timeout,value);
+    
+    if(timeout) {
+      clearTimeout(timeout);
+    }
+    let timeout1= setTimeout(async ()=>{
+      try {
+        const res = await axios.post(
+          'http://127.0.0.1:8080/api/v1/products/searchText',
+          {
+            searchText: value,
+          }
+        );
+        setSearchResults(res.data.searchResults);
+        // console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    },500)
+    settimeout1(timeout1);
+    
   };
   return (
     <div>
@@ -43,18 +67,33 @@ const Header = () => {
         </Link>
         <div className="flex header_right">
           {' '}
-          <form onSubmit={(e) => SearchSubmit(e)} className="header_form">
-            <input
-              value={term}
-              type="text"
-              className="header_form-input"
-              placeholder="search here..."
-              onChange={(e) => setTerm(e.target.value)}
-            />
-            <button className="header_form-btn">
-              <SearchIcon className="header_form-btn-img" />
-            </button>
-          </form>
+          <div className="header_form_container">
+            <form onSubmit={SearchSubmit} className="header_form">
+              <input
+                value={term}
+                onBlur={()=>{listRef.current.style.visibility='hidden'}}
+                onFocus={()=>{if(searchResults.length) listRef.current.style.visibility='visible'}}
+                type="text"
+                className="header_form-input"
+                placeholder="search here..."
+                onChange={(e) => {setTerm(e.target.value);SearchSubmit(e)}}
+              />
+              <button className="header_form-btn">
+                <SearchIcon className="header_form-btn-img" />
+              </button>
+            </form>
+            <div className="header_form_searchlist" ref={listRef} style={{visibility:`${searchResults.length?'visible':'hidden'}`}}>
+            {
+              searchResults.map(result=>{
+                return(
+                  <Link to={`/productInfo/${result._id}`} className="header_form_searchlist_item" key={result._id}>
+                    {result.fullName}
+                  </Link>
+                )
+              })
+            }
+          </div>
+          </div>
           <Link to={'/wishlist'} className="header_wishlist">
             <WishList className="header_wishlist-img" />
             {/* <FavoriteRoundedIcon 
