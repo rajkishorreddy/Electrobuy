@@ -60,9 +60,13 @@
     &-wishlist {
       background: none;
       border: none;
+      cursor: pointer;
       &-icon {
         height: 2.5rem;
         width: 2.5rem;
+        &:active {
+          fill: red;
+        }
       }
     }
     &-cart {
@@ -73,6 +77,10 @@
       font-weight: 600;
       font-family: 'Cabin', sans-serif;
       color: white;
+      cursor: pointer;
+      &:active {
+        transform: translateY(1px);
+      }
     }
   }
 }

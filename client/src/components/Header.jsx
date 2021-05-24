@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../history';
+import { useSnackbar } from 'react-simple-snackbar';
 // import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import './header.scss';
 import { ReactComponent as Logo } from '../assets/Logo.svg';
@@ -17,10 +18,27 @@ const Header = () => {
   const [user, setUser] = useState(window.localStorage.getItem('token'));
   const [searchResults, setSearchResults] = useState([]);
   const [timeout, settimeout1] = useState(undefined);
+  const options = {
+    position: 'top-left',
+    style: {
+      // backgroundColor: '#930696',
+      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
+      color: 'white',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '16px',
+      textAlign: 'center',
+    },
+    closeStyle: {
+      color: 'black',
+      fontSize: '10px',
+    },
+  };
+  const [openSnackbar] = useSnackbar(options);
   // const listRef = useRef(null);
   const logout = () => {
     window.localStorage.removeItem('token');
     setUser(window.localStorage.getItem('token'));
+    openSnackbar('Successfully logged-out');
     history.push('/');
   };
   const googletry = async () => {
@@ -62,9 +80,9 @@ const Header = () => {
 
   const onEnter = (e) => {
     e.preventDefault();
-    if(searchResults.length) 
-      history.push(`/productInfo/${searchResults[0]._id}`)
-  }
+    if (searchResults.length)
+      history.push(`/productInfo/${searchResults[0]._id}`);
+  };
 
   return (
     <div>
@@ -80,14 +98,14 @@ const Header = () => {
               <input
                 value={term}
                 onBlur={() => {
-                  setTimeout(()=> {
+                  setTimeout(() => {
                     setVisible(false);
-                  }, 500)
+                  }, 500);
                   // listRef.current.style.visibility = 'hidden';
                 }}
                 onFocus={() => {
-                    setVisible(true);
-                    // listRef.current.style.visibility = 'visible';
+                  setVisible(true);
+                  // listRef.current.style.visibility = 'visible';
                 }}
                 type="text"
                 className="header_form-input"
@@ -101,37 +119,37 @@ const Header = () => {
                 <SearchIcon className="header_form-btn-img" />
               </button>
             </form>
-            {
-              searchResults.length ? (
-                <div
-                  className={visible ? 'header_form_searchlist' : 'header_form_searchlist hidden'}
-                  //   classnames({
-                  //     "header_form_searchlist": true,
-                  //     'visible': visible,
-                  //     'hidden': !visible
-                  //   }
-                  // )
-                  // ref={listRef}
-                  // style={{
-                  //   visibility: `${searchResults.length ? 'visible' : 'hidden'}`,
-                  // }}
-                >
-                  {searchResults.map((result) => {
-                    return (
-                      <Link
-                        to={`/productInfo/${result._id}`}
-                        className="header_form_searchlist_item"
-                        key={result._id}
-                      >
-                        {result.fullName}
-                      </Link>
-                    );
-                  })}
-                </div>
-              ) : (
-                null
-              )
-            }
+            {searchResults.length ? (
+              <div
+                className={
+                  visible
+                    ? 'header_form_searchlist'
+                    : 'header_form_searchlist hidden'
+                }
+                //   classnames({
+                //     "header_form_searchlist": true,
+                //     'visible': visible,
+                //     'hidden': !visible
+                //   }
+                // )
+                // ref={listRef}
+                // style={{
+                //   visibility: `${searchResults.length ? 'visible' : 'hidden'}`,
+                // }}
+              >
+                {searchResults.map((result) => {
+                  return (
+                    <Link
+                      to={`/productInfo/${result._id}`}
+                      className="header_form_searchlist_item"
+                      key={result._id}
+                    >
+                      {result.fullName}
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : null}
           </div>
           <Link to={'/wishlist'} className="header_wishlist">
             <WishList className="header_wishlist-img" />

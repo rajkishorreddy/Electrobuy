@@ -6,11 +6,28 @@ import axios from 'axios';
 import history from '../../history';
 import loader from '../../assets/loading.gif';
 import { ReactComponent as Nologin } from '../../assets/nologin.svg';
+import { useSnackbar } from 'react-simple-snackbar';
 const Cart = () => {
   const [arr, setArr] = useState(null);
   const [final, setFinal] = useState(0);
   const [dis, setDis] = useState(0);
   const [original, setOriginal] = useState(0);
+  const options = {
+    position: 'top-left',
+    style: {
+      // backgroundColor: '#930696',
+      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
+      color: 'white',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '16px',
+      textAlign: 'center',
+    },
+    closeStyle: {
+      color: 'black',
+      fontSize: '10px',
+    },
+  };
+  const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     const getdata = async () => {
       const token = window.localStorage.getItem('token');
@@ -42,6 +59,7 @@ const Cart = () => {
         'http://127.0.0.1:8080/api/v1/payments',
         {
           transactionAmount: final,
+          goods: arr.map((el) => el._id),
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -91,8 +109,31 @@ const Cart = () => {
       setFinal(data.totalFinalPrice);
       setDis(data.totalSavingPrice);
       setOriginal(data.totalOriginalPrice);
+      openSnackbar('item removed');
     } catch (err) {
       console.log(err);
+    }
+  };
+  const addWishlist = async (el) => {
+    const token = window.localStorage.getItem('token');
+    if (!token) {
+      history.push('/login');
+    } else {
+      try {
+        const data = await axios.post(
+          `http://127.0.0.1:8080/api/v1/users/addWishlistProduct/${el.target.dataset?.id}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(data);
+        if (data.data.status === 'success') {
+          openSnackbar('item added successfully to Cart');
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   const renderCart = () => {
@@ -130,12 +171,16 @@ const Cart = () => {
                 >
                   Remove
                 </button>
-                <button className="cart_cont-item-move">
-                  Move to wishlist
+                <button
+                  data-id={el.id}
+                  onClick={(curr) => addWishlist(curr)}
+                  className="cart_cont-item-move"
+                >
+                  Add to wishlist
                 </button>
               </div>
               <div className="cart_cont-item-rating">
-                <span className="cart_cont-item-rating-none">Rating:</span> ★{' '}
+                <span className="cart_cont-item-rating-none"></span> ★{' '}
                 {el.averageRating}
               </div>
             </div>
