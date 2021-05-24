@@ -20,7 +20,7 @@ router.post("/redirect", (req, res, next) => {
   form.parse(req, (err, fields, file) => {
     console.log(fields);
     // res.status(200).json("ok working");
-    res.redirect("http://127.0.0.1:3000/");
+    res.redirect("https://unruffled-swanson-043fa8.netlify.app/cart");
   });
 });
 module.exports = router;

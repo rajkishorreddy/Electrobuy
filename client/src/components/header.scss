@@ -1,10 +1,10 @@
-@import "../sass/theme.scss";
+@import '../sass/theme.scss';
 .header {
   background: $primary-purple;
   padding: 1.5rem 1rem;
   display: flex;
   align-items: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   justify-content: space-between;
 
   &_logo {
@@ -52,7 +52,7 @@
     &_item {
       text-decoration: none;
       color: white;
-      font-family: "Montserrat", sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.3rem;
       padding: 1rem;
       text-overflow: ellipsis;
@@ -78,7 +78,7 @@
     &-input {
       width: 100%;
       height: 3rem;
-      ly: "Cabin", sans-serif;
+      font-family: 'Cabin', sans-serif;
       background: linear-gradient(
         270deg,
         #333333 1.38%,
@@ -119,7 +119,7 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    font-family: "Cabin", sans-serif;
+    font-family: 'Cabin', sans-serif;
     font-size: 1.5rem;
     line-height: 1.25rem;
     letter-spacing: 0.26px;
@@ -150,7 +150,7 @@
   &_cart {
     display: flex;
     align-items: center;
-    font-family: "Cabin", sans-serif;
+    font-family: 'Cabin', sans-serif;
     font-size: 1.5rem;
     line-height: 1.25rem;
     letter-spacing: 0.26px;
@@ -179,7 +179,7 @@
     }
   }
   &_login {
-    @include font-face("Cabin", 1.5rem, 500);
+    @include font-face('Cabin', 1.5rem, 500);
     padding: 1rem 2rem;
     background-color: rgba(0, 0, 0, 0.521);
     color: white;
@@ -236,7 +236,7 @@
       flex-direction: column;
       color: white;
       position: relative;
-      font-family: "Montserrat", sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.25rem;
       font-weight: 600;
       z-index: 2;
@@ -268,13 +268,13 @@
     &_item {
       text-decoration: none;
       color: white;
-      font-family: "Montserrat", sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.3rem;
       padding: 1rem;
     }
   }
   &_item {
-    @include font-face("Montserrat", 1.25rem, 600);
+    @include font-face('Montserrat', 1.25rem, 600);
     // font-size: 1.25rem;
     text-decoration: none;
     color: white;
@@ -296,7 +296,6 @@
 .nav_more-list:hover {
   visibility: visible;
 }
-
 
 .visible {
   // display: block;

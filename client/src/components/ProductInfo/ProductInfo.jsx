@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-
+import { useSnackbar } from 'react-simple-snackbar';
 import { fetchProductInfo } from '../../actions';
 
 import Header from '../Header';
@@ -15,6 +15,22 @@ import { ReactComponent as WishlistProdInfo } from '../../assets/wishlistProdInf
 import './ProductInfo.scss';
 
 const ProductInfo = (props) => {
+  const options = {
+    position: 'top-left',
+    style: {
+      // backgroundColor: '#930696',
+      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
+      color: 'white',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '16px',
+      textAlign: 'center',
+    },
+    closeStyle: {
+      color: 'black',
+      fontSize: '10px',
+    },
+  };
+  const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     props.fetchProductInfo(props.match.params.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +52,7 @@ const ProductInfo = (props) => {
           }
         );
         if (data.data.status === 'success') {
-          alert('item added successfully to wishlist');
+          openSnackbar('item added successfully to wishlist');
         }
       } catch (err) {
         console.log(err);
@@ -59,14 +75,13 @@ const ProductInfo = (props) => {
         );
         console.log(data);
         if (data.data.status === 'success') {
-          alert('item added successfully to Cart');
+          openSnackbar('item added successfully to Cart');
         }
       } catch (err) {
         console.log(err);
       }
     }
   };
-
 
   const renderInfo = () => {
     if (!props.data.description) {
@@ -122,10 +137,18 @@ const ProductInfo = (props) => {
                     </p>
                   </div>
                   <div className="product-display--content__heading-priceAndBtn--btns">
-                    <button onClick={(el) => addWishlist(el)} data-id={props.data.id} className="product-display--content__heading-priceAndBtn--btns-wishlist">
-                      <WishlistProdInfo className='wishlist-icon' />
+                    <button
+                      onClick={(el) => addWishlist(el)}
+                      data-id={props.data.id}
+                      className="product-display--content__heading-priceAndBtn--btns-wishlist"
+                    >
+                      <WishlistProdInfo className="wishlist-icon" />
                     </button>
-                    <button onClick={(el) => addCart(el)} data-id={props.data.id} className="product-display--content__heading-priceAndBtn--btns-cart">
+                    <button
+                      onClick={(el) => addCart(el)}
+                      data-id={props.data.id}
+                      className="product-display--content__heading-priceAndBtn--btns-cart"
+                    >
                       Add to cart
                     </button>
                   </div>

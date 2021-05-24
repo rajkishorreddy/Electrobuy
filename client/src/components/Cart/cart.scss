@@ -86,6 +86,9 @@
         font-size: 1.5rem;
         margin-right: 2rem;
         cursor: pointer;
+        &:active {
+          transform: translateY(1px);
+        }
       }
       &-move {
         border: none;
@@ -95,6 +98,9 @@
         font-size: 1.5rem;
         margin-right: 2rem;
         cursor: pointer;
+        &:active {
+          transform: translateY(1px);
+        }
       }
       &-rating {
         position: absolute;
