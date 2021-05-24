@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSnackbar } from 'react-simple-snackbar';
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as Style } from '../../assets/signup.svg';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,22 @@ import axios from 'axios';
 const Signup = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+  const options = {
+    position: 'top-left',
+    style: {
+      // backgroundColor: '#930696',
+      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
+      color: 'white',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '16px',
+      textAlign: 'center',
+    },
+    closeStyle: {
+      color: 'black',
+      fontSize: '10px',
+    },
+  };
+  const [openSnackbar] = useSnackbar(options);
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,6 +37,7 @@ const Signup = () => {
       });
       console.log(data.data);
       window.localStorage.setItem('token', data.jwtToken);
+      openSnackbar('Login successfull!');
       setTimeout(() => {
         history.push('/');
       }, 1000);

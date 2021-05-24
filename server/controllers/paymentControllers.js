@@ -12,11 +12,10 @@ exports.initiateTransaction = async (req, res, next) => {
     }
 
     // 2) Get the total amount and the email from the req.body
-    let { transactionAmount } = req.body;
-
+    let { transactionAmount, goods } = req.body;
     // Make sure to conver the integer value to the string
     transactionAmount = JSON.stringify(transactionAmount);
-    console.log("the transaction amount is " + transactionAmount);
+    console.log("the transaction amount is " + transactionAmount, goods);
 
     // if (req.user.email !== email) {
     //   return next(

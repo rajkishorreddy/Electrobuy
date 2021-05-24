@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
+import { useSnackbar } from 'react-simple-snackbar';
 import './wishlist.scss';
 import axios from 'axios';
 import history from '../../history';
@@ -8,6 +9,22 @@ import loader from '../../assets/loading.gif';
 import { ReactComponent as Nologin } from '../../assets/nologin.svg';
 const Wishlist = () => {
   const [arr, setArr] = useState(null);
+  const options = {
+    position: 'top-left',
+    style: {
+      // backgroundColor: '#930696',
+      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
+      color: 'white',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '16px',
+      textAlign: 'center',
+    },
+    closeStyle: {
+      color: 'black',
+      fontSize: '10px',
+    },
+  };
+  const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     const getdata = async () => {
       const token = window.localStorage.getItem('token');
@@ -35,14 +52,36 @@ const Wishlist = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(data.data);
       setArr(data.data);
+      openSnackbar('item removed');
     } catch (err) {
       console.log(err);
     }
   };
   const loginclick = () => {
     history.push('/login');
+  };
+  const addCart = async (el) => {
+    const token = window.localStorage.getItem('token');
+    if (!token) {
+      history.push('/login');
+    } else {
+      try {
+        const data = await axios.post(
+          `http://127.0.0.1:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(data);
+        if (data.data.status === 'success') {
+          openSnackbar('item added successfully to Cart');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
   const renderWishlist = () => {
     if (!arr) return <img className="loading" src={loader} alt="loading.." />;
@@ -81,8 +120,12 @@ const Wishlist = () => {
                 >
                   Remove
                 </button>
-                <button className="wishlist_cont-item-move">
-                  Move to cart
+                <button
+                  data-id={el.id}
+                  onClick={(el) => addCart(el)}
+                  className="wishlist_cont-item-move"
+                >
+                  Add to cart
                 </button>
               </div>
               <div className="wishlist_cont-item-rating">
