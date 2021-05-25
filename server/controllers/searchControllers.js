@@ -8,6 +8,10 @@ exports.searchText = async (req, res, next) => {
   // 1) Get the text from the body
   const { searchText } = req.body;
 
+  if (!searchText) {
+    return next(new AppError(400, "Please specify some text"));
+  }
+
   // 2) Get the results from the mongoDb
   const searchResults = await Product.aggregate([
     {

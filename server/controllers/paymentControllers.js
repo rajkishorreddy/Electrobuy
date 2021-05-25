@@ -1,6 +1,11 @@
+const util = require("util");
+
 const { v4: uuidv4 } = require("uuid");
 const axios = require("axios");
+const formidable = require("formidable");
+const formidableMiddleware = require("express-formidable");
 
+const bookingModel = require("./../models/bookingModel");
 const PaytmChecksum = require("./../utils/PaytmChecksum");
 const AppError = require("./../utils/AppError");
 
@@ -12,19 +17,23 @@ exports.initiateTransaction = async (req, res, next) => {
     }
 
     // 2) Get the total amount and the email from the req.body
-    let { transactionAmount, goods } = req.body;
+    let { transactionAmount, transactionGoods } = req.body;
+
     // Make sure to conver the integer value to the string
     transactionAmount = JSON.stringify(transactionAmount);
-    console.log("the transaction amount is " + transactionAmount, goods);
+    transactionGoods = JSON.stringify(transactionGoods);
+    console.log(transactionGoods);
+    // transactionGoods = transactionGoods.map((good) => {
+    //   return {
+    //     merchantGoodsId: good,
+    //   };
+    // });
 
-    // if (req.user.email !== email) {
-    //   return next(
-    //     new AppError(
-    //       401,
-    //       "The transaction initiated doesnt seem to be coming from the same user"
-    //     )
-    //   );
-    // }
+    console.log("the goods are ", transactionGoods);
+    // console.log(
+    //   "the goods are ",
+    //   transactionGoods.map((el) => JSON.stringify(el))
+    // );
 
     // 3) Get all the details required for the transaction
     let paytmTransactionParams = {};
@@ -35,7 +44,8 @@ exports.initiateTransaction = async (req, res, next) => {
       mid: process.env.PAYTM_MERCHANT_ID,
       websiteName: process.env.PAYTM_WEBSITE_NAME,
       orderId: uuidv4(),
-      callbackUrl: process.env.PAYTM_CALLBACK_URL,
+      callbackUrl: `${process.env.PAYTM_CALLBACK_URL}?userId=${req.user._id}&products=${transactionGoods}`,
+
       txnAmount: {
         value: transactionAmount,
         currency: "INR",
@@ -46,8 +56,6 @@ exports.initiateTransaction = async (req, res, next) => {
         firstName: req.user.name.split(" ")[0],
         lastName: req.user.name.split(" ")[1],
       },
-
-      // add goods key too ..
     };
     console.log(paytmTransactionParams);
     const paytmChecksumResultHash = await PaytmChecksum.generateSignature(
@@ -55,71 +63,30 @@ exports.initiateTransaction = async (req, res, next) => {
       process.env.PAYTM_MERCHANT_KEY
     );
 
+    console.log("cjeck this", paytmChecksumResultHash);
     paytmTransactionParams.head = {
       signature: paytmChecksumResultHash,
     };
-    console.log(paytmTransactionParams.head.signature);
-    // console.log(
-    //   paytmTransactionParams.head.signature === paytmChecksumResultHash
-    // );
-    console.log(paytmTransactionParams.body.orderId);
-    // console.log(
-    //   `${JSON.stringify({
-    //     mid: process.env.PAYTM_MERCHANT_ID,
-    //     orderId: paytmTransactionParams.body.orderId,
-    //   })}`
-    // );
-    // console.log("key is ", process.env.PAYTM_MERCHANT_KEY);
-
-    // const isVerifySignature = await PaytmChecksum.verifySignature(
-    //   JSON.stringify(paytmTransactionParams.body),
-    //   process.env.PAYTM_MERCHANT_KEY,
-    //   paytmChecksumResultHash
-    // );
-    // if (!isVerifySignature)
-
-    // const post_data = JSON.stringify(paytmTransactionParams);
-    // console.log(
-    //   `https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`
-    // );
 
     const transactionResponse = await axios({
       url: `https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`,
       method: "POST",
       data: paytmTransactionParams,
-      // port: 1234,
       headers: {
         "Content-Type": "application/json",
         "Content-Length": JSON.stringify(paytmTransactionParams).length,
         Accept: "*/*",
       },
     });
-    // console.log(transactionResponse.data);
+
     paytmTransactionParams.head = {
       txnToken: transactionResponse.data.body.txnToken,
     };
 
-    // const x = await axios({
-    //   url: `https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?mid=${process.env.PAYTM_MERCHANT_ID}&orderId=${paytmTransactionParams.body.orderId}`,
-    //   method: "POST",
-    //   data: {
-    //     mid: paytmTransactionParams.body.mid,
-    //     orderId: paytmTransactionParams.body.orderId,
-    //     txnToken: paytmTransactionParams.head.txnToken,
-    //   },
-    //   // port: 1234,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     // "Content-Length": JSON.stringify(paytmTransactionParams).length,
-    //     Accept: "*/*",
-    //   },
-    // });
-
-    // 4) Send back the response
-    // console.log(x.data);
     //NOTE: change the error handling
     if (transactionResponse.data.body.resultInfo.resultStatus !== "S") {
-      return next(new AppError(500, "Some internal error"));
+      console.log(transactionResponse.data.body.resultInfo);
+      return next(new AppError(400, "Some internal error"));
     }
     res.status(200).json({
       status: "success",
@@ -133,4 +100,123 @@ exports.initiateTransaction = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.verifyTransaction = async (req, res, next) => {
+  try {
+    let newPaytmTransactionParams = {};
+    let paytmCheckSum;
+    const incomingForm = new formidable.IncomingForm();
+
+    incomingForm.encoding = "utf-8";
+    var formfields = await new Promise(function (resolve, reject) {
+      incomingForm.parse(req, function (err, fields, files) {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(fields);
+      });
+    });
+    console.log(formfields);
+    // console.log(formfields.CHECKSUMHASH);
+    paytmCheckSum = formfields.CHECKSUMHASH;
+    delete formfields.CHECKSUMHASH;
+    newPaytmTransactionParams = formfields;
+    // console.log(newPaytmTransactionParams);
+    // console.log("idkk", process.env.PAYTM_MERCHANT_KEY);
+
+    const isVerifySignature = await PaytmChecksum.verifySignature(
+      newPaytmTransactionParams,
+      process.env.PAYTM_MERCHANT_KEY,
+      paytmCheckSum
+    );
+    if (!isVerifySignature) {
+      res.redirect(
+        `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
+      );
+    }
+
+    const newParamsBody = {
+      mid: newPaytmTransactionParams.MID,
+      orderId: newPaytmTransactionParams.ORDERID,
+    };
+    const paytmChecksumResultHash = await PaytmChecksum.generateSignature(
+      JSON.stringify(newParamsBody),
+      process.env.PAYTM_MERCHANT_KEY
+    );
+
+    const checkTransactionStatus = await axios({
+      method: "post",
+      url: `https://securegw-stage.paytm.in/v3/order/status`,
+      data: {
+        head: { signature: paytmChecksumResultHash },
+        body: {
+          mid: newPaytmTransactionParams.MID,
+          orderId: newPaytmTransactionParams.ORDERID,
+        },
+      },
+    });
+    console.log("final stuff is ", checkTransactionStatus.data);
+
+    if (
+      checkTransactionStatus.data.body.resultInfo.resultStatus !== "TXN_SUCCESS"
+    ) {
+      // return next(
+      //   new AppError(404, "Sorry, the transaction was not successfull")
+      // );
+      res.redirect(
+        `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
+      );
+    }
+    // console.log("fuck you", JSON.parse(req.query.products));
+    const booking = await bookingModel.create({
+      transactionId: checkTransactionStatus.data.body.txnId,
+      orderId: checkTransactionStatus.data.body.orderId,
+      transactionDate: checkTransactionStatus.data.body.txnDate,
+      transactionAmount: checkTransactionStatus.data.body.txnAmount,
+      userRef: req.query.userId,
+      products: JSON.parse(req.query.products),
+    });
+    console.log("booking successfully created", booking);
+
+    res.redirect(
+      `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getAllOrders = async (req, res, next) => {
+  try {
+    const orders = await bookingModel.aggregate([
+      {
+        $match: { userRef: req.user._id },
+      },
+    ]);
+
+    res.status(200).json({
+      count: orders.length,
+      data: orders,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.checkOrder = async (req, res, next) => {
+  // get the order id from the req.body
+  const { orderId } = req.params;
+  // check if the order is present or not
+  const order = await bookingModel.findOne({ orderId });
+
+  if (!order) {
+    return next(new AppError(404, "No Order found with the provided orderId"));
+  }
+  return res.status(200).json({
+    message: "success",
+    data: order,
+  });
 };

@@ -20,6 +20,9 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "default.jpg",
     },
+    address: {
+      type: String,
+    },
     role: {
       //to make a user to admin, he must go to db and perform the explicit operation over there
       type: String,

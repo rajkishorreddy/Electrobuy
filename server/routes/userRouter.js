@@ -4,8 +4,10 @@ const passport = require("passport");
 const connectRouter = require("./../routes/connectRoutes");
 
 const authController = require("../controllers/authControllers");
+const userController = require("../controllers/userControllers");
 const wishlistController = require("../controllers/wishlistControllers");
 const cartController = require("../controllers/cartControllers");
+const paymentController = require("../controllers/paymentControllers");
 
 const router = express.Router();
 
@@ -35,7 +37,7 @@ router.patch(
 router.patch(
   "/updateMyPassword",
   authController.passportWrapperMiddleware,
-  authController.updatePassword
+  userController.updatePassword
 );
 
 router.get(
@@ -98,5 +100,13 @@ router
     authController.passportWrapperMiddleware,
     cartController.deleteCartItem
   );
+
+router.get(
+  "/orders",
+  authController.passportWrapperMiddleware,
+  paymentController.getAllOrders
+);
+
+router.get("/checkOrder/:orderId", paymentController.checkOrder);
 
 module.exports = router;
