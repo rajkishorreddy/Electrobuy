@@ -18,7 +18,7 @@ const userRouter = require("./routes/userRouter");
 const paymentRouter = require("./routes/paymentRouter");
 const globalErrorHandler = require("./controllers/errorControllers");
 require("./services/passportServices");
-const formidableMiddleware = require("express-formidable");
+
 const redisClient = require("./services/cacheServices");
 
 const app = express();
@@ -26,9 +26,6 @@ const app = express();
 //Middleware functions
 
 //General middleware functions
-
-// Formidable Support
-app.use(formidableMiddleware());
 
 //Passport Initialization
 app.use(passport.initialize());
