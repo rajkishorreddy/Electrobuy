@@ -191,6 +191,12 @@ exports.verifyTransaction = async (req, res, next) => {
 
 exports.getAllOrders = async (req, res, next) => {
   try {
+    // 1 Initally check if the user is authenticated
+    if (!req.user) {
+      return next(new AppError(404, "Please login to find the orders placed"));
+    }
+    // console.log("coming from gerer", req.user._id);
+
     const orders = await bookingModel.aggregate([
       {
         $match: { userRef: req.user._id },

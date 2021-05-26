@@ -34,6 +34,24 @@ router.patch(
   authController.createCookie
 );
 
+router.get(
+  "/getMyProfile",
+  authController.passportWrapperMiddleware,
+  userController.getProfileInfo
+);
+
+router.patch(
+  "/updateMyProfilePic",
+  authController.passportWrapperMiddleware,
+  userController.updateAvatar
+);
+
+router.patch(
+  "/updateMyProfile",
+  authController.passportWrapperMiddleware,
+  userController.updateMe
+);
+
 router.patch(
   "/updateMyPassword",
   authController.passportWrapperMiddleware,
@@ -106,7 +124,5 @@ router.get(
   authController.passportWrapperMiddleware,
   paymentController.getAllOrders
 );
-
-router.get("/checkOrder/:orderId", paymentController.checkOrder);
 
 module.exports = router;

@@ -41,17 +41,24 @@ The total product count is present in the response
 /users/forgetPassword => Sends back a reset token to the email of the user
 /users/resetPassword => Verifies the token provides as a query parameter, and updates the password
 
-/users/updatePassword => Updates the password when the user is authenticated only
+/users/updateMyPassword => Updates the password when the user is authenticated only
+/users/updateMyProfile => Updates the profile information of the user, if AUTHENTICATED
+/users/getMyProfile => Returns the profile information of the user, if AUTHENTICATED
+/users/updateMyProfilePic => Updates the profile pic of the user, if AUTHENTICATED
 
 /users/addWishlistProduct/:productId => Adds a new product to the wishlist
 /users/getAllWishlistProduct => Gets all the products available in the wishlist
 
-/forgetPassword => Allows the user to be sent a mail enabling him to recover his password with a special token
-/resetPassword => Allows the user to update his password when the valid reset token is provided
+/users/addCartProduct/:productId => Adds a new product to the Cart
+/users/getAllCartProduct => Gets all the products available in the Cart
 
-/me => Returns the basic profile information of the user, if AUTHENTICATED
+/users/forgetPassword => Allows the user to be sent a mail enabling him to recover his password with a special token
+/users/resetPassword => Allows the user to update his password when the valid reset token is provided
+
+/users/orders => Returns all the orders made by the user
 
 /payments => Iniaties a transaction and returns the transactionId and the checksum with the other parameters
+/payments/checkOrder/:orderId => Checks the Db for the order and returns the status of the transaction
 
 <!-- DATABASES -->
 
