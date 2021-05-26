@@ -194,3 +194,90 @@
     font-weight: 600;
   }
 }
+.dcard {
+  height: 18rem;
+  width: 35rem;
+  position: fixed;
+  bottom: 3rem;
+  right: 0;
+  &-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+  }
+  &-master {
+    position: absolute;
+    height: 3rem;
+    width: 5rem;
+    bottom: 2rem;
+    right: 5rem;
+  }
+  &-brand {
+    position: absolute;
+    height: 2.5rem;
+    width: 2.5rem;
+    right: 6rem;
+    top: 2rem;
+  }
+  &-no {
+    height: 1.6rem;
+    position: absolute;
+    top: 50%;
+    left: 5rem;
+  }
+  &-mo {
+    position: absolute;
+    height: 1.3rem;
+    top: 70%;
+    left: 5rem;
+  }
+  &-cvv {
+    color: black;
+    position: absolute;
+    top: 69%;
+    left: 15rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  &-cvvv {
+    position: absolute;
+    height: 1.3rem;
+    top: 70%;
+    left: 18rem;
+  }
+  &-dark {
+    position: absolute;
+    top: 1.5rem;
+    left: -2rem;
+    height: 3rem;
+  }
+  &-use {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    position: absolute;
+    top: 7rem;
+    left: 5rem;
+  }
+  &-close {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 4rem;
+    top: 0;
+    cursor: pointer;
+  }
+  &-view {
+    position: fixed;
+    bottom: 3rem;
+    right: 2rem;
+    background: linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%);
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+}
