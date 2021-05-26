@@ -18,4 +18,6 @@ router.post(
   authController.passportWrapperMiddleware,
   paymentController.verifyTransaction
 );
+
+router.get("/checkOrder/:orderId", paymentController.checkOrder);
 module.exports = router;

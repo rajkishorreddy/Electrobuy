@@ -1,3 +1,5 @@
+const util = require("util");
+
 const sgMail = require("@sendgrid/mail");
 
 const AppError = require("./../utils/AppError");
@@ -5,8 +7,9 @@ const User = require("./../models/UserModel");
 
 class Email {
   constructor(user, url) {
+    sgMail.setApiKey(process.env.SENDGRID_KEY);
     this.to = user.email;
-    this.fullName = user.name.split(" ")[0];
+    this.name = user.name;
     this.url = url;
     this.from = `ElectroBuy Team <${process.env.SENDGRID_EMAIL}>`;
   }
@@ -27,6 +30,7 @@ class Email {
   }
 
   async send(template, subject) {
+    const response = await util.promisify(sgMail.send)(msg);
     // console.log('mf', this.url, this.to);
     // Render the html based on the pug template.
     const html = pug.renderFile(`${__dirname}/../views/${template}.pug`, {
@@ -49,7 +53,10 @@ class Email {
   }
 
   async sendWelcomeEmail() {
-    await this.send("welcomeEmailTemplate", "Welcome to the natours family!");
+    await this.send(
+      "welcomeEmailTemplate",
+      "Welcome to the ElectroBuy family!"
+    );
   }
 
   async sendResetPasswordEmail() {
@@ -58,6 +65,13 @@ class Email {
       `Your Password Reset Token (Valid for ${
         parseInt(process.env.RESET_PASSWORD_EXPIRY_TIME) / (1000 * 60)
       }) minutes`
+    );
+  }
+
+  async successOrder() {
+    await this.send(
+      "successOrder",
+      `Your Order has been successfully placed. To view your orders, please click here.`
     );
   }
 }
