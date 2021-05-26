@@ -15,7 +15,10 @@
       margin: 0;
     }
   }
-
+  .disp-flex {
+    display: flex;
+    align-items: center;
+  }
   &_right {
     // background: red;
     width: 70%;
@@ -185,7 +188,7 @@
     color: white;
     border: none;
     cursor: pointer;
-    margin: 0 2rem;
+    margin: 0 1rem;
     text-decoration: none;
     @media only screen and (max-width: 36.5em) {
       margin: 0 1rem;

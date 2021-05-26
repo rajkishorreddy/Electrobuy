@@ -165,9 +165,14 @@ const Header = () => {
             <span className="header_cart-name">cart</span>
           </Link>
           {user ? (
-            <button onClick={() => logout()} className="header_login">
-              logout
-            </button>
+            <div className="disp-flex">
+              <Link to={'/myaccount'} className="header_login">
+                Myaccount
+              </Link>
+              <button onClick={() => logout()} className="header_login">
+                logout
+              </button>
+            </div>
           ) : (
             <Link to={'/login'} className="header_login">
               login
