@@ -6,12 +6,22 @@ import axios from 'axios';
 import history from '../../history';
 import loader from '../../assets/loading.gif';
 import { ReactComponent as Nologin } from '../../assets/nologin.svg';
+import { ReactComponent as Card } from '../../assets/card.svg';
+import { ReactComponent as Master } from '../../assets/master.svg';
+import { ReactComponent as CardBrand } from '../../assets/cardbrand.svg';
+import { ReactComponent as Dark } from '../../assets/Dark.svg';
 import { useSnackbar } from 'react-simple-snackbar';
+import cardno from '../../assets/cardno.png';
+import cardmonth from '../../assets/cardmonth.png';
+
+import cvv from '../../assets/cvv.png';
+
 const Cart = () => {
   const [arr, setArr] = useState(null);
   const [final, setFinal] = useState(0);
   const [dis, setDis] = useState(0);
   const [original, setOriginal] = useState(0);
+  const [view, setView] = useState(0);
   const options = {
     position: 'top-left',
     style: {
@@ -226,7 +236,7 @@ const Cart = () => {
                   </div>
                 </div>
                 <button onClick={() => shipping()} className="order-btn">
-                  Proceed to sipping &rarr;
+                  Proceed to shipping &rarr;
                 </button>
               </div>
             ) : (
@@ -247,6 +257,26 @@ const Cart = () => {
           </div>
         )}
       </div>
+      {view === 0 ? (
+        <div className="dcard">
+          <Card className="dcard-back" />
+          <Master className="dcard-master" />
+          <CardBrand className="dcard-brand" />
+          <Dark className="dcard-dark" />
+          <img src={cardno} alt={'4242424242424242'} className="dcard-no" />
+          <img src={cardmonth} alt={'02/23'} className="dcard-mo" />
+          <img src={cvv} alt={'123'} className="dcard-cvvv" />
+          <div className="dcard-cvv">cvv:</div>
+          <div className="dcard-use">use this debit card for payments</div>
+          <button onClick={() => setView(1)} className="dcard-close">
+            x
+          </button>
+        </div>
+      ) : (
+        <button onClick={() => setView(0)} className="dcard-view">
+          viewCard
+        </button>
+      )}
       <Footer />
     </div>
   );
