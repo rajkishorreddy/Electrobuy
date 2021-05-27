@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
-import './Myaccount.scss';
+import Resizer from "react-image-file-resizer";
+import axios from 'axios';
+
 import Header from '../Header.jsx';
+import './Myaccount.scss';
+
 import { ReactComponent as Camera } from '../../assets/camera.svg';
 import temp from '../../assets/profile.png';
-import axios from 'axios';
+
 const Myaccount = () => {
   const [FirstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
@@ -12,6 +16,7 @@ const Myaccount = () => {
   const [currPass, setCurrPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [cnNewPass, setCnNewPass] = useState('');
+  const [dp, setDp] = useState('');
 
   useEffect(() => {
     const getData = async () => {
@@ -30,8 +35,39 @@ const Myaccount = () => {
     };
     getData();
   });
+
+  const resizeFile = (event) => {
+    var fileInput = false;
+    if (event.target.files[0]) {
+      fileInput = true;
+    }
+    if (fileInput) {
+      try {
+        Resizer.imageFileResizer(
+          event.target.files[0],
+          300,
+          300,
+          "JPEG",
+          75,
+          0,
+          (uri) => {
+            // console.log(uri);
+            setDp(uri);
+            // this.setState({ newImage: uri });
+          },
+          "base64",
+          200,
+          200
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(dp);
   };
   return (
     <div>
@@ -40,7 +76,16 @@ const Myaccount = () => {
         <div className="myac-img-cont">
           <img src={temp} className="myac-img" alt="select" />
           <button className="myac-img-btn">
-            <Camera />{' '}
+            <input
+              id="dp"
+              accept="image/*"
+              className="myac-img-btn__input"
+              type="file"
+              onChange={resizeFile}
+            />
+            <label htmlFor="dp" className="myac-img-btn__input-label">
+              <Camera />{' '}
+            </label>
           </button>
         </div>
         <div className="myac-line"></div>

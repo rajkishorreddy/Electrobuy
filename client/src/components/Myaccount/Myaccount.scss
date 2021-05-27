@@ -34,6 +34,16 @@
       transform: translateY(4rem);
       transition: all 0.5s;
       cursor: pointer;
+
+      &__input {
+        display: none;
+        z-index: 1;
+
+        &-label {
+          z-index: -1;
+          cursor: pointer;
+        }
+      }
     }
   }
   &-line {
