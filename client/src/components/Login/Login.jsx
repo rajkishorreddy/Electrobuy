@@ -34,6 +34,13 @@ const Signup = () => {
           email: Email,
           password: Password,
         },
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true,
+        },
+        credentials: 'include',
+        // withCredentials: true,
       });
       console.log(data.data);
       window.localStorage.setItem('token', data.jwtToken);
@@ -43,7 +50,7 @@ const Signup = () => {
       }, 1000);
     } catch (err) {
       console.log(err.response?.data);
-      alert(err.response?.data.message);
+      openSnackbar(err.response?.data.message);
     }
   };
   return (

@@ -69,7 +69,7 @@ const Cart = () => {
         'http://127.0.0.1:8080/api/v1/payments',
         {
           transactionAmount: final,
-          goods: arr.map((el) => el._id),
+          transactionGoods: arr.map((el) => el._id),
         },
         {
           headers: { Authorization: `Bearer ${token}` },
