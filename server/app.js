@@ -31,15 +31,21 @@ const app = express();
 app.use(passport.initialize());
 
 //Adding CORS support
-app.use("*", function (req, res, next) {
-  //replace localhost:8080 to the ip address:port of your server
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
-
+// app.use("*", function (req, res, next) {
+//   //replace localhost:8080 to the ip address:port of your server
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   res.header("Access-Control-Allow-Headers", "Content-Type");
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+app.use(
+  cors({
+    origin: "*", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // allow session cookie from browser to pass through
+  })
+);
 //enable pre-flight
 app.options("*", cors());
 

@@ -1,9 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Myaccount.scss';
 import Header from '../Header.jsx';
 import { ReactComponent as Camera } from '../../assets/camera.svg';
+import { ReactComponent as Myac } from '../../assets/myac.svg';
 import temp from '../../assets/profile.png';
 import axios from 'axios';
+import FileBase from 'react-file-base64';
+import { useSnackbar } from 'react-simple-snackbar';
+
 const Myaccount = () => {
   const [FirstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
@@ -12,26 +16,93 @@ const Myaccount = () => {
   const [currPass, setCurrPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [cnNewPass, setCnNewPass] = useState('');
-
+  const options = {
+    position: 'top-left',
+    style: {
+      // backgroundColor: '#930696',
+      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
+      color: 'white',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '16px',
+      textAlign: 'center',
+    },
+    closeStyle: {
+      color: 'black',
+      fontSize: '10px',
+    },
+  };
+  const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     const getData = async () => {
       const token = window.localStorage.getItem('token');
-      const { data } = await axios.get(
-        `http://127.0.0.1:8080/api/v1/users/getMyProfile`,
+      try {
+        const { data } = await axios.get(
+          `http://127.0.0.1:8080/api/v1/users/getMyProfile`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        // console.log(data.data);
+        const [first, last] = data.data.name.split(' ');
+        setFirstName(first);
+        setLastName(last);
+        setEmail(data.data.email);
+        setAddress(data.data.address);
+      } catch (err) {
+        console.log(err.response);
+      }
+    };
+    getData();
+  }, []);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const token = window.localStorage.getItem('token');
+    try {
+      const { data } = await axios.patch(
+        `http://127.0.0.1:8080/api/v1/users/updateMyProfile`,
+        {
+          name: `${FirstName} ${LastName}`,
+          email: Email,
+          address: address,
+        },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(data.data);
-      const [first, last] = data.data.name.split(' ');
+      console.log(data);
+      const [first, last] = data.data.user.name.split(' ');
       setFirstName(first);
       setLastName(last);
-      setEmail(data.data.email);
-    };
-    getData();
-  });
-  const onSubmit = (e) => {
+      setEmail(data.data.user.email);
+      setAddress(data.data.user.address);
+      if (data.status === 'success') {
+        openSnackbar('Profile updated successfully');
+      }
+    } catch (err) {
+      openSnackbar(err.response?.data?.message);
+    }
+  };
+  const changePassword = async (e) => {
     e.preventDefault();
+    const token = window.localStorage.getItem('token');
+    try {
+      const { data } = await axios.patch(
+        `http://127.0.0.1:8080/api/v1/users/updateMyPassword`,
+        {
+          currentPassword: currPass,
+          password: newPass,
+          confirmPassword: cnNewPass,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (data.status === 'success') {
+        openSnackbar('password changed successfully');
+      }
+    } catch (err) {
+      openSnackbar(err.response?.data?.message);
+    }
   };
   return (
     <div>
@@ -40,7 +111,12 @@ const Myaccount = () => {
         <div className="myac-img-cont">
           <img src={temp} className="myac-img" alt="select" />
           <button className="myac-img-btn">
-            <Camera />{' '}
+            {/* <Camera />{' '} */}
+            {/* <FileBase
+              type="file"
+              multiple={false}
+              onDone={({ base64 }) => setImage(base64)}
+            /> */}
           </button>
         </div>
         <div className="myac-line"></div>
@@ -104,14 +180,17 @@ const Myaccount = () => {
             </form>
           </div>
           <div className="myac-forms-right">
-            <form className="myac-form-left" onSubmit={(e) => onSubmit(e)}>
+            <form
+              className="myac-form-left"
+              onSubmit={(e) => changePassword(e)}
+            >
               <div className="myac-form-left-title">Change password</div>
-              <label htmlFor="first-name" className="myac-form-left-label">
+              <label htmlFor="crpass" className="myac-form-left-label">
                 Current Password
               </label>
               <input
-                id="first-name"
-                type="text"
+                id="crpass"
+                type="password"
                 className="myac-form-left-input"
                 value={currPass}
                 autoComplete="off"
@@ -119,12 +198,12 @@ const Myaccount = () => {
                   setCurrPass(e.target.value);
                 }}
               />
-              <label htmlFor="last-name" className="myac-form-left-label">
+              <label htmlFor="newpass" className="myac-form-left-label">
                 New Password
               </label>
               <input
-                id="last-name"
-                type="text"
+                id="newpass"
+                type="password"
                 className="myac-form-left-input"
                 value={newPass}
                 onChange={(e) => {
@@ -132,12 +211,12 @@ const Myaccount = () => {
                 }}
                 autoComplete="off"
               />
-              <label htmlFor="email" className="myac-form-left-label">
+              <label htmlFor="cnnew" className="myac-form-left-label">
                 Confirm new Password
               </label>
               <input
-                id="email"
-                type="email"
+                id="cnnew"
+                type="password"
                 className="myac-form-left-input"
                 value={cnNewPass}
                 onChange={(e) => {
@@ -149,6 +228,14 @@ const Myaccount = () => {
             </form>
           </div>
         </div>
+        <Myac className="myac-svg" />
+        <div className="orders">
+          <div className="orders-title">My orders</div>
+        </div>
+        {/* <div className="choose">
+          
+        </div> */}
+        <input type="file" className="file" />
       </div>
     </div>
   );

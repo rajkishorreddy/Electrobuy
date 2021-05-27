@@ -1,5 +1,5 @@
 .myac {
-  height: 150vh;
+  height: 200vh;
   width: 100%;
   background: linear-gradient(
     180deg,
@@ -34,6 +34,7 @@
       transform: translateY(4rem);
       transition: all 0.5s;
       cursor: pointer;
+      padding-left: 3.5rem;
     }
   }
   &-line {
@@ -108,7 +109,27 @@
       }
     }
   }
+  &-svg {
+    width: 100%;
+  }
+}
+.orders {
+  &-title {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 3rem;
+    padding: 3rem;
+  }
 }
 .myac-img-cont:hover .myac-img-btn {
   transform: translateY(0);
+}
+.choose {
+  display: none;
+}
+.file {
+  // display: none;
+  border: none;
+  outline: none;
 }

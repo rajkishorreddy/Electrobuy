@@ -133,7 +133,7 @@ exports.verifyTransaction = async (req, res, next) => {
       paytmCheckSum
     );
     if (!isVerifySignature) {
-      res.redirect(
+      return res.redirect(
         `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
       );
     }
@@ -166,7 +166,7 @@ exports.verifyTransaction = async (req, res, next) => {
       // return next(
       //   new AppError(404, "Sorry, the transaction was not successfull")
       // );
-      res.redirect(
+      return res.redirect(
         `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
       );
     }
@@ -180,7 +180,7 @@ exports.verifyTransaction = async (req, res, next) => {
       products: JSON.parse(req.query.products),
     });
     console.log("booking successfully created", booking);
-
+    res.cookie("dummy", "thiljfkajskfdskhfsfjsfdkffsdflsjdfk");
     res.redirect(
       `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
     );
@@ -213,16 +213,23 @@ exports.getAllOrders = async (req, res, next) => {
 };
 
 exports.checkOrder = async (req, res, next) => {
-  // get the order id from the req.body
-  const { orderId } = req.params;
-  // check if the order is present or not
-  const order = await bookingModel.findOne({ orderId });
-
-  if (!order) {
-    return next(new AppError(404, "No Order found with the provided orderId"));
+  try {
+    // get the order id from the req.body
+    const { orderId } = req.params;
+    console.log(req.params, orderId);
+    // check if the order is present or not
+    const order = await bookingModel.findOne({ orderId });
+    console.log("orderis ", order);
+    if (!order) {
+      return next(
+        new AppError(404, "No Order found with the provided orderId")
+      );
+    }
+    return res.status(200).json({
+      message: "success",
+      data: order,
+    });
+  } catch (err) {
+    next(err);
   }
-  return res.status(200).json({
-    message: "success",
-    data: order,
-  });
 };
