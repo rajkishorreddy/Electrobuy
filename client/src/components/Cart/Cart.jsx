@@ -43,10 +43,10 @@ const Cart = () => {
       const token = window.localStorage.getItem('token');
       try {
         const { data } = await axios.get(
-          `http://127.0.0.1:8080/api/v1/users/getAllCartProduct`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          `http://127.0.0.1:8080/api/v1/users/getAllCartProduct`
+          // {
+          //   headers: { Authorization: `Bearer ${token}` },
+          // }
         );
         console.log(data);
         setArr(data.data);

@@ -1,6 +1,6 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-
+import { useCookies } from 'react-cookie';
 import Header from '../Header';
 import Footer from '../Footer';
 import Card from './Card';
@@ -40,6 +40,8 @@ import wm2 from '../../assets/wms/wm2.jpg';
 import wm3 from '../../assets/wms/wm3.jpg';
 import wm4 from '../../assets/wms/wm4.jpg';
 const LandingPg = (props) => {
+  const [cookies] = useCookies(['user']);
+  console.log(cookies);
   const laps = [
     { item: lap1, name: 'Macbooks' },
     { item: lap2, name: 'Touch laptops' },

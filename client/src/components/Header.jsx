@@ -166,7 +166,7 @@ const Header = () => {
             <span className="header_cart-name">cart</span>
           </Link>
           {user ? (
-            <div className="disp-flex">
+            <div className="header-disp-flex">
               <Link to={'/myaccount'} className="header_login">
                 Myaccount
               </Link>

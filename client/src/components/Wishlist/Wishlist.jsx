@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
+import { useCookies } from 'react-cookie';
 import { useSnackbar } from 'react-simple-snackbar';
 import './wishlist.scss';
 import axios from 'axios';
@@ -8,6 +9,7 @@ import history from '../../history';
 import loader from '../../assets/loading.gif';
 import { ReactComponent as Nologin } from '../../assets/nologin.svg';
 const Wishlist = () => {
+  const [cookies] = useCookies(['user']);
   const [arr, setArr] = useState(null);
   const options = {
     position: 'top-left',
@@ -27,14 +29,20 @@ const Wishlist = () => {
   const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     const getdata = async () => {
-      const token = window.localStorage.getItem('token');
+      const token = cookies.jwt;
+      console.log(cookies);
+      console.log('this token is', token);
       try {
         const { data } = await axios.get(
           `http://127.0.0.1:8080/api/v1/users/getAllWishlistProduct`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            // headers: {
+            //   Authorization: `Bearer ${token}`,
+            // },
+            withCredentials: true,
           }
         );
+        console.log(data);
         setArr(data.data);
       } catch (err) {
         console.log(err);
@@ -43,7 +51,8 @@ const Wishlist = () => {
     getdata();
   }, []);
   const removeitem = async (curr) => {
-    const token = window.localStorage.getItem('token');
+    const token = cookies.jwt;
+
     try {
       console.log(curr.target?.dataset?.id);
       const { data } = await axios.delete(

@@ -6,7 +6,6 @@
   align-items: center;
   font-family: 'Montserrat', sans-serif;
   justify-content: space-between;
-
   &_logo {
     height: 5rem;
     width: 5rem;
@@ -15,9 +14,13 @@
       margin: 0;
     }
   }
-  .disp-flex {
+  .header-disp-flex {
     display: flex;
     align-items: center;
+    @media only screen and (max-width: 26em) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
   &_right {
     // background: red;
@@ -26,14 +29,23 @@
     align-items: center;
     justify-content: flex-end;
     position: relative;
-    @media only screen and (max-width: 36.5em) {
+    @media only screen and (max-width: 43.75em) {
       width: 88%;
+    }
+    @media only screen and (max-width: 26em) {
+      justify-content: space-around;
     }
   }
   &_form_container {
     width: 55%;
     margin-right: 3rem;
     position: relative;
+    @media only screen and (max-width: 43.75em) {
+      margin-right: 0;
+    }
+    @media only screen and (max-width: 26em) {
+      width: 65%;
+    }
   }
   &_form_searchlist {
     display: flex;
@@ -145,7 +157,7 @@
       margin: 0.5rem;
     }
     &-name {
-      @media only screen and (max-width: 26em) {
+      @media only screen and (max-width: 56.25em) {
         display: none;
       }
     }
@@ -176,7 +188,7 @@
       margin: 0.5rem;
     }
     &-name {
-      @media only screen and (max-width: 26em) {
+      @media only screen and (max-width: 56.25em) {
         display: none;
       }
     }
@@ -195,7 +207,8 @@
     }
     @media only screen and (max-width: 26em) {
       margin: 0;
-      margin-left: 0.4rem;
+      padding: 0.5rem;
+      margin-bottom: 2px;
     }
   }
 }
@@ -264,7 +277,8 @@
       padding: 1rem 5rem 1rem 0.5rem;
       font-size: 1.25rem;
       font-weight: 600;
-      top: 1rem;
+      top: 1.5rem;
+      right: 0;
       visibility: hidden;
       z-index: -1;
     }

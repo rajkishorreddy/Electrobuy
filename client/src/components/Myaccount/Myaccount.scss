@@ -1,5 +1,4 @@
 .myac {
-  height: 200vh;
   width: 100%;
   background: linear-gradient(
     180deg,
@@ -44,7 +43,6 @@
           cursor: pointer;
         }
       }
-      padding-left: 3.5rem;
     }
   }
   &-line {
@@ -57,13 +55,22 @@
   &-forms {
     width: 100%;
     display: flex;
+    @media only screen and (max-width: 30rem) {
+      flex-direction: column;
+    }
     &-left {
       padding-top: 3rem;
       width: 50%;
+      @media only screen and (max-width: 30rem) {
+        width: 100%;
+      }
     }
     &-right {
       padding-top: 3rem;
       width: 50%;
+      @media only screen and (max-width: 30rem) {
+        width: 100%;
+      }
     }
   }
   &-form {
@@ -71,6 +78,9 @@
       font-family: 'Cabin', sans-serif;
       // background: red;
       width: 60%;
+      @media only screen and (max-width: 30rem) {
+        width: 90%;
+      }
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -133,7 +143,10 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 3rem;
-    padding: 3rem;
+    padding: 1rem 3rem;
+  }
+  &-items {
+    padding: 0 3rem;
   }
 }
 .myac-img-cont:hover .myac-img-btn {
@@ -146,4 +159,16 @@
   // display: none;
   border: none;
   outline: none;
+}
+.oitem {
+  color: white;
+  padding: 2.5rem 0rem;
+  &-id {
+    font-size: 1.3rem;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0.5rem 0rem;
+    &-title {
+      font-weight: 700;
+    }
+  }
 }

@@ -11,13 +11,10 @@ var extractCookieFn = function (req) {
   let jwtToken = null;
   console.log("req.headers", req.headers.authorization);
   console.log("req.cookies", req.cookies);
-  if (req && req.cookies["jwt-cookie"]) {
+  if (req && req.cookies["jwt"]) {
     console.log("all cokkies present now are", req.cookies);
-    jwtToken = req.cookies["jwt-cookie"];
-    console.log(
-      "cookies from passport-jwt callback",
-      req.cookies["jwt-cookie"]
-    );
+    jwtToken = req.cookies["jwt"];
+    console.log("cookies from passport-jwt callback", req.cookies["jwt"]);
     return jwtToken;
   }
   if (

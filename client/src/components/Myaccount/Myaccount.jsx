@@ -10,7 +10,6 @@ import './Myaccount.scss';
 
 import { ReactComponent as Camera } from '../../assets/camera.svg';
 import { ReactComponent as Myac } from '../../assets/myac.svg';
-import temp from '../../assets/profile.png';
 
 const Myaccount = () => {
   const [FirstName, setFirstName] = useState('');
@@ -84,7 +83,7 @@ const Myaccount = () => {
           event.target.files[0],
           300,
           300,
-          "JPEG",
+          'JPEG',
           75,
           0,
           (uri) => {
@@ -92,7 +91,7 @@ const Myaccount = () => {
             setDp(uri);
             // this.setState({ newImage: uri });
           },
-          "base64",
+          'base64',
           200,
           200
         );
@@ -100,7 +99,7 @@ const Myaccount = () => {
         console.log(err);
       }
     }
-  }
+  };
 
   useEffect(() => {
     const token = window.localStorage.getItem('token');
@@ -108,7 +107,7 @@ const Myaccount = () => {
       const { data } = await axios.patch(
         `http://127.0.0.1:8080/api/v1/users/updateMyProfilePic`,
         {
-          avatar: dp
+          avatar: dp,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -116,7 +115,7 @@ const Myaccount = () => {
       );
       setAvatar(data.data.avatar);
       console.log(data);
-    }
+    };
     uploadDp();
   }, [dp]);
 
@@ -275,10 +274,7 @@ const Myaccount = () => {
                 rows="4"
                 cols="50"
                 className="myac-form-left-input-add"
-              >
-                At w3schools.com you will learn how to make a website. They
-                offer free tutorials in all web development technologies.
-              </textarea>
+              ></textarea>
               <button className="myac-form-left-btn">Update profile</button>
             </form>
           </div>

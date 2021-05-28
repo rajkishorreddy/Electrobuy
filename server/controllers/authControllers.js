@@ -240,18 +240,32 @@ exports.createCookie = (req, res, next) => {
     { id: cookieInfo.user._id, provider: cookieInfo.provider },
     process.env.JWT_SECRET
   );
-  res.cookie("jwt-cookie", jwtToken, cookieOptions);
-
   //3)sending back the response
-  // res.redirect(`http://127.0.0.1:3000`);
-  res.status(200).json({
-    status: "success",
-    jwtToken,
-    data: {
-      user: cookieInfo.user,
-      provider: cookieInfo.provider,
-    },
-  });
+  console.log("PLEASE check this", cookieInfo);
+  if (cookieInfo.provider === "google") {
+    res.cookie("jwt", jwtToken, cookieOptions);
+    res.redirect(`http://127.0.0.1:3000`);
+  } else {
+    res.status(200).json({
+      status: "success",
+      jwtToken,
+      data: {
+        user: cookieInfo.user,
+        provider: cookieInfo.provider,
+      },
+    });
+  }
+  // res.cookie("jwt", jwtToken, cookieOptions);
+  // //3)sending back the response
+  // // res.redirect(`http://127.0.0.1:3000`);
+  // res.status(200).json({
+  //   status: "success",
+  //   jwtToken,
+  //   data: {
+  //     user: cookieInfo.user,
+  //     provider: cookieInfo.provider,
+  //   },
+  // });
 };
 
 exports.passportWrapperMiddleware = (req, res, next) => {

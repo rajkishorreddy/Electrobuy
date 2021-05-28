@@ -32,25 +32,26 @@ const SearchResults = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addWishlist = async (el) => {
-    const token = window.localStorage.getItem('token');
-    if (!token) {
-      history.push('/login');
-    } else {
-      try {
-        const data = await axios.post(
-          `http://127.0.0.1:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
-          {},
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        if (data.data.status === 'success') {
-          openSnackbar('item added to wishlist');
+    // const token = window.localStorage.getItem('token');
+    // if (!token) {
+    //   history.push('/login');
+    // } else {
+    try {
+      const data = await axios.post(
+        `http://127.0.0.1:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
+        {},
+        {
+          // headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         }
-      } catch (err) {
-        console.log(err);
+      );
+      if (data.data.status === 'success') {
+        openSnackbar('item added to wishlist');
       }
+    } catch (err) {
+      console.log(err);
     }
+    // }
   };
   const addCart = async (el) => {
     const token = window.localStorage.getItem('token');

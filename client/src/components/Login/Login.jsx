@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useSnackbar } from 'react-simple-snackbar';
+import { useCookies } from 'react-cookie';
+
 import { ReactComponent as Logo } from '../../assets/Logo.svg';
 import { ReactComponent as Style } from '../../assets/signup.svg';
 import { Link } from 'react-router-dom';
@@ -8,6 +10,7 @@ import axios from 'axios';
 const Signup = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+  const [cookies, setCookie] = useCookies(['user']);
   const options = {
     position: 'top-left',
     style: {
@@ -44,6 +47,7 @@ const Signup = () => {
       });
       console.log(data.data);
       window.localStorage.setItem('token', data.jwtToken);
+      setCookie('jwt', data.jwtToken, { path: '/' });
       openSnackbar('Login successfull!');
       setTimeout(() => {
         history.push('/');
@@ -64,7 +68,12 @@ const Signup = () => {
           className="signup-logo"
         />
         <div className="signup-main">
-          <form className="signup-form" onSubmit={(e) => onSubmit(e)}>
+          <form
+            className="signup-form"
+            onSubmit={(e) => onSubmit(e)}
+            // method="post"
+            // action="http://127.0.0.1:8080/api/v1/users/login-basic"
+          >
             <div className="signup-form-title">Login here!</div>
 
             <label htmlFor="email" className="signup-form-label">
@@ -73,6 +82,7 @@ const Signup = () => {
             <input
               id="email"
               type="email"
+              name="email"
               className="signup-form-input"
               value={Email}
               onChange={(e) => {
@@ -86,6 +96,7 @@ const Signup = () => {
             <input
               id="password"
               type="password"
+              name="password"
               className="signup-form-input"
               value={Password}
               onChange={(e) => {
