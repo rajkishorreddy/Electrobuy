@@ -1,6 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-// const GitHubStrategy = require("passport-github2").Strategy;
+const GitHubStrategy = require("passport-github2").Strategy;
 // const facebookStrategy = require("passport-facebook").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
@@ -10,6 +10,7 @@ const User = require("./../models/UserModel");
 var extractCookieFn = function (req) {
   let jwtToken = null;
   console.log("req.headers", req.headers.authorization);
+  console.log("req.cookies", req.cookies);
   if (req && req.cookies["jwt-cookie"]) {
     console.log("all cokkies present now are", req.cookies);
     jwtToken = req.cookies["jwt-cookie"];
@@ -109,30 +110,64 @@ passport.use(
   )
 );
 
-// passport.use(
-//   new GitHubStrategy(
-//     {
-//       clientID: process.env.GITHUB_CLIENT_ID,
-//       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-//       callbackURL: process.env.GITHUB_CALLBACK_URL,
-//       passReqToCallback: true,
-//     },
-//     (req, accessToken, refreshToken, profile, cb) => {
-//       if (!req.user) {
-//         console.log(profile.provider, accessToken);
-//         cb(null, { id: profile.id, provider: profile.provider });
-//       } else {
-//         // the case where, he is trying to connect with other account
-//         // NOTE: must add the new detils to the user, and then prvide the userid from the db
-//         console.log(
-//           " my work is succesfully. the user is trying to connect again with other social profile"
-//         );
-//         console.log("the current req.user is", req.user);
-//         cb(null, req.user);
-//       }
-//     }
-//   )
-// );
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: process.env.GITHUB_CALLBACK_URL,
+      passReqToCallback: true,
+    },
+    async (req, accessToken, refreshToken, profile, cb) => {
+      try {
+        if (!req.user) {
+          // Case where the user signsup/ logsin  for the first time
+          console.log("there is no req.user present");
+          console.log(profile, accessToken);
+
+          const user = await User.findOne({ githubId: profile.id });
+          if (!user) {
+            // Case where the user signs up for the first time
+            const newUser = await User.create({
+              name: profile.displayName,
+              // NOTE: Make sure to only save the verified email address
+              email: profile.emails[0].value,
+              avatar: profile.photos[0].value,
+              googleId: profile.id,
+            });
+            console.log("A new user is created and saved onto the DB");
+            return cb(null, { user: newUser, provider: "github" });
+          }
+          console.log("An existing user is trying to log in");
+          return cb(null, { user: user, provider: "github" });
+        } else {
+          // the case where, he is trying to connect with other account
+          // NOTE: there is some inconsistency while logging with other google account, when the cookie is already present.
+          // It is replacing the googleId, which must not be done
+          console.log(
+            "The user is already authenticated, but trying to add the github details to his user profile"
+          );
+
+          const user = await User.findById(req.user.id);
+
+          if (!user.githubId) {
+            await User.findByIdAndUpdate(req.user.id, { githubId: profile.id });
+            console.log(
+              "Added the githubId to the existing authenticated user"
+            );
+            return cb(null, { user: user, provider: "github" });
+          }
+          console.log("Trying to replace the already present githubId");
+          throw new Error(
+            "Trying to change the githubId of an existing authenticated user"
+          );
+        }
+      } catch (error) {
+        cb(error, false);
+      }
+    }
+  )
+);
 
 // cant use facbook right now
 // passport.use(

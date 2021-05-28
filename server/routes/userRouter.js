@@ -82,6 +82,30 @@ router.get(
   authController.createCookie
 );
 
+router.get(
+  "/github",
+  (req, res, next) => {
+    console.log("called from 1st call");
+    next();
+  },
+  passport.authenticate("github", {
+    session: false,
+    scope: ["profile", "email"],
+  })
+);
+router.get(
+  "/github/redirect",
+  authController.passportWrapperMiddleware,
+  passport.authenticate("github", {
+    session: false,
+    // display: "popup",
+    scope: ["profile", "email"],
+    failureRedirect: "/",
+  }),
+  // middleware for sending the cookie back to the browser
+  authController.createCookie
+);
+
 router.use(
   "/protected",
   authController.passportWrapperMiddleware,
