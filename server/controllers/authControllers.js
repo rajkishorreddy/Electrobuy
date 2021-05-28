@@ -243,6 +243,7 @@ exports.createCookie = (req, res, next) => {
   res.cookie("jwt-cookie", jwtToken, cookieOptions);
 
   //3)sending back the response
+  // res.redirect(`http://127.0.0.1:3000`);
   res.status(200).json({
     status: "success",
     jwtToken,

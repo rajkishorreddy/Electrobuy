@@ -5,7 +5,8 @@ const axios = require("axios");
 const formidable = require("formidable");
 const formidableMiddleware = require("express-formidable");
 
-const bookingModel = require("./../models/bookingModel");
+const Product = require("./../models/productModel");
+const Booking = require("./../models/bookingModel");
 const PaytmChecksum = require("./../utils/PaytmChecksum");
 const AppError = require("./../utils/AppError");
 
@@ -171,7 +172,7 @@ exports.verifyTransaction = async (req, res, next) => {
       );
     }
     // console.log("fuck you", JSON.parse(req.query.products));
-    const booking = await bookingModel.create({
+    const booking = await Booking.create({
       transactionId: checkTransactionStatus.data.body.txnId,
       orderId: checkTransactionStatus.data.body.orderId,
       transactionDate: checkTransactionStatus.data.body.txnDate,
@@ -197,11 +198,16 @@ exports.getAllOrders = async (req, res, next) => {
     }
     // console.log("coming from gerer", req.user._id);
 
-    const orders = await bookingModel.aggregate([
+    const orders = await Booking.aggregate([
       {
         $match: { userRef: req.user._id },
       },
     ]);
+
+    await Product.populate(orders, {
+      path: "products",
+      select: "-__v -technicalDetails -additionalDetails -reviewArr -id",
+    });
 
     res.status(200).json({
       count: orders.length,
@@ -218,7 +224,7 @@ exports.checkOrder = async (req, res, next) => {
     const { orderId } = req.params;
     console.log(req.params, orderId);
     // check if the order is present or not
-    const order = await bookingModel.findOne({ orderId });
+    const order = await Booking.findOne({ orderId });
     console.log("orderis ", order);
     if (!order) {
       return next(
