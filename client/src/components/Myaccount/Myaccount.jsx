@@ -1,24 +1,16 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
-import Resizer from "react-image-file-resizer";
 import axios from 'axios';
+import { useSnackbar } from 'react-simple-snackbar';
+import Resizer from 'react-image-file-resizer';
 
-=======
-import { useState, useEffect, useRef } from 'react';
-import './Myaccount.scss';
->>>>>>> 6482e465d87c92afa2e64f8d2d098c87d8a8717d
 import Header from '../Header.jsx';
+import Footer from '../Footer.jsx';
+
 import './Myaccount.scss';
 
 import { ReactComponent as Camera } from '../../assets/camera.svg';
 import { ReactComponent as Myac } from '../../assets/myac.svg';
 import temp from '../../assets/profile.png';
-<<<<<<< HEAD
-=======
-import axios from 'axios';
-import FileBase from 'react-file-base64';
-import { useSnackbar } from 'react-simple-snackbar';
->>>>>>> 6482e465d87c92afa2e64f8d2d098c87d8a8717d
 
 const Myaccount = () => {
   const [FirstName, setFirstName] = useState('');
@@ -28,10 +20,11 @@ const Myaccount = () => {
   const [currPass, setCurrPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [cnNewPass, setCnNewPass] = useState('');
-<<<<<<< HEAD
+  const [orders, setOrders] = useState(null);
   const [dp, setDp] = useState('');
+  const [avatar, setAvatar] = useState('');
 
-=======
+  console.log(orders);
   const options = {
     position: 'top-left',
     style: {
@@ -48,7 +41,6 @@ const Myaccount = () => {
     },
   };
   const [openSnackbar] = useSnackbar(options);
->>>>>>> 6482e465d87c92afa2e64f8d2d098c87d8a8717d
   useEffect(() => {
     const getData = async () => {
       const token = window.localStorage.getItem('token');
@@ -59,42 +51,27 @@ const Myaccount = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        // console.log(data.data);
+        const orders = await axios.get(
+          `http://127.0.0.1:8080/api/v1/users/orders `,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        setOrders(orders.data.data);
         const [first, last] = data.data.name.split(' ');
         setFirstName(first);
         setLastName(last);
         setEmail(data.data.email);
         setAddress(data.data.address);
+        setAvatar(data.data.avatar);
       } catch (err) {
         console.log(err.response);
       }
     };
+
     getData();
   }, []);
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const token = window.localStorage.getItem('token');
-    try {
-      const { data } = await axios.patch(
-        `http://127.0.0.1:8080/api/v1/users/updateMyProfile`,
-        {
-          name: `${FirstName} ${LastName}`,
-          email: Email,
-          address: address,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log(data);
-      const [first, last] = data.data.user.name.split(' ');
-      setFirstName(first);
-      setLastName(last);
-<<<<<<< HEAD
-      setEmail(data.data.email);
-    };
-    getData();
-  });
 
   const resizeFile = (event) => {
     var fileInput = false;
@@ -125,10 +102,43 @@ const Myaccount = () => {
     }
   }
 
-  const onSubmit = (e) => {
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+    const uploadDp = async () => {
+      const { data } = await axios.patch(
+        `http://127.0.0.1:8080/api/v1/users/updateMyProfilePic`,
+        {
+          avatar: dp
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setAvatar(data.data.avatar);
+      console.log(data);
+    }
+    uploadDp();
+  }, [dp]);
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(dp);
-=======
+    const token = window.localStorage.getItem('token');
+    try {
+      const { data } = await axios.patch(
+        `http://127.0.0.1:8080/api/v1/users/updateMyProfile`,
+        {
+          name: `${FirstName} ${LastName}`,
+          email: Email,
+          address: address,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(data);
+      const [first, last] = data.data.user.name.split(' ');
+      setFirstName(first);
+      setLastName(last);
       setEmail(data.data.user.email);
       setAddress(data.data.user.address);
       if (data.status === 'success') {
@@ -159,16 +169,40 @@ const Myaccount = () => {
     } catch (err) {
       openSnackbar(err.response?.data?.message);
     }
->>>>>>> 6482e465d87c92afa2e64f8d2d098c87d8a8717d
   };
+  const renderOrders = () => {
+    if (!orders) return <div>Loading...</div>;
+    else
+      return orders.map((el) => {
+        return (
+          <div className="oitem" key={el._id}>
+            <div className="oitem-id">
+              <span className="oitem-id-title">ORDER-ID: </span> {el.orderId}
+            </div>
+            <div className="oitem-id">
+              <span className="oitem-id-title">TRANSACTION-DATE: </span>
+              {el.transactionDate.slice(0, 10)}
+            </div>
+            <div className="oitem-id">
+              <span className="oitem-id-title">TRANSACTION-ID: </span>
+              {el.transactionId}
+            </div>
+            <div className="oitem-id">
+              <span className="oitem-id-title">AMOUNT: </span>
+              {el.transactionAmount}
+            </div>
+          </div>
+        );
+      });
+  };
+
   return (
     <div>
       <Header />
       <div className="myac">
         <div className="myac-img-cont">
-          <img src={temp} className="myac-img" alt="select" />
+          <img src={avatar} className="myac-img" alt="select" />
           <button className="myac-img-btn">
-<<<<<<< HEAD
             <input
               id="dp"
               accept="image/*"
@@ -179,14 +213,6 @@ const Myaccount = () => {
             <label htmlFor="dp" className="myac-img-btn__input-label">
               <Camera />{' '}
             </label>
-=======
-            {/* <Camera />{' '} */}
-            {/* <FileBase
-              type="file"
-              multiple={false}
-              onDone={({ base64 }) => setImage(base64)}
-            /> */}
->>>>>>> 6482e465d87c92afa2e64f8d2d098c87d8a8717d
           </button>
         </div>
         <div className="myac-line"></div>
@@ -198,6 +224,7 @@ const Myaccount = () => {
                 First Name
               </label>
               <input
+                required
                 id="first-name"
                 type="text"
                 className="myac-form-left-input"
@@ -211,6 +238,7 @@ const Myaccount = () => {
                 Last Name
               </label>
               <input
+                required
                 id="last-name"
                 type="text"
                 className="myac-form-left-input"
@@ -224,6 +252,7 @@ const Myaccount = () => {
                 Email
               </label>
               <input
+                required
                 id="email"
                 type="email"
                 className="myac-form-left-input"
@@ -236,16 +265,20 @@ const Myaccount = () => {
               <label htmlFor="add" className="myac-form-left-label">
                 Address
               </label>
-              <input
-                id="add"
-                type="text"
-                className="myac-form-left-input-add"
+              <textarea
                 value={address}
                 onChange={(e) => {
                   setAddress(e.target.value);
                 }}
-                autoComplete="off"
-              />
+                id="add"
+                name="add"
+                rows="4"
+                cols="50"
+                className="myac-form-left-input-add"
+              >
+                At w3schools.com you will learn how to make a website. They
+                offer free tutorials in all web development technologies.
+              </textarea>
               <button className="myac-form-left-btn">Update profile</button>
             </form>
           </div>
@@ -301,12 +334,10 @@ const Myaccount = () => {
         <Myac className="myac-svg" />
         <div className="orders">
           <div className="orders-title">My orders</div>
+          <div className="orders-items">{renderOrders()}</div>
         </div>
-        {/* <div className="choose">
-          
-        </div> */}
-        <input type="file" className="file" />
       </div>
+      <Footer />
     </div>
   );
 };

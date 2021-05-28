@@ -44,6 +44,7 @@
           cursor: pointer;
         }
       }
+      padding-left: 3.5rem;
     }
   }
   &-line {
@@ -107,6 +108,9 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.774);
           margin-bottom: 1rem;
           text-align: start;
+          color: white;
+          padding: 1rem 1rem;
+          font-family: 'Cabin', sans-serif;
         }
       }
       &-btn {
@@ -115,6 +119,7 @@
         padding: 1rem 1.5rem;
         border-radius: 5px;
         color: white;
+        cursor: pointer;
       }
     }
   }
