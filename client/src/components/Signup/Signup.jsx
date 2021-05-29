@@ -1,40 +1,40 @@
-import { useState } from 'react';
-import { ReactComponent as Logo } from '../../assets/Logo.svg';
-import { ReactComponent as Style } from '../../assets/signup.svg';
-import './Signup.scss';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import history from '../../history';
-import { useSnackbar } from 'react-simple-snackbar';
+import { useState } from "react";
+import { ReactComponent as Logo } from "../../assets/Logo.svg";
+import { ReactComponent as Style } from "../../assets/signup.svg";
+import "./Signup.scss";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import history from "../../history";
+import { useSnackbar } from "react-simple-snackbar";
 const Signup = () => {
-  const [FirstName, setFirstName] = useState('');
-  const [LastName, setLastName] = useState('');
-  const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
-  const [CnPassword, setCnPassword] = useState('');
+  const [FirstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [CnPassword, setCnPassword] = useState("");
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('assasas');
-      const data = await axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8080/api/v1/users/signup-basic',
+      console.log("assasas");
+      const { data } = await axios({
+        method: "post",
+        url: "http://127.0.0.1:8080/api/v1/users/signup-basic",
         data: {
           name: `${FirstName} ${LastName}`,
           email: Email,
@@ -43,10 +43,10 @@ const Signup = () => {
         },
       });
       console.log(data);
-      window.localStorage.setItem('token', data.jwtToken);
-      openSnackbar('Account created successfully!');
+      window.localStorage.setItem("token", data.jwtToken);
+      openSnackbar("Account created successfully!");
       setTimeout(() => {
-        history.push('/');
+        history.push("/");
       }, 1000);
     } catch (err) {
       console.log(err);
@@ -56,7 +56,7 @@ const Signup = () => {
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={'/'} className="signup_left-goback">
+        <Link to={"/"} className="signup_left-goback">
           ←
         </Link>
         <Logo className="signup-logo" />
@@ -131,8 +131,8 @@ const Signup = () => {
             <button className="signup-form-btn">Sign Up</button>
           </form>
           <div className="signup-already">
-            If already a user, then{' '}
-            <Link className="signup-already-link" to={'/login'}>
+            If already a user, then{" "}
+            <Link className="signup-already-link" to={"/login"}>
               Login here! →
             </Link>
           </div>

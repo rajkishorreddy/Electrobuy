@@ -15,14 +15,44 @@ const router = express.Router();
 
 router.use("/connect", connectRouter);
 
+router.get(
+  "/getAuthTokenInfo",
+  authController.passportWrapperMiddleware,
+  authController.getAuthTokenInfo
+);
+
 router.post(
   "/signup-basic",
+  authController.passportWrapperMiddleware,
+  (req, res, next) => {
+    // This returns a error, if the user is trying to connect his google again
+    console.log("checking purpose of user", req.user);
+    if (req.user && req.user.email) {
+      console.log(
+        "You have already connected via local method. Please contact admin to change account"
+      );
+      return res.redirect("http://localhost:3000");
+    }
+    next();
+  },
   authController.basicSignup,
   authController.createCookie
 );
 
 router.post(
   "/login-basic",
+  authController.passportWrapperMiddleware,
+  (req, res, next) => {
+    // This returns a error, if the user is trying to connect his google again
+    console.log("checking purpose of user", req.user);
+    if (req.user && req.user.email) {
+      console.log(
+        "You have already connected via local method. Please contact admin to change account"
+      );
+      return res.redirect("http://localhost:3000");
+    }
+    next();
+  },
   authController.basicLogin,
   authController.createCookie
 );
@@ -60,8 +90,16 @@ router.patch(
 
 router.get(
   "/google",
+  authController.passportWrapperMiddleware,
   (req, res, next) => {
-    console.log("called from 1st call");
+    // This returns a error, if the user is trying to connect his google again
+    console.log("checking purpose of user", req.user);
+    if (req.user && req.user.googleId) {
+      console.log(
+        "You have already connected to google. Please contact admin to change account"
+      );
+      return res.redirect("http://localhost:3000");
+    }
     next();
   },
   passport.authenticate("google", {
@@ -83,14 +121,53 @@ router.get(
 );
 
 router.get(
-  "/github",
+  "/facebook",
+  authController.passportWrapperMiddleware,
   (req, res, next) => {
-    console.log("called from 1st call");
+    // This returns a error, if the user is trying to connect his facebook again
+    console.log("checking purpose of user", req.user);
+    if (req.user && req.user.facebookId) {
+      console.log(
+        "You have already connected to facebook. Please contact admin to change account"
+      );
+      return res.redirect("http://localhost:3000");
+    }
+    next();
+  },
+  passport.authenticate("facebook", {
+    session: false,
+    scope: ["profile", "email"],
+  })
+);
+router.get(
+  "/facebook/redirect",
+  authController.passportWrapperMiddleware,
+  passport.authenticate("facebook", {
+    session: false,
+    // display: "popup",
+    scope: ["profile", "email"],
+    failureRedirect: "/",
+  }),
+  // middleware for sending the cookie back to the browser
+  authController.createCookie
+);
+
+router.get(
+  "/github",
+  authController.passportWrapperMiddleware,
+  (req, res, next) => {
+    // This returns a error, if the user is trying to connect his github again
+    if (req.user && req.user.githubId) {
+      console.log(
+        "You have already connected to Github. Please contact admin to change account"
+      );
+      return res.redirect("http://localhost:3000");
+    }
     next();
   },
   passport.authenticate("github", {
     session: false,
-    scope: ["profile", "email"],
+    scope: ["user:email"],
   })
 );
 router.get(

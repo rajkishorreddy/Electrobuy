@@ -1,29 +1,26 @@
-import { useState } from 'react';
-import { useSnackbar } from 'react-simple-snackbar';
-import { useCookies } from 'react-cookie';
-
-import { ReactComponent as Logo } from '../../assets/Logo.svg';
-import { ReactComponent as Style } from '../../assets/signup.svg';
-import { Link } from 'react-router-dom';
-import history from '../../history';
-import axios from 'axios';
+import { useState } from "react";
+import { useSnackbar } from "react-simple-snackbar";
+import { ReactComponent as Logo } from "../../assets/Logo.svg";
+import { ReactComponent as Style } from "../../assets/signup.svg";
+import { Link } from "react-router-dom";
+import history from "../../history";
+import axios from "axios";
 const Signup = () => {
-  const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
-  const [cookies, setCookie] = useCookies(['user']);
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
@@ -31,26 +28,25 @@ const Signup = () => {
     e.preventDefault();
     try {
       const { data } = await axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8080/api/v1/users/login-basic',
+        method: "post",
+        url: "http://127.0.0.1:8080/api/v1/users/login-basic",
         data: {
           email: Email,
           password: Password,
         },
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Credentials': true,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
         },
-        credentials: 'include',
+        credentials: "include",
         // withCredentials: true,
       });
       console.log(data.data);
-      window.localStorage.setItem('token', data.jwtToken);
-      setCookie('jwt', data.jwtToken, { path: '/' });
-      openSnackbar('Login successfull!');
+      window.localStorage.setItem("token", data.jwtToken);
+      openSnackbar("Login successfull!");
       setTimeout(() => {
-        history.push('/');
+        history.push("/");
       }, 1000);
     } catch (err) {
       console.log(err.response?.data);
@@ -60,20 +56,15 @@ const Signup = () => {
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={'/'} className="signup_left-goback">
+        <Link to={"/"} className="signup_left-goback">
           ←
         </Link>
         <Logo
-          style={{ transform: 'translate(-50%,8rem)' }}
+          style={{ transform: "translate(-50%,8rem)" }}
           className="signup-logo"
         />
         <div className="signup-main">
-          <form
-            className="signup-form"
-            onSubmit={(e) => onSubmit(e)}
-            // method="post"
-            // action="http://127.0.0.1:8080/api/v1/users/login-basic"
-          >
+          <form className="signup-form" onSubmit={(e) => onSubmit(e)}>
             <div className="signup-form-title">Login here!</div>
 
             <label htmlFor="email" className="signup-form-label">
@@ -82,7 +73,6 @@ const Signup = () => {
             <input
               id="email"
               type="email"
-              name="email"
               className="signup-form-input"
               value={Email}
               onChange={(e) => {
@@ -96,7 +86,6 @@ const Signup = () => {
             <input
               id="password"
               type="password"
-              name="password"
               className="signup-form-input"
               value={Password}
               onChange={(e) => {
@@ -108,8 +97,8 @@ const Signup = () => {
             <button className="signup-form-btn">Log in</button>
           </form>
           <div className="signup-already">
-            No account, then click here to{' '}
-            <Link to={'/signup'} className="signup-already-link">
+            No account, then click here to{" "}
+            <Link to={"/signup"} className="signup-already-link">
               sign up! →
             </Link>
           </div>

@@ -1,58 +1,49 @@
-import { useEffect, useState } from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
-import { useCookies } from 'react-cookie';
-import { useSnackbar } from 'react-simple-snackbar';
-import './wishlist.scss';
-import axios from 'axios';
-import history from '../../history';
-import loader from '../../assets/loading.gif';
-import { ReactComponent as Nologin } from '../../assets/nologin.svg';
+import { useEffect, useState } from "react";
+import Header from "../Header";
+import Footer from "../Footer";
+import { useSnackbar } from "react-simple-snackbar";
+import "./wishlist.scss";
+import axios from "axios";
+import history from "../../history";
+import loader from "../../assets/loading.gif";
+import { ReactComponent as Nologin } from "../../assets/nologin.svg";
 const Wishlist = () => {
-  const [cookies] = useCookies(['user']);
   const [arr, setArr] = useState(null);
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     const getdata = async () => {
-      const token = cookies.jwt;
-      console.log(cookies);
-      console.log('this token is', token);
+      const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
           `http://127.0.0.1:8080/api/v1/users/getAllWishlistProduct`,
           {
-            // headers: {
-            //   Authorization: `Bearer ${token}`,
-            // },
-            withCredentials: true,
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log(data);
         setArr(data.data);
       } catch (err) {
-        console.log(err);
+        openSnackbar(err.response?.data?.message);
       }
     };
     getdata();
   }, []);
   const removeitem = async (curr) => {
-    const token = cookies.jwt;
-
+    const token = window.localStorage.getItem("token");
     try {
       console.log(curr.target?.dataset?.id);
       const { data } = await axios.delete(
@@ -62,18 +53,18 @@ const Wishlist = () => {
         }
       );
       setArr(data.data);
-      openSnackbar('item removed');
+      openSnackbar("item removed");
     } catch (err) {
       console.log(err);
     }
   };
   const loginclick = () => {
-    history.push('/login');
+    history.push("/login");
   };
   const addCart = async (el) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     if (!token) {
-      history.push('/login');
+      history.push("/login");
     } else {
       try {
         const data = await axios.post(
@@ -84,8 +75,8 @@ const Wishlist = () => {
           }
         );
         console.log(data);
-        if (data.data.status === 'success') {
-          openSnackbar('item added successfully to Cart');
+        if (data.data.status === "success") {
+          openSnackbar("item added successfully to Cart");
         }
       } catch (err) {
         console.log(err);
@@ -110,14 +101,14 @@ const Wishlist = () => {
             <div className="wishlist_cont-item-info">
               <div className="wishlist_cont-item-title">{el.fullName}</div>
               <div className="wishlist_cont-item-price">
-                Price :{' '}
+                Price :{" "}
                 <span className="wishlist_cont-item-price-get">
-                  {' '}
+                  {" "}
                   ₹{el.finalPrice}
-                </span>{' '}
+                </span>{" "}
                 /
                 <span className="wishlist_cont-item-price-original">
-                  {' '}
+                  {" "}
                   ₹{el.originalPrice}
                 </span>
               </div>
@@ -138,7 +129,7 @@ const Wishlist = () => {
                 </button>
               </div>
               <div className="wishlist_cont-item-rating">
-                {' '}
+                {" "}
                 <span className="wishlist_cont-item-rating-none"></span>★
                 {el.averageRating}
               </div>
@@ -152,11 +143,11 @@ const Wishlist = () => {
     <div>
       <Header />
       <div className="wishlist">
-        {window.localStorage.getItem('token') ? (
+        {window.localStorage.getItem("token") ? (
           <div>
-            {' '}
+            {" "}
             <div className="wishlist-heading">
-              My Wishlist{' '}
+              My Wishlist{" "}
               <span className="wishlist-heading-count">
                 {arr?.length} items
               </span>
