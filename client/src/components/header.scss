@@ -1,0 +1,325 @@
+@import '../sass/theme.scss';
+.header {
+  background: $primary-purple;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  justify-content: space-between;
+  &_logo {
+    height: 5rem;
+    width: 5rem;
+    margin-left: 1rem;
+    @media only screen and (max-width: 26em) {
+      margin: 0;
+    }
+  }
+  .header-disp-flex {
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width: 26em) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+  &_right {
+    // background: red;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    @media only screen and (max-width: 43.75em) {
+      width: 88%;
+    }
+    @media only screen and (max-width: 26em) {
+      justify-content: space-around;
+    }
+  }
+  &_form_container {
+    width: 55%;
+    margin-right: 3rem;
+    position: relative;
+    @media only screen and (max-width: 43.75em) {
+      margin-right: 0;
+    }
+    @media only screen and (max-width: 26em) {
+      width: 65%;
+    }
+  }
+  &_form_searchlist {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: linear-gradient(
+      270deg,
+      #333333 1.38%,
+      rgba(#51236e, 1) 104.69%
+    );
+    padding: 1rem 1rem 1rem 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    top: 3rem;
+    border-radius: 0 0 1rem 1rem;
+    max-width: 100%;
+    // visibility: visible;
+    z-index: 1;
+    &_item {
+      text-decoration: none;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      padding: 1rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+  &_form {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    @media only screen and (max-width: 36.5em) {
+      margin-right: 1rem;
+    }
+
+    @media only screen and (max-width: 26em) {
+      width: 100%;
+      margin-right: 0.5rem;
+    }
+
+    &-input {
+      width: 100%;
+      height: 3rem;
+      font-family: 'Cabin', sans-serif;
+      background: linear-gradient(
+        270deg,
+        #333333 1.38%,
+        rgba(211, 211, 211, 0) 104.69%
+      );
+      border-radius: 5px;
+      outline: none;
+      border: none;
+      padding: 0.5rem 2rem 0.5rem 2rem;
+      color: white;
+
+      @media only screen and (max-width: 26em) {
+        height: 4rem;
+        background: rgba(0, 0, 0, 0.329);
+      }
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    &-btn {
+      background: transparent;
+      outline: none;
+      border: none;
+      position: absolute;
+      right: 0.5rem;
+      cursor: pointer;
+
+      &-img {
+        height: 2rem;
+        width: 2rem;
+      }
+    }
+  }
+
+  &_wishlist {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-family: 'Cabin', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.26px;
+    font-weight: 500;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 1.5rem;
+    @media only screen and (max-width: 36.5em) {
+      margin: 0 1rem;
+    }
+    @media only screen and (max-width: 26em) {
+      margin: 0;
+    }
+    &-img {
+      // font-size: 100px;
+      height: 2rem !important;
+      width: 2rem !important;
+      margin: 0.5rem;
+    }
+    &-name {
+      @media only screen and (max-width: 56.25em) {
+        display: none;
+      }
+    }
+  }
+  &_cart {
+    display: flex;
+    align-items: center;
+    font-family: 'Cabin', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.26px;
+    font-weight: 500;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 1.5rem;
+    text-decoration: none;
+    @media only screen and (max-width: 36.5em) {
+      margin: 0 1rem;
+    }
+    @media only screen and (max-width: 26em) {
+      margin: 0;
+    }
+    &-img {
+      height: 2.5rem;
+      width: 2.5rem;
+      margin: 0.5rem;
+    }
+    &-name {
+      @media only screen and (max-width: 56.25em) {
+        display: none;
+      }
+    }
+  }
+  &_login {
+    @include font-face('Cabin', 1.5rem, 500);
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.521);
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 1rem;
+    text-decoration: none;
+    @media only screen and (max-width: 36.5em) {
+      margin: 0 1rem;
+    }
+    @media only screen and (max-width: 26em) {
+      margin: 0;
+      padding: 0.5rem;
+      margin-bottom: 2px;
+    }
+  }
+}
+.nav {
+  background: $primary-black;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  &_more {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    // &-btn {
+    //   background: none;
+    //   color: white;
+    //   border: none;
+    //   font-family: 'Montserrat', sans-serif;
+    //   font-size: 1.25rem;
+    //   font-weight: 600;
+    // }
+    // &_item {
+    //   text-decoration: none;
+    //   color: white;
+    //   font-family: 'Montserrat', sans-serif;
+    //   font-size: 1.3rem;
+    //   padding: 1rem;
+    // }
+    // &-list {
+    //   display: flex;
+    //   flex-direction: column;
+    //   position: absolute;
+    //   background: black;
+    //   padding: 0rem 5rem 1rem 0.5rem;
+    //   font-size: 1.25rem;
+    //   font-weight: 600;
+    //   top: 3rem;
+    // }
+    &-btn {
+      display: flex;
+      flex-direction: column;
+      color: white;
+      position: relative;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      z-index: 2;
+      cursor: pointer;
+      &-span {
+        display: flex;
+        align-items: center;
+      }
+      &-down {
+        fill: white;
+        height: 1.2rem;
+        width: 1.2rem;
+        margin: 0 4px;
+        transition: all 0.3s;
+      }
+    }
+    &-list {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      background: black;
+      padding: 1rem 5rem 1rem 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      top: 1.5rem;
+      right: 0;
+      visibility: hidden;
+      z-index: -1;
+    }
+    &_item {
+      text-decoration: none;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      padding: 1rem;
+    }
+  }
+  &_item {
+    @include font-face('Montserrat', 1.25rem, 600);
+    // font-size: 1.25rem;
+    text-decoration: none;
+    color: white;
+    // font-family: 'Montserrat', sans-serif;
+    @media only screen and (max-width: 26em) {
+      font-size: 1.3rem;
+      letter-spacing: 0;
+    }
+  }
+}
+
+.nav_more-btn:hover .nav_more-list {
+  visibility: visible;
+}
+.nav_more-btn:hover .nav_more-btn-down {
+  transform: rotate(-180deg);
+  transform-origin: center;
+}
+.nav_more-list:hover {
+  visibility: visible;
+}
+
+.visible {
+  // display: block;
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+  // display: hidden;
+}

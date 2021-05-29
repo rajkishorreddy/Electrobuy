@@ -1,0 +1,283 @@
+.cart {
+  min-height: 79vh;
+  background: linear-gradient(
+    180deg,
+    #74f062 0%,
+    #2e2e2e 0.01%,
+    rgba(88, 30, 122, 0.79) 100%
+  );
+  &-heading {
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    &-count {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.507);
+      margin-left: 1rem;
+    }
+  }
+  &_cont {
+    padding-top: 2rem;
+    width: 70%;
+    margin-left: 3rem;
+    // background-color: red;
+    padding-bottom: 3rem;
+    @media only screen and (max-width: 56.25em) {
+      width: 65%;
+      margin-left: 0;
+    }
+    @media only screen and (max-width: 36.5em) {
+      width: 90%;
+      margin: 0 auto;
+    }
+    @media only screen and (max-width: 26em) {
+      width: 100%;
+    }
+    &-item {
+      display: flex;
+      padding: 1rem 2rem;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.301);
+      &:first-child {
+        border-top: 1px solid rgba(255, 255, 255, 0.301);
+      }
+      &-img {
+        height: 12rem;
+        width: 12rem;
+        border-radius: 1.5rem;
+        margin-right: 3rem;
+      }
+      &-info {
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        width: 80%;
+      }
+      &-title {
+        font-size: 1.7rem;
+        font-weight: 500;
+        padding-bottom: 1rem;
+      }
+      &-price {
+        font-size: 1.5rem;
+        font-weight: 600;
+        padding-bottom: 1rem;
+        &-get {
+          // font-weight:;
+        }
+        &-original {
+          font-weight: 500;
+          text-decoration: line-through;
+        }
+      }
+      &-btns {
+        // position: absolute;
+        // bottom: 2.5rem;
+        // @media only screen and (max-width: 26em) {
+        //   bottom: 1rem;
+        // }
+      }
+      &-remove {
+        border: none;
+        padding: 0.5rem 2rem;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 2rem;
+        cursor: pointer;
+        &:active {
+          transform: translateY(1px);
+        }
+      }
+      &-move {
+        border: none;
+        padding: 0.5rem 2rem;
+        background: #581e7a;
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 2rem;
+        cursor: pointer;
+        &:active {
+          transform: translateY(1px);
+        }
+      }
+      &-rating {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        font-size: 1.5rem;
+        &-none {
+          @media only screen and (max-width: 56.25em) {
+            display: none;
+          }
+        }
+        @media only screen and (max-width: 56.25em) {
+          top: 70%;
+        }
+        @media only screen and (max-width: 26em) {
+          top: 45%;
+        }
+      }
+    }
+  }
+}
+.order {
+  position: fixed;
+
+  top: 18rem;
+  right: 3rem;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.4851) 0%,
+    rgba(88, 30, 122, 0.6633) 100%
+  );
+  width: 20%;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin: 1rem;
+  @media only screen and (max-width: 56.25em) {
+    width: 30%;
+    right: 1rem;
+  }
+  @media only screen and (max-width: 36.5em) {
+    position: static;
+    width: 60%;
+    margin: 0 auto;
+  }
+  @media only screen and (max-width: 26em) {
+    width: 70%;
+    margin: 0 auto;
+  }
+  &-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 2rem;
+  }
+  &-price {
+    display: flex;
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 0.5rem 2rem;
+    justify-content: space-between;
+  }
+  &-discount {
+    display: flex;
+    font-size: 1.5rem;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+  }
+  &-delivery {
+    display: flex;
+    font-size: 1.5rem;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+  }
+  &-total {
+    display: flex;
+    font-size: 1.5rem;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+  }
+  &-btn {
+    width: 100%;
+    border: none;
+    background: #3d0161;
+    padding: 1rem;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+.dcard {
+  height: 18rem;
+  width: 35rem;
+  position: fixed;
+  bottom: 3rem;
+  right: 0;
+  &-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+  }
+  &-master {
+    position: absolute;
+    height: 3rem;
+    width: 5rem;
+    bottom: 2rem;
+    right: 5rem;
+  }
+  &-brand {
+    position: absolute;
+    height: 2.5rem;
+    width: 2.5rem;
+    right: 6rem;
+    top: 2rem;
+  }
+  &-no {
+    height: 1.6rem;
+    position: absolute;
+    top: 50%;
+    left: 5rem;
+  }
+  &-mo {
+    position: absolute;
+    height: 1.3rem;
+    top: 70%;
+    left: 5rem;
+  }
+  &-cvv {
+    color: black;
+    position: absolute;
+    top: 69%;
+    left: 15rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  &-cvvv {
+    position: absolute;
+    height: 1.3rem;
+    top: 70%;
+    left: 18rem;
+  }
+  &-dark {
+    position: absolute;
+    top: 1.5rem;
+    left: -2rem;
+    height: 3rem;
+  }
+  &-use {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    position: absolute;
+    top: 7rem;
+    left: 5rem;
+  }
+  &-close {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 4rem;
+    top: 0;
+    cursor: pointer;
+  }
+  &-view {
+    position: fixed;
+    bottom: 3rem;
+    right: 2rem;
+    background: linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%);
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+}
