@@ -41,10 +41,7 @@ const Header = () => {
     openSnackbar("Successfully logged-out");
     history.push("/");
   };
-  const googletry = async () => {
-    // await axios.get('http://localhost:8080/api/v1/users/google');
-    window.open("http://localhost:8080/api/v1/users/google", "_self");
-  };
+
   const SearchSubmit = async (e) => {
     e.preventDefault();
     let value;
@@ -194,8 +191,7 @@ const Header = () => {
         <Link to={"/results/headphones"} className="nav_item">
           HEADPHONES
         </Link>
-        <button onClick={googletry}>google</button>
-        {/* <a href="http://localhost:8080/api/v1/users/google">tryg</a> */}
+
         {/* <div className="nav_more"> */}
         <div className="nav_more-btn">
           <span className="nav_more-btn-span">

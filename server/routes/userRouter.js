@@ -126,7 +126,7 @@ router.get(
     session: false,
     // display: "popup",
     scope: ["profile", "email"],
-    failureRedirect: "/",
+    failureRedirect: "http://localhost:3000/getToken/error",
   }),
   // middleware for sending the cookie back to the browser
   authController.createCookie

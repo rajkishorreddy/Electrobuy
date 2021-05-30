@@ -138,6 +138,11 @@
   }
 }
 .orders {
+  &-null {
+    color: white;
+    font-size: 2rem;
+    padding: 3rem;
+  }
   &-title {
     color: white;
     font-family: "Montserrat", sans-serif;
@@ -196,6 +201,37 @@
         font-size: 1.5rem;
         padding: 1rem;
       }
+    }
+  }
+}
+.connect-google {
+  text-decoration: none;
+  background-color: red;
+  color: white;
+}
+.googlec {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  // background: #4285f4;
+  background: linear-gradient(180deg, #000000 -30.49%, #56326c 51.22%);
+  padding: 2px;
+  border-radius: 3px;
+  margin-top: 2rem;
+  // width: 100%;
+  &-name {
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 1rem;
+  }
+  &-img {
+    height: 2.8rem;
+    width: 2.8rem;
+    &-cont {
+      padding: 2px;
+      background: white;
     }
   }
 }

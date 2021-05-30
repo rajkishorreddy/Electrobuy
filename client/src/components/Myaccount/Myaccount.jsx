@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSnackbar } from "react-simple-snackbar";
 import Resizer from "react-image-file-resizer";
-
+import google from "../../assets/google.png";
 import Header from "../Header.jsx";
 import Footer from "../Footer.jsx";
 
@@ -355,27 +355,30 @@ const Myaccount = () => {
                 autoComplete="off"
               />
               <button className="myac-form-left-btn">change password</button>
+              <a
+                className="googlec"
+                href={`http://localhost:8080/api/v1/users/connect/google/${window.localStorage.getItem(
+                  "token"
+                )}`}
+              >
+                <div className="googlec-img-cont">
+                  <img src={google} alt="google" className="googlec-img"></img>
+                </div>
+                <div className="googlec-name">connect with google</div>
+              </a>
             </form>
-            <a
-              href={`http://localhost:8080/api/v1/users/connect/google/${window.localStorage.getItem(
-                "token"
-              )}`}
-            >
-              connect with google
-            </a>
-            <a
-              href={`http://localhost:8080/api/v1/users/connect/github/${window.localStorage.getItem(
-                "token"
-              )}`}
-            >
-              connect with github
-            </a>
           </div>
         </div>
         <Myac className="myac-svg" />
         <div className="orders">
           <div className="orders-title">My orders</div>
-          <div className="orders-items">{renderOrders()}</div>
+          {orders?.length === 0 ? (
+            <div className="orders-null">
+              You haven't ordered anything yet! Start shopping!
+            </div>
+          ) : (
+            <div className="orders-items">{renderOrders()}</div>
+          )}
         </div>
       </div>
 

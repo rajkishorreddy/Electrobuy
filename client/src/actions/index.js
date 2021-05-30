@@ -6,6 +6,7 @@ export const fetchCategoryProducts = (categoryName, page) => {
     const { data } = await axios.get(`${baseUrl}/category/${categoryName}`, {
       params: {
         feildsCapacity: "low",
+        sort: "-finalPrice",
       },
     });
     console.log("the products are:", data.data);
