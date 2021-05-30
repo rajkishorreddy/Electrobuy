@@ -1,5 +1,4 @@
 .myac {
-  height: 200vh;
   width: 100%;
   background: linear-gradient(
     180deg,
@@ -44,7 +43,6 @@
           cursor: pointer;
         }
       }
-      padding-left: 3.5rem;
     }
   }
   &-line {
@@ -57,20 +55,32 @@
   &-forms {
     width: 100%;
     display: flex;
+    @media only screen and (max-width: 30rem) {
+      flex-direction: column;
+    }
     &-left {
       padding-top: 3rem;
       width: 50%;
+      @media only screen and (max-width: 30rem) {
+        width: 100%;
+      }
     }
     &-right {
       padding-top: 3rem;
       width: 50%;
+      @media only screen and (max-width: 30rem) {
+        width: 100%;
+      }
     }
   }
   &-form {
     &-left {
-      font-family: 'Cabin', sans-serif;
+      font-family: "Cabin", sans-serif;
       // background: red;
       width: 60%;
+      @media only screen and (max-width: 30rem) {
+        width: 90%;
+      }
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -110,7 +120,7 @@
           text-align: start;
           color: white;
           padding: 1rem 1rem;
-          font-family: 'Cabin', sans-serif;
+          font-family: "Cabin", sans-serif;
         }
       }
       &-btn {
@@ -130,10 +140,13 @@
 .orders {
   &-title {
     color: white;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 600;
-    font-size: 3rem;
-    padding: 3rem;
+    font-size: 4rem;
+    padding: 1rem 3rem;
+  }
+  &-items {
+    padding: 0 3rem;
   }
 }
 .myac-img-cont:hover .myac-img-btn {
@@ -146,4 +159,43 @@
   // display: none;
   border: none;
   outline: none;
+}
+.oitem {
+  color: white;
+  padding-bottom: 2.5rem;
+  &-id {
+    font-size: 1.3rem;
+    font-family: "Montserrat", sans-serif;
+    margin: 0.5rem 0rem;
+    &-title {
+      font-weight: 700;
+    }
+  }
+  &-prod {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    &-cont {
+      border-bottom: 1px solid white;
+    }
+    &-img {
+      width: 18rem;
+      height: 13rem;
+      padding: 1rem;
+      border-radius: 1.5rem;
+    }
+    &-info {
+      font-family: "Cabin", sans-serif;
+      color: white;
+      &-title {
+        font-size: 1.7rem;
+        padding-left: 1rem;
+        font-weight: 700;
+      }
+      &-price {
+        font-size: 1.5rem;
+        padding: 1rem;
+      }
+    }
+  }
 }

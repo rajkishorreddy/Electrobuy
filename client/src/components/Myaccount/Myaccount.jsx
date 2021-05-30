@@ -1,49 +1,50 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useSnackbar } from 'react-simple-snackbar';
-import Resizer from 'react-image-file-resizer';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useSnackbar } from "react-simple-snackbar";
+import Resizer from "react-image-file-resizer";
 
-import Header from '../Header.jsx';
-import Footer from '../Footer.jsx';
+import Header from "../Header.jsx";
+import Footer from "../Footer.jsx";
 
-import './Myaccount.scss';
+import "./Myaccount.scss";
 
-import { ReactComponent as Camera } from '../../assets/camera.svg';
-import { ReactComponent as Myac } from '../../assets/myac.svg';
-import temp from '../../assets/profile.png';
+import { ReactComponent as Camera } from "../../assets/camera.svg";
+import { ReactComponent as Myac } from "../../assets/myac.svg";
+
+import { Link } from "react-router-dom";
 
 const Myaccount = () => {
-  const [FirstName, setFirstName] = useState('');
-  const [LastName, setLastName] = useState('');
-  const [Email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [currPass, setCurrPass] = useState('');
-  const [newPass, setNewPass] = useState('');
-  const [cnNewPass, setCnNewPass] = useState('');
+  const [FirstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [currPass, setCurrPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [cnNewPass, setCnNewPass] = useState("");
   const [orders, setOrders] = useState(null);
-  const [dp, setDp] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const [dp, setDp] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   console.log(orders);
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     const getData = async () => {
-      const token = window.localStorage.getItem('token');
+      const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
           `http://127.0.0.1:8080/api/v1/users/getMyProfile`,
@@ -59,7 +60,7 @@ const Myaccount = () => {
         );
 
         setOrders(orders.data.data);
-        const [first, last] = data.data.name.split(' ');
+        const [first, last] = data.data.name.split(" ");
         setFirstName(first);
         setLastName(last);
         setEmail(data.data.email);
@@ -100,15 +101,15 @@ const Myaccount = () => {
         console.log(err);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     const uploadDp = async () => {
       const { data } = await axios.patch(
         `http://127.0.0.1:8080/api/v1/users/updateMyProfilePic`,
         {
-          avatar: dp
+          avatar: dp,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -116,13 +117,13 @@ const Myaccount = () => {
       );
       setAvatar(data.data.avatar);
       console.log(data);
-    }
+    };
     uploadDp();
   }, [dp]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.patch(
         `http://127.0.0.1:8080/api/v1/users/updateMyProfile`,
@@ -136,13 +137,13 @@ const Myaccount = () => {
         }
       );
       console.log(data);
-      const [first, last] = data.data.user.name.split(' ');
+      const [first, last] = data.data.user.name.split(" ");
       setFirstName(first);
       setLastName(last);
       setEmail(data.data.user.email);
       setAddress(data.data.user.address);
-      if (data.status === 'success') {
-        openSnackbar('Profile updated successfully');
+      if (data.status === "success") {
+        openSnackbar("Profile updated successfully");
       }
     } catch (err) {
       openSnackbar(err.response?.data?.message);
@@ -150,7 +151,7 @@ const Myaccount = () => {
   };
   const changePassword = async (e) => {
     e.preventDefault();
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.patch(
         `http://127.0.0.1:8080/api/v1/users/updateMyPassword`,
@@ -163,8 +164,8 @@ const Myaccount = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      if (data.status === 'success') {
-        openSnackbar('password changed successfully');
+      if (data.status === "success") {
+        openSnackbar("password changed successfully");
       }
     } catch (err) {
       openSnackbar(err.response?.data?.message);
@@ -188,8 +189,33 @@ const Myaccount = () => {
               {el.transactionId}
             </div>
             <div className="oitem-id">
-              <span className="oitem-id-title">AMOUNT: </span>
+              <span className="oitem-id-title">AMOUNT:</span> ₹
               {el.transactionAmount}
+            </div>
+            <div className="oitem-prod-cont">
+              {el.products.map((pro) => {
+                return (
+                  <Link
+                    to={`productInfo/${pro.id}`}
+                    className="oitem-prod "
+                    key={pro.id}
+                  >
+                    <img
+                      src={pro.imageArr[0]}
+                      alt="product"
+                      className="oitem-prod-img"
+                    />
+                    <div className="oitem-prod-info">
+                      <div className="oitem-prod-info-title">
+                        {pro.fullName}
+                      </div>
+                      <div className="oitem-prod-info-price">
+                        ₹{pro.finalPrice}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         );
@@ -211,7 +237,7 @@ const Myaccount = () => {
               onChange={resizeFile}
             />
             <label htmlFor="dp" className="myac-img-btn__input-label">
-              <Camera />{' '}
+              <Camera />{" "}
             </label>
           </button>
         </div>
@@ -337,6 +363,7 @@ const Myaccount = () => {
           <div className="orders-items">{renderOrders()}</div>
         </div>
       </div>
+
       <Footer />
     </div>
   );

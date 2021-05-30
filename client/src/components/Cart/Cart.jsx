@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
-import './cart.scss';
-import axios from 'axios';
-import history from '../../history';
-import loader from '../../assets/loading.gif';
-import { ReactComponent as Nologin } from '../../assets/nologin.svg';
-import { ReactComponent as Card } from '../../assets/card.svg';
-import { ReactComponent as Master } from '../../assets/master.svg';
-import { ReactComponent as CardBrand } from '../../assets/cardbrand.svg';
-import { ReactComponent as Dark } from '../../assets/Dark.svg';
-import { useSnackbar } from 'react-simple-snackbar';
-import cardno from '../../assets/cardno.png';
-import cardmonth from '../../assets/cardmonth.png';
-
-import cvv from '../../assets/cvv.png';
+import { useEffect, useState } from "react";
+import Header from "../Header";
+import Footer from "../Footer";
+import "./cart.scss";
+import axios from "axios";
+import history from "../../history";
+import loader from "../../assets/loading.gif";
+import { ReactComponent as Nologin } from "../../assets/nologin.svg";
+import { ReactComponent as Card } from "../../assets/card.svg";
+import { ReactComponent as Master } from "../../assets/master.svg";
+import { ReactComponent as CardBrand } from "../../assets/cardbrand.svg";
+import { ReactComponent as Dark } from "../../assets/Dark.svg";
+import { useSnackbar } from "react-simple-snackbar";
+import cardno from "../../assets/cardno.png";
+import cardmonth from "../../assets/cardmonth.png";
+import cvv from "../../assets/cvv.png";
 
 const Cart = () => {
   const [arr, setArr] = useState(null);
@@ -23,24 +22,24 @@ const Cart = () => {
   const [original, setOriginal] = useState(0);
   const [view, setView] = useState(0);
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
   useEffect(() => {
     const getdata = async () => {
-      const token = window.localStorage.getItem('token');
+      const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
           `http://127.0.0.1:8080/api/v1/users/getAllCartProduct`,
@@ -54,19 +53,19 @@ const Cart = () => {
         setDis(data.totalSavingPrice);
         setOriginal(data.totalOriginalPrice);
       } catch (err) {
-        console.log(err);
+        openSnackbar(err.response?.data?.message);
       }
     };
     getdata();
   }, []);
   const loginclick = () => {
-    history.push('/login');
+    history.push("/login");
   };
   const shipping = async () => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.post(
-        'http://127.0.0.1:8080/api/v1/payments',
+        "http://127.0.0.1:8080/api/v1/payments",
         {
           transactionAmount: final,
           transactionGoods: arr.map((el) => el._id),
@@ -76,24 +75,24 @@ const Cart = () => {
         }
       );
 
-      const form = document.createElement('form');
-      form.setAttribute('method', 'post');
+      const form = document.createElement("form");
+      form.setAttribute("method", "post");
       form.setAttribute(
-        'action',
+        "action",
         `https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?mid=${data.data.mid}&orderId=${data.data.orderId}`
       );
-      const input1 = document.createElement('input');
-      input1.setAttribute('type', 'hidden');
-      input1.setAttribute('name', 'mid');
-      input1.setAttribute('value', data.data.mid);
-      const input2 = document.createElement('input');
-      input2.setAttribute('type', 'hidden');
-      input2.setAttribute('name', 'orderId');
-      input2.setAttribute('value', data.data.orderId);
-      const input3 = document.createElement('input');
-      input3.setAttribute('type', 'hidden');
-      input3.setAttribute('name', 'txnToken');
-      input3.setAttribute('value', data.data.txnToken);
+      const input1 = document.createElement("input");
+      input1.setAttribute("type", "hidden");
+      input1.setAttribute("name", "mid");
+      input1.setAttribute("value", data.data.mid);
+      const input2 = document.createElement("input");
+      input2.setAttribute("type", "hidden");
+      input2.setAttribute("name", "orderId");
+      input2.setAttribute("value", data.data.orderId);
+      const input3 = document.createElement("input");
+      input3.setAttribute("type", "hidden");
+      input3.setAttribute("name", "txnToken");
+      input3.setAttribute("value", data.data.txnToken);
       form.appendChild(input1);
       form.appendChild(input2);
       form.appendChild(input3);
@@ -105,7 +104,7 @@ const Cart = () => {
     }
   };
   const removeitem = async (curr) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     try {
       console.log(curr.target?.dataset?.id);
       const { data } = await axios.delete(
@@ -119,15 +118,15 @@ const Cart = () => {
       setFinal(data.totalFinalPrice);
       setDis(data.totalSavingPrice);
       setOriginal(data.totalOriginalPrice);
-      openSnackbar('item removed');
+      openSnackbar("item removed");
     } catch (err) {
       console.log(err);
     }
   };
   const addWishlist = async (el) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     if (!token) {
-      history.push('/login');
+      history.push("/login");
     } else {
       try {
         const data = await axios.post(
@@ -138,8 +137,8 @@ const Cart = () => {
           }
         );
         console.log(data);
-        if (data.data.status === 'success') {
-          openSnackbar('item added successfully to Cart');
+        if (data.data.status === "success") {
+          openSnackbar("item added successfully to Cart");
         }
       } catch (err) {
         console.log(err);
@@ -164,10 +163,10 @@ const Cart = () => {
             <div className="cart_cont-item-info">
               <div className="cart_cont-item-title">{el.fullName}</div>
               <div className="cart_cont-item-price">
-                Price :{' '}
+                Price :{" "}
                 <span className="cart_cont-item-price-get">
                   ₹{el.finalPrice}
-                </span>{' '}
+                </span>{" "}
                 /
                 <span className="cart_cont-item-price-original">
                   ₹{el.originalPrice}
@@ -190,7 +189,7 @@ const Cart = () => {
                 </button>
               </div>
               <div className="cart_cont-item-rating">
-                <span className="cart_cont-item-rating-none"></span> ★{' '}
+                <span className="cart_cont-item-rating-none"></span> ★{" "}
                 {el.averageRating}
               </div>
             </div>
@@ -203,10 +202,10 @@ const Cart = () => {
     <div>
       <Header />
       <div className="cart">
-        {window.localStorage.getItem('token') ? (
+        {window.localStorage.getItem("token") ? (
           <div>
             <div className="cart-heading">
-              My cart{' '}
+              My cart{" "}
               <span className="cart-heading-count">{arr?.length} items</span>
             </div>
             <div className="cart_cont">{renderCart()}</div>
@@ -263,9 +262,9 @@ const Cart = () => {
           <Master className="dcard-master" />
           <CardBrand className="dcard-brand" />
           <Dark className="dcard-dark" />
-          <img src={cardno} alt={'4242424242424242'} className="dcard-no" />
-          <img src={cardmonth} alt={'02/23'} className="dcard-mo" />
-          <img src={cvv} alt={'123'} className="dcard-cvvv" />
+          <img src={cardno} alt={"4242424242424242"} className="dcard-no" />
+          <img src={cardmonth} alt={"02/23"} className="dcard-mo" />
+          <img src={cvv} alt={"123"} className="dcard-cvvv" />
           <div className="dcard-cvv">cvv:</div>
           <div className="dcard-use">use this debit card for payments</div>
           <button onClick={() => setView(1)} className="dcard-close">

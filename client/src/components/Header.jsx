@@ -1,59 +1,59 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import history from '../history';
-import { useSnackbar } from 'react-simple-snackbar';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import history from "../history";
+import { useSnackbar } from "react-simple-snackbar";
 // import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-import './header.scss';
-import { ReactComponent as Logo } from '../assets/Logo.svg';
-import { ReactComponent as SearchIcon } from '../assets/searchIcon.svg';
-import { ReactComponent as WishList } from '../assets/wishlist.svg';
-import { ReactComponent as Cart } from '../assets/cart.svg';
-import { ReactComponent as Down } from '../assets/downarrow.svg';
+import "./header.scss";
+import { ReactComponent as Logo } from "../assets/Logo.svg";
+import { ReactComponent as SearchIcon } from "../assets/searchIcon.svg";
+import { ReactComponent as WishList } from "../assets/wishlist.svg";
+import { ReactComponent as Cart } from "../assets/cart.svg";
+import { ReactComponent as Down } from "../assets/downarrow.svg";
 
-import axios from 'axios';
+import axios from "axios";
 const Header = () => {
-  const [term, setTerm] = useState('');
+  const [term, setTerm] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const [user, setUser] = useState(window.localStorage.getItem('token'));
+  const [user, setUser] = useState(window.localStorage.getItem("token"));
   const [searchResults, setSearchResults] = useState([]);
   const [timeout, settimeout1] = useState(undefined);
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
   // const listRef = useRef(null);
   const logout = () => {
-    window.localStorage.removeItem('token');
-    setUser(window.localStorage.getItem('token'));
-    openSnackbar('Successfully logged-out');
-    history.push('/');
+    window.localStorage.removeItem("token");
+    setUser(window.localStorage.getItem("token"));
+    openSnackbar("Successfully logged-out");
+    history.push("/");
   };
   const googletry = async () => {
     // await axios.get('http://127.0.0.1:8080/api/v1/users/google');
-    window.open('http://127.0.0.1:8080/api/v1/users/google', '_self');
+    window.open("http://127.0.0.1:8080/api/v1/users/google", "_self");
   };
   const SearchSubmit = async (e) => {
     e.preventDefault();
     let value;
-    if (e.target.nodeName === 'INPUT') {
+    if (e.target.nodeName === "INPUT") {
       value = e.target.value;
     } else {
       value = term;
     }
-    if (value === '') {
+    if (value === "") {
       setSearchResults([]);
       return;
     }
@@ -65,7 +65,7 @@ const Header = () => {
     let timeout1 = setTimeout(async () => {
       try {
         const res = await axios.post(
-          'http://127.0.0.1:8080/api/v1/products/searchText',
+          "http://127.0.0.1:8080/api/v1/products/searchText",
           {
             searchText: value,
           }
@@ -88,12 +88,12 @@ const Header = () => {
   return (
     <div>
       <div className="header">
-        <Link to={'/'} className="Link">
-          {' '}
+        <Link to={"/"} className="Link">
+          {" "}
           <Logo className="header_logo" />
         </Link>
         <div className="flex header_right">
-          {' '}
+          {" "}
           <div className="header_form_container">
             <form onSubmit={onEnter} className="header_form">
               <input
@@ -124,8 +124,8 @@ const Header = () => {
               <div
                 className={
                   visible
-                    ? 'header_form_searchlist'
-                    : 'header_form_searchlist hidden'
+                    ? "header_form_searchlist"
+                    : "header_form_searchlist hidden"
                 }
                 //   classnames({
                 //     "header_form_searchlist": true,
@@ -152,7 +152,7 @@ const Header = () => {
               </div>
             ) : null}
           </div>
-          <Link to={'/wishlist'} className="header_wishlist">
+          <Link to={"/wishlist"} className="header_wishlist">
             <WishList className="header_wishlist-img" />
             {/* <FavoriteRoundedIcon 
               classes={{
@@ -161,13 +161,13 @@ const Header = () => {
             /> */}
             <span className="header_wishlist-name">wishlist</span>
           </Link>
-          <Link to={'/cart'} className="header_cart">
+          <Link to={"/cart"} className="header_cart">
             <Cart className="header_cart-img" />
             <span className="header_cart-name">cart</span>
           </Link>
           {user ? (
-            <div className="disp-flex">
-              <Link to={'/myaccount'} className="header_login">
+            <div className="header-disp-flex">
+              <Link to={"/myaccount"} className="header_login">
                 Myaccount
               </Link>
               <button onClick={() => logout()} className="header_login">
@@ -175,23 +175,23 @@ const Header = () => {
               </button>
             </div>
           ) : (
-            <Link to={'/login'} className="header_login">
+            <Link to={"/login"} className="header_login">
               login
             </Link>
           )}
         </div>
       </div>
       <nav className="nav">
-        <Link to={'/results/laptops'} className="nav_item">
+        <Link to={"/results/laptops"} className="nav_item">
           LAPTOPS
         </Link>
-        <Link to={'/results/televisions'} className="nav_item">
+        <Link to={"/results/televisions"} className="nav_item">
           TVS
         </Link>
-        <Link to={'/results/DSLR'} className="nav_item">
+        <Link to={"/results/DSLR"} className="nav_item">
           CAMERAS
         </Link>
-        <Link to={'/results/headphones'} className="nav_item">
+        <Link to={"/results/headphones"} className="nav_item">
           HEADPHONES
         </Link>
         <button onClick={googletry}>google</button>
@@ -202,22 +202,22 @@ const Header = () => {
             MORE <Down className="nav_more-btn-down" />
           </span>
           <div className="nav_more-list">
-            <Link to={'/results/speakers'} className="nav_more_item">
+            <Link to={"/results/speakers"} className="nav_more_item">
               SPEAKERS
             </Link>
-            <Link to={'/results/mobiles'} className="nav_more_item">
+            <Link to={"/results/mobiles"} className="nav_more_item">
               MOBILES
             </Link>
-            <Link to={'/results/smartWatches'} className="nav_more_item">
+            <Link to={"/results/smartWatches"} className="nav_more_item">
               SMART WATCHES
             </Link>
-            <Link to={'/results/AC'} className="nav_more_item">
+            <Link to={"/results/AC"} className="nav_more_item">
               AC
             </Link>
-            <Link to={'/results/cameras'} className="nav_more_item">
+            <Link to={"/results/cameras"} className="nav_more_item">
               CAMERA ACCESSORIES
             </Link>
-            <Link to={'/results/refrigerators'} className="nav_more_item">
+            <Link to={"/results/refrigerators"} className="nav_more_item">
               REFRIGERATORS
             </Link>
           </div>

@@ -1,29 +1,29 @@
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useSnackbar } from 'react-simple-snackbar';
-import './SearchResults.scss';
-import React from 'react';
-import Header from '../Header';
-import { ReactComponent as WishList } from '../../assets/wishlistcard.svg';
-import { fetchCategoryProducts } from '../../actions';
-import history from '../../history';
-import axios from 'axios';
-import loader from '../../assets/loading.gif';
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
+import "./SearchResults.scss";
+import React from "react";
+import Header from "../Header";
+import { ReactComponent as WishList } from "../../assets/wishlistcard.svg";
+import { fetchCategoryProducts } from "../../actions";
+import history from "../../history";
+import axios from "axios";
+import loader from "../../assets/loading.gif";
 const SearchResults = (props) => {
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
@@ -32,9 +32,9 @@ const SearchResults = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addWishlist = async (el) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     if (!token) {
-      history.push('/login');
+      history.push("/login");
     } else {
       try {
         const data = await axios.post(
@@ -44,18 +44,18 @@ const SearchResults = (props) => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        if (data.data.status === 'success') {
-          openSnackbar('item added to wishlist');
+        if (data.data.status === "success") {
+          openSnackbar("item added to wishlist");
         }
       } catch (err) {
-        console.log(err);
+        openSnackbar(err.response?.data?.message);
       }
     }
   };
   const addCart = async (el) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     if (!token) {
-      history.push('/login');
+      history.push("/login");
     } else {
       try {
         const data = await axios.post(
@@ -65,11 +65,11 @@ const SearchResults = (props) => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        if (data.data.status === 'success') {
-          openSnackbar('item added to cart');
+        if (data.data.status === "success") {
+          openSnackbar("item added to cart");
         }
       } catch (err) {
-        console.log(err);
+        openSnackbar(err.response?.data?.message);
       }
     }
   };

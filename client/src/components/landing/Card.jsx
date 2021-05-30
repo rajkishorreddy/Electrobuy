@@ -1,5 +1,5 @@
-import './card.scss';
-import { Link } from 'react-router-dom';
+import "./card.scss";
+import { Link } from "react-router-dom";
 const Card = (props) => {
   return (
     <div className="card">
@@ -9,7 +9,7 @@ const Card = (props) => {
           className="card_item-img"
           alt="product img"
         ></img>
-        <div className="card_item-name">{props.obj[0].name} </div>
+        <Link className="card_item-name">{props.obj[0].name} </Link>
       </div>
       <div className="card_item">
         <img
@@ -35,9 +35,9 @@ const Card = (props) => {
         ></img>
         <div className="card_item-name">{props.obj[3].name} </div>
       </div>
-      <Link to={'/'} className="card_title">
+      <Link to={"/"} className="card_title">
         <div className="card_title-name">{props.obj[4].title}</div>
-        <Link to={'/'} className="card_title-btn">
+        <Link to={"/"} className="card_title-btn">
           &rarr;
         </Link>
       </Link>

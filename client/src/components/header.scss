@@ -1,12 +1,11 @@
-@import '../sass/theme.scss';
+@import "../sass/theme.scss";
 .header {
   background: $primary-purple;
   padding: 1.5rem 1rem;
   display: flex;
   align-items: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   justify-content: space-between;
-
   &_logo {
     height: 5rem;
     width: 5rem;
@@ -15,9 +14,13 @@
       margin: 0;
     }
   }
-  .disp-flex {
+  .header-disp-flex {
     display: flex;
     align-items: center;
+    @media only screen and (max-width: 26em) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
   &_right {
     // background: red;
@@ -26,14 +29,23 @@
     align-items: center;
     justify-content: flex-end;
     position: relative;
-    @media only screen and (max-width: 36.5em) {
+    @media only screen and (max-width: 43.75em) {
       width: 88%;
+    }
+    @media only screen and (max-width: 26em) {
+      justify-content: space-around;
     }
   }
   &_form_container {
     width: 55%;
     margin-right: 3rem;
     position: relative;
+    @media only screen and (max-width: 43.75em) {
+      margin-right: 0;
+    }
+    @media only screen and (max-width: 26em) {
+      width: 65%;
+    }
   }
   &_form_searchlist {
     display: flex;
@@ -55,7 +67,7 @@
     &_item {
       text-decoration: none;
       color: white;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       font-size: 1.3rem;
       padding: 1rem;
       text-overflow: ellipsis;
@@ -81,7 +93,7 @@
     &-input {
       width: 100%;
       height: 3rem;
-      font-family: 'Cabin', sans-serif;
+      font-family: "Cabin", sans-serif;
       background: linear-gradient(
         270deg,
         #333333 1.38%,
@@ -122,7 +134,7 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    font-family: 'Cabin', sans-serif;
+    font-family: "Cabin", sans-serif;
     font-size: 1.5rem;
     line-height: 1.25rem;
     letter-spacing: 0.26px;
@@ -145,7 +157,7 @@
       margin: 0.5rem;
     }
     &-name {
-      @media only screen and (max-width: 26em) {
+      @media only screen and (max-width: 56.25em) {
         display: none;
       }
     }
@@ -153,7 +165,7 @@
   &_cart {
     display: flex;
     align-items: center;
-    font-family: 'Cabin', sans-serif;
+    font-family: "Cabin", sans-serif;
     font-size: 1.5rem;
     line-height: 1.25rem;
     letter-spacing: 0.26px;
@@ -176,13 +188,13 @@
       margin: 0.5rem;
     }
     &-name {
-      @media only screen and (max-width: 26em) {
+      @media only screen and (max-width: 56.25em) {
         display: none;
       }
     }
   }
   &_login {
-    @include font-face('Cabin', 1.5rem, 500);
+    @include font-face("Cabin", 1.5rem, 500);
     padding: 1rem 2rem;
     background-color: rgba(0, 0, 0, 0.521);
     color: white;
@@ -195,7 +207,8 @@
     }
     @media only screen and (max-width: 26em) {
       margin: 0;
-      margin-left: 0.4rem;
+      padding: 0.5rem;
+      margin-bottom: 2px;
     }
   }
 }
@@ -239,7 +252,7 @@
       flex-direction: column;
       color: white;
       position: relative;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       font-size: 1.25rem;
       font-weight: 600;
       z-index: 2;
@@ -264,20 +277,21 @@
       padding: 1rem 5rem 1rem 0.5rem;
       font-size: 1.25rem;
       font-weight: 600;
-      top: 1rem;
+      top: 1.5rem;
+      right: 0;
       visibility: hidden;
       z-index: -1;
     }
     &_item {
       text-decoration: none;
       color: white;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       font-size: 1.3rem;
       padding: 1rem;
     }
   }
   &_item {
-    @include font-face('Montserrat', 1.25rem, 600);
+    @include font-face("Montserrat", 1.25rem, 600);
     // font-size: 1.25rem;
     text-decoration: none;
     color: white;
