@@ -4,10 +4,10 @@
   flex-direction: column;
   align-items: center;
   height: 85vh;
-  overflow-y: hidden;
+  overflow: hidden;
 
   &-success {
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 
     & > img {
       height: 13rem;
@@ -20,6 +20,26 @@
     border-radius: 2rem 2rem 0px 0px;
     width: 117rem;
     height: 80rem;
+    
+    @media only screen and (max-width: 1200px) {
+      width: 100rem;
+    }
+    
+    @media only screen and (max-width: 800px) {
+      width: 85rem;
+    }
+    
+    @media only screen and (max-width: 700px) {
+      width: 75rem;
+    }
+    
+    @media only screen and (max-width: 580px) {
+      width: 60rem;
+    }
+    
+    @media only screen and (max-width: 450px) {
+      width: 50rem;
+    }
 
     display: flex;
     flex-direction: column;
@@ -27,6 +47,10 @@
 
     &__container {
       padding: 4rem 0 1rem 6rem;
+      
+      @media only screen and (min-width: 450px) and (max-width: 600px) {
+        padding: 0 0 1rem 4rem;
+      }
       
       &-order {
         font-family: Montserrat;
@@ -52,9 +76,25 @@
   position: relative;
   left: 50%;
 
+  @media only screen and (max-width: 585px) {
+    left: 25%;
+  }
+  
+  @media only screen and (max-width: 650px) {
+    left: 35%;
+  }
+  
+
   .truck {
     width: 315.06px;
-    height: 189.42px;
+    
+    @media only screen and (max-width: 1200px) {
+      width: 250px;
+    }
+    
+    @media only screen and (max-width: 800px) {
+      width: 200px;
+    }
   }
   
 }
@@ -69,7 +109,7 @@
 }
 
 .mover-1 {
-  width: 1000rem;
+  width: 100rem;
   
   position: absolute;
   overflow-x: hidden;
@@ -94,14 +134,73 @@
   }
 }
 
-@keyframes rotation1 {
-  100% {
-    transform: translate(6.25rem, -3.5rem) rotate(360deg);
+@media only screen and (min-width: 1200px) and (max-width: 1750px) {
+  @keyframes rotation1 {
+    100% {
+      transform: translate(5.75rem, -3rem) rotate(360deg);
+    }
+  }
+  
+  @keyframes rotation2 {
+    100% {
+      transform: translate(16.5rem, -3rem) rotate(360deg);
+    }
   }
 }
-@keyframes rotation2 {
-  100% {
-    transform: translate(16rem, -3.5rem) rotate(360deg);
+
+@media only screen and (max-width: 1200px) {
+  @keyframes rotation1 {
+    100% {
+      transform: translate(5.3rem, -3rem) rotate(360deg);
+    }
+  }
+  
+  @keyframes rotation2 {
+    100% {
+      transform: translate(15rem, -3rem) rotate(360deg);
+    }
+  }
+}
+
+@media only screen and (min-width: 801px) and (max-width: 900px) {
+  @keyframes rotation1 {
+    100% {
+      transform: translate(6rem, -3rem) rotate(360deg);
+    }
+  }
+  
+  @keyframes rotation2 {
+    100% {
+      transform: translate(17rem, -3rem) rotate(360deg);
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  @keyframes rotation1 {
+    100% {
+      transform: translate(4.75rem, -3rem) rotate(360deg);
+    }
+  }
+  
+  @keyframes rotation2 {
+    100% {
+      transform: translate(13rem, -3rem) rotate(360deg);
+    }
+  }
+}
+
+@media only screen and (max-width: 585px) {
+  @keyframes rotation1 {
+    100% {
+      transform: translate(5rem, -3rem) rotate(360deg);
+    }
+  }
+  
+  @keyframes rotation2 {
+    100% {
+      transform: translate(14.5rem, -3rem) rotate(360deg);
+    }
   }
 }
 
@@ -109,17 +208,64 @@
   z-index: 1;
   position: relative;
   
+  @media only screen and (max-width: 1200px) {
+    width: 35px;
+  }
+  
+  @media only screen and (max-width: 800px) {
+    width: 30px;
+  }
+  
   &:first-child {
-    transform: translate(6.25rem, -3.5rem);
     -moz-animation:rotation1 1s linear infinite;
     animation:rotation1 1s linear infinite;
     -webkit-animation:rotation1 1s linear infinite;
+    
+    @media only screen and (min-width: 1200px) and (max-width: 1750px) {
+      transform: translate(5.75rem, -3rem);
+    }
+    
+    @media only screen and (max-width: 1200px) {
+      transform: translate(5.3rem, -3rem);
+    }
+
+    @media only screen and (min-width: 801px) and (max-width: 900px) {
+      transform: translate(6rem, -3rem);
+    }
+    
+    @media only screen and (max-width: 800px) {
+      transform: translate(4.75rem, -3rem);
+    }
+
+    @media only screen and (max-width: 585px) {
+      transform: translate(5rem, -3rem);
+    }
   }
   
   &:last-child {
-    transform: translate(16rem, -3.5rem);
     -moz-animation:rotation2 1s linear infinite;
     animation:rotation2 1s linear infinite;
     -webkit-animation:rotation2 1s linear infinite;
+    
+    @media only screen and (min-width: 1200px) and (max-width: 1750px) {
+      transform: translate(16.5rem, -3rem);
+    }
+    
+    @media only screen and (max-width: 1200px) {
+      transform: translate(15rem, -3rem);
+    }
+    
+    @media only screen and (min-width: 801px) and (max-width: 900px) {
+      transform: translate(17rem, -3rem);
+    }
+    
+    @media only screen and (max-width: 800px) {
+      transform: translate(13rem, -3rem);
+    }
+    
+    @media only screen and (max-width: 585px) {
+      transform: translate(14.5rem, -3rem);
+    }
+    
   }
 }
