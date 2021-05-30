@@ -5,6 +5,8 @@ import { ReactComponent as Style } from "../../assets/signup.svg";
 import { Link } from "react-router-dom";
 import history from "../../history";
 import axios from "axios";
+import google from "../../assets/google.png";
+
 const Signup = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -95,26 +97,22 @@ const Signup = () => {
             />
 
             <button className="signup-form-btn">Log in</button>
+            <a
+              className="google"
+              href="http://localhost:8080/api/v1/users/google"
+            >
+              <div className="google-img-cont">
+                <img src={google} alt={google} className="google-img"></img>
+              </div>
+              <div className="google-name">Sign up with google</div>
+            </a>
           </form>
+
           <div className="signup-already">
             No account, then click here to{" "}
             <Link to={"/signup"} className="signup-already-link">
               sign up! →
             </Link>
-          </div>
-          <div className="google_test">
-            <a href="http://localhost:8080/api/v1/users/google">google</a>
-            <a href="http://localhost:8080/api/v1/users/connect/google">
-              connect with google
-            </a>
-            {/* <a href="http://localhost:8080/api/v1/users/github">github</a>
-        <a href="http://localhost:8080/api/v1/users/connect/github">
-          connect with github
-        </a>
-        <a href="http://localhost:8080/api/v1/users/facebook">facebook</a>
-        <a href="http://localhost:8080/api/v1/users/connect/facebook">
-          connect with facebook
-        </a> */}
           </div>
         </div>
       </div>

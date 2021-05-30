@@ -16,7 +16,6 @@ router.get(
   "/google/:jwt",
   connectController.addURLParamToHeader,
   authController.passportWrapperMiddleware,
-
   (req, res, next) => {
     // This returns a error, if the user is trying to connect his github again
     if (req.user && req.user.googleId) {
@@ -36,6 +35,7 @@ router.get(
         state: req.params.jwt,
       },
       async (err, user, info) => {
+        console.log(err);
         return next();
       }
     )(req, res, next);

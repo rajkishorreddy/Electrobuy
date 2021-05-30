@@ -85,7 +85,7 @@ passport.use(
           );
           const prevConnectedGoogle = User.findOne({ googleId: profile.id });
           if (prevConnectedGoogle) {
-            return cb(error, false);
+            return cb(null, false);
           }
           const user = await User.findById(req.user._id);
           console.log("the current already authenticated user is", user);
@@ -109,10 +109,10 @@ passport.use(
           // throw new Error(
           //   "Trying to change the googleId of an existing authenticated user"
           // );
-          return cb(error, false);
+          return cb(null, false);
         }
       } catch (error) {
-        return cb(error, false);
+        return cb(null, false);
       }
     }
   )

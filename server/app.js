@@ -124,6 +124,11 @@ app.use((req, res, next) => {
   res.setHeader("Acces-Contorl-Allow-Methods", "Content-Type", "Authorization");
   next();
 });
+app.get("/", (req, res, next) => {
+  res.status(200).json({
+    data: "this is basic route",
+  });
+});
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/payments", paymentRouter);
