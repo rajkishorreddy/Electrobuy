@@ -9,6 +9,7 @@ const Product = require("./../models/productModel");
 const Booking = require("./../models/bookingModel");
 const PaytmChecksum = require("./../utils/PaytmChecksum");
 const AppError = require("./../utils/AppError");
+const Email = require("./../utils/Email");
 
 exports.initiateTransaction = async (req, res, next) => {
   try {
@@ -76,7 +77,7 @@ exports.initiateTransaction = async (req, res, next) => {
       headers: {
         "Content-Type": "application/json",
         "Content-Length": JSON.stringify(paytmTransactionParams).length,
-        Accept: "*/*",
+        Accept: "/",
       },
     });
 
@@ -181,7 +182,13 @@ exports.verifyTransaction = async (req, res, next) => {
       products: JSON.parse(req.query.products),
     });
     console.log("booking successfully created", booking);
-    res.cookie("dummy", "thiljfkajskfdskhfsfjsfdkffsdflsjdfk");
+
+    try {
+      const currentUser = await User.findById(req.query.userId);
+      await Email(currentUser).successOrder();
+    } catch (err) {
+      console.log(err);
+    }
     res.redirect(
       `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
     );

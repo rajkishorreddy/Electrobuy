@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 
+const AppError = require("./../utils/AppError");
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -11,10 +13,9 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, "Every user must have an email"],
       unique: true,
-      lowercase: true,
-      validate: [validator.isEmail, "Please provide an valid email."],
+      // required: [true, "Every user must have an email"],
+      // validate: [validator.isEmail, "Please provide an valid email."],
     },
     avatar: {
       type: String,
@@ -51,6 +52,9 @@ const userSchema = mongoose.Schema(
       type: Number,
     },
     githubId: {
+      type: Number,
+    },
+    facebookId: {
       type: Number,
     },
     passwordChangedAt: {
@@ -91,6 +95,21 @@ const userSchema = mongoose.Schema(
 );
 
 // Pre Save Hooks
+// Prior to creating the user, he must either have atleast one of the feilds present
+userSchema.pre("save", function (next) {
+  // ensuring that atleast one of the feilds is present
+  if (!this.email && !this.githubId && !this.googleId) {
+    return next(
+      new AppError(400, "Please provide atleast one unique identifier")
+    );
+  }
+  console.log("this.email is", this.email);
+  if (this.email && !validator.isEmail(this.email)) {
+    return next(new AppError(400, "Please provide proper email address"));
+  }
+  next();
+});
+
 // Encyprting the password in the case, when the user signs up using the basic method
 userSchema.pre("save", async function (next) {
   // 1) Make sure that the current document has both feilds password and the confirm password, so that, we can

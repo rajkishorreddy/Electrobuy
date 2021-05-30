@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/UserModel");
 const AppError = require("../utils/AppError");
+const Email = require("./../utils/Email");
 
 exports.basicSignup = async (req, res, next) => {
   // This middleware is responsible for creating a new user in the db
@@ -19,18 +20,6 @@ exports.basicSignup = async (req, res, next) => {
     ) {
       return next(new AppError(400, "Please provide the proper inputs"));
     }
-
-    //2) Initally, we need to validate the password with confirmPassword
-    // const checkPasswordWithConfirmPasswordBool =
-    //   req.body.password === req.body.confirmPassword;
-    // if (!checkPasswordWithConfirmPasswordBool) {
-    //   return next(
-    //     new AppError(
-    //       400,
-    //       "Please make sure that the password and the confirmPassword feilds are same"
-    //     )
-    //   );
-    // }
 
     //3)create a new user in the DB
     //we must always signup a new user only as an default i.e user. an user can be changed to admin in db
@@ -50,10 +39,16 @@ exports.basicSignup = async (req, res, next) => {
 
     //3) Send a welcome email to the user email
     // const url = `${req.protocol}://${req.get("host")}/me`;
-    // await new Email(newUser, url).sendWelcomeEmail();
+    try {
+      const emailStatus = await new Email(newUser).sendWelcomeEmail();
+      console.log("emailStatus is ", emailStatus);
+    } catch (err) {
+      console.log(err);
+    }
 
     //4)pass onto the next middlware which send back the token and the response
     // Inorder tosend the info to the next middleware, i will attach a property to the req object
+    console.log("the new user is ", newUser);
     req.cookieInfoProperty = { user: newUser, provider: "local" };
 
     return next();
@@ -155,6 +150,17 @@ exports.basicForgetPassword = async (req, res, next) => {
     const updatedUser = await lostUser.save({ validateBeforeSave: false });
     updatedUser.password = undefined;
 
+    try {
+      console.log(resetToken);
+      const emailStatus = await new Email(
+        updatedUser,
+        resetToken
+      ).sendResetPasswordEmail();
+      console.log(emailStatus);
+    } catch (err) {
+      console.log(err);
+    }
+
     // NOTE: The reset token must be only ssent through the email
     // 5) Send back the reset token for now
     res.status(200).json({
@@ -237,24 +243,56 @@ exports.createCookie = (req, res, next) => {
 
   // NOTE: We need to send the _id property of the user from the DB
   const jwtToken = jwt.sign(
-    { id: cookieInfo.user._id, provider: cookieInfo.provider },
+    { _id: cookieInfo.user._id, provider: cookieInfo.provider },
     process.env.JWT_SECRET
   );
-  res.cookie("jwt-cookie", jwtToken, cookieOptions);
-
   //3)sending back the response
-  // res.redirect(`http://127.0.0.1:3000`);
+  console.log(
+    "The cookie info prior to sending response or redirecting",
+    cookieInfo
+  );
+  res.cookie("jwt", jwtToken, cookieOptions);
+  if (cookieInfo.provider === "google" || cookieInfo.provider === "github") {
+    res.redirect(`http://127.0.0.1:3000/getToken/${jwtToken}`);
+  } else {
+    res.status(200).json({
+      status: "success",
+      jwtToken,
+      data: {
+        user: cookieInfo.user,
+        provider: cookieInfo.provider,
+      },
+    });
+  }
+};
+
+exports.getAuthTokenInfo = (req, res, next) => {
+  if (!req.user) {
+    return next(new AppError(400, "Please log in again"));
+  }
+  // As the token is present on the req.user if the user is authenticated
+  const availableMethodstoConnect = [];
+  if (!req.user.googleId) {
+    availableMethodstoConnect.push("google");
+  }
+  if (!req.user.email) {
+    availableMethodstoConnect.push("local");
+  }
+  if (!req.user.githubId) {
+    availableMethodstoConnect.push("github");
+  }
+  if (!req.user.facebookId) {
+    availableMethodstoConnect.push("facebook");
+  }
+
   res.status(200).json({
     status: "success",
-    jwtToken,
-    data: {
-      user: cookieInfo.user,
-      provider: cookieInfo.provider,
-    },
+    data: availableMethodstoConnect,
   });
 };
 
 exports.passportWrapperMiddleware = (req, res, next) => {
+  // NOTE: Need to add more security for checking the cookie
   passport.authenticate(
     "jwt",
     { session: false },
@@ -278,7 +316,24 @@ exports.passportWrapperMiddleware = (req, res, next) => {
         // 2) If the provider is google, verify if the verifiedUser really exists in the DB, and add it
         // directly to the verifiedUser
         if (jwtPayload.provider === "google") {
-          verifiedUser = await User.findById(jwtPayload.id);
+          verifiedUser = await User.findById(jwtPayload._id);
+
+          if (!verifiedUser) {
+            return next(
+              new AppError(
+                400,
+                "User not found based on the cookie provided. Please log in again"
+              )
+            );
+          }
+          req.user = verifiedUser;
+          console.log("the user added to the req", req.user);
+          return next();
+        }
+        // 2) If the provider is github, verify if the verifiedUser really exists in the DB, and add it
+        // directly to the verifiedUser
+        if (jwtPayload.provider === "github") {
+          verifiedUser = await User.findById(jwtPayload._id);
 
           if (!verifiedUser) {
             return next(
@@ -295,7 +350,7 @@ exports.passportWrapperMiddleware = (req, res, next) => {
         // 3) If the provider is the local strategy, veify the verifiedUser and also check for the password
         // property, and make sure that the token provided is valid
         if (jwtPayload.provider === "local") {
-          verifiedUser = await User.findById(jwtPayload.id);
+          verifiedUser = await User.findById(jwtPayload._id);
           if (!verifiedUser) {
             return next(
               new AppError(
@@ -314,10 +369,10 @@ exports.passportWrapperMiddleware = (req, res, next) => {
               )
             );
           }
+          req.user = verifiedUser;
+          console.log("the user added to the req", req.user);
+          return next();
         }
-        req.user = verifiedUser;
-        console.log("the user added to the req", req.user);
-        return next();
       } catch (error) {
         next(error);
       }

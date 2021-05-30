@@ -52,6 +52,7 @@ const Myaccount = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+        console.log(data);
         const orders = await axios.get(
           `http://127.0.0.1:8080/api/v1/users/orders `,
           {
@@ -355,6 +356,13 @@ const Myaccount = () => {
               />
               <button className="myac-form-left-btn">change password</button>
             </form>
+            <a
+              href={`http://localhost:8080/api/v1/users/connect/google/${window.localStorage.getItem(
+                "token"
+              )}`}
+            >
+              connect with google
+            </a>
           </div>
         </div>
         <Myac className="myac-svg" />

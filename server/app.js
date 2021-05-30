@@ -41,7 +41,7 @@ app.use(passport.initialize());
 // });
 app.use(
   cors({
-    origin: "*", // allow to server to accept request from different origin
+    origin: ["http://127.0.0.1:3000", "http://localhost:3000"], // allow to server to accept request from different origin
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // allow session cookie from browser to pass through
   })
@@ -110,6 +110,8 @@ app.use(compression());
 //Custom middleware function
 app.use((req, res, next) => {
   console.log("this is the middleware function talking");
+  console.log("the cookies attached to this req is");
+  console.log(req.cookies);
   next();
 });
 // app.use((req, res, next) => {
@@ -117,7 +119,7 @@ app.use((req, res, next) => {
 //   next();
 // });
 app.use((req, res, next) => {
-  res.setHeader("Acces-Control-Allow-Origin", "*");
+  res.setHeader("Acces-Control-Allow-Origin", "http://127.0.0.1:3000");
   res.setHeader("Acces-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
   res.setHeader("Acces-Contorl-Allow-Methods", "Content-Type", "Authorization");
   next();

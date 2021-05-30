@@ -1,26 +1,26 @@
-import { useState } from 'react';
-import { useSnackbar } from 'react-simple-snackbar';
-import { ReactComponent as Logo } from '../../assets/Logo.svg';
-import { ReactComponent as Style } from '../../assets/signup.svg';
-import { Link } from 'react-router-dom';
-import history from '../../history';
-import axios from 'axios';
+import { useState } from "react";
+import { useSnackbar } from "react-simple-snackbar";
+import { ReactComponent as Logo } from "../../assets/Logo.svg";
+import { ReactComponent as Style } from "../../assets/signup.svg";
+import { Link } from "react-router-dom";
+import history from "../../history";
+import axios from "axios";
 const Signup = () => {
-  const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
@@ -28,25 +28,25 @@ const Signup = () => {
     e.preventDefault();
     try {
       const { data } = await axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8080/api/v1/users/login-basic',
+        method: "post",
+        url: "http://127.0.0.1:8080/api/v1/users/login-basic",
         data: {
           email: Email,
           password: Password,
         },
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Credentials': true,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
         },
-        credentials: 'include',
+        credentials: "include",
         // withCredentials: true,
       });
       console.log(data.data);
-      window.localStorage.setItem('token', data.jwtToken);
-      openSnackbar('Login successfull!');
+      window.localStorage.setItem("token", data.jwtToken);
+      openSnackbar("Login successfull!");
       setTimeout(() => {
-        history.push('/');
+        history.push("/");
       }, 1000);
     } catch (err) {
       console.log(err.response?.data);
@@ -56,11 +56,11 @@ const Signup = () => {
   return (
     <div className="signup">
       <div className="signup_left">
-        <Link to={'/'} className="signup_left-goback">
+        <Link to={"/"} className="signup_left-goback">
           ←
         </Link>
         <Logo
-          style={{ transform: 'translate(-50%,8rem)' }}
+          style={{ transform: "translate(-50%,8rem)" }}
           className="signup-logo"
         />
         <div className="signup-main">
@@ -97,10 +97,24 @@ const Signup = () => {
             <button className="signup-form-btn">Log in</button>
           </form>
           <div className="signup-already">
-            No account, then click here to{' '}
-            <Link to={'/signup'} className="signup-already-link">
+            No account, then click here to{" "}
+            <Link to={"/signup"} className="signup-already-link">
               sign up! →
             </Link>
+          </div>
+          <div className="google_test">
+            <a href="http://localhost:8080/api/v1/users/google">google</a>
+            <a href="http://localhost:8080/api/v1/users/connect/google">
+              connect with google
+            </a>
+            {/* <a href="http://localhost:8080/api/v1/users/github">github</a>
+        <a href="http://localhost:8080/api/v1/users/connect/github">
+          connect with github
+        </a>
+        <a href="http://localhost:8080/api/v1/users/facebook">facebook</a>
+        <a href="http://localhost:8080/api/v1/users/connect/facebook">
+          connect with facebook
+        </a> */}
           </div>
         </div>
       </div>

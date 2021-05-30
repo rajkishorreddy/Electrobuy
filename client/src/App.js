@@ -1,18 +1,19 @@
-import { Router, Route, Switch } from 'react-router-dom';
-import history from './history';
-import ScrollToTop from './ScrollToTop';
-import SnackbarProvider from 'react-simple-snackbar';
+import { Router, Route, Switch } from "react-router-dom";
+import history from "./history";
+import ScrollToTop from "./ScrollToTop";
+import SnackbarProvider from "react-simple-snackbar";
 
-import LandingPg from './components/landing/LandingPg';
-import SearchResults from './components/searchResults/SearchResults';
-import Signup from './components/Signup/Signup.jsx';
-import Login from './components/Login/Login.jsx';
-import ProductInfo from './components/ProductInfo/ProductInfo.jsx';
-import Wishlist from './components/Wishlist/Wishlist.jsx';
-import Cart from './components/Cart/Cart.jsx';
-import Conformation from './components/Conformation/Conformation.jsx';
-import Myaccount from './components/Myaccount/Myaccount.jsx';
-import './App.scss';
+import LandingPg from "./components/landing/LandingPg";
+import SearchResults from "./components/searchResults/SearchResults";
+import Signup from "./components/Signup/Signup.jsx";
+import Login from "./components/Login/Login.jsx";
+import ProductInfo from "./components/ProductInfo/ProductInfo.jsx";
+import Wishlist from "./components/Wishlist/Wishlist.jsx";
+import Cart from "./components/Cart/Cart.jsx";
+import Conformation from "./components/Conformation/Conformation.jsx";
+import Myaccount from "./components/Myaccount/Myaccount.jsx";
+import GetToken from "./components/GetToken/GetToken.jsx";
+import "./App.scss";
 
 const App = () => {
   return (
@@ -27,7 +28,7 @@ const App = () => {
               <Route path="/wishlist" exact component={Wishlist} />
               <Route path="/cart" exact component={Cart} />
               <Route path="/myaccount" exact component={Myaccount} />
-              <Route path="/conformation/:id" exact component={Conformation} />
+              <Route path="/getToken/:token" exact component={GetToken} />
               {/* <Route path="/results/:id" exact component={SearchResults} /> */}
               {/* <Route path="/productInfo/:id" exact component={ProductInfo} /> */}
               <Route

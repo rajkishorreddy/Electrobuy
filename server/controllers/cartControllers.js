@@ -3,18 +3,18 @@ const AppError = require("../utils/AppError");
 
 exports.getAllCartItems = async (req, res, next) => {
   try {
-    // 1) Get the user details from the req.user._id
     // 1) Make sure that the user is logged in
     if (!req.user) {
       return next(new AppError(401, "Please log in again"));
     }
 
-    // 2) Get all the documents from the cart array (make sure that the arr is populated)
+    // 1) Get the user details from the req.user._id
     if (!req.user._id) {
       return next(new AppError(400, "Please login/ signup again"));
     }
     // console.log(req.user._id, req.params.productId);
 
+    // 2) Get all the documents from the cart array (make sure that the arr is populated)
     const { cartArr } = await User.findById(req.user._id);
 
     // 3) Send back the response
@@ -111,7 +111,7 @@ exports.deleteCartItem = async (req, res, next) => {
     // 1) Get the user details from the req.user._id
     // 1) Make sure that the user is logged in
     if (!req.user) {
-      return next(new AppError(401, "Please log in again"));
+      return next(new AppError(401, "Please log in/ sign up again"));
     }
 
     // 2) Update the cart array with the new product, whose id is taken from the query paramter
