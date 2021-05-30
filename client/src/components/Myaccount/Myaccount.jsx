@@ -363,6 +363,13 @@ const Myaccount = () => {
             >
               connect with google
             </a>
+            <a
+              href={`http://localhost:8080/api/v1/users/connect/github/${window.localStorage.getItem(
+                "token"
+              )}`}
+            >
+              connect with github
+            </a>
           </div>
         </div>
         <Myac className="myac-svg" />
