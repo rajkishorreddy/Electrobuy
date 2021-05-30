@@ -1,5 +1,5 @@
 const AppError = require("./../utils/AppError");
-const User = require("./../models/UserModel");
+const User = require("../models/userModel");
 
 exports.updateMe = async (req, res, next) => {
   try {

@@ -1,6 +1,6 @@
 const passport = require("passport");
 
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 const AppError = require("../utils/AppError");
 
 exports.getAllWishlistItems = async (req, res, next) => {

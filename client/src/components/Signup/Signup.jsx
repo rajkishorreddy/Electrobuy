@@ -34,7 +34,7 @@ const Signup = () => {
       console.log("assasas");
       const { data } = await axios({
         method: "post",
-        url: "http://127.0.0.1:8080/api/v1/users/signup-basic",
+        url: "http://localhost:8080/api/v1/users/signup-basic",
         data: {
           name: `${FirstName} ${LastName}`,
           email: Email,

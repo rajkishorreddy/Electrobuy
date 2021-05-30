@@ -5,7 +5,7 @@ const passport = require("passport");
 
 const authController = require("./../controllers/authControllers");
 const connectController = require("./../controllers/connectControllers");
-const User = require("./../models/UserModel");
+const User = require("../models/userModel");
 const AppError = require("./../utils/AppError");
 const Email = require("./../utils/Email");
 

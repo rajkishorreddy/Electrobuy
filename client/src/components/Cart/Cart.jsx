@@ -42,7 +42,7 @@ const Cart = () => {
       const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
-          `http://127.0.0.1:8080/api/v1/users/getAllCartProduct`,
+          `http://localhost:8080/api/v1/users/getAllCartProduct`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -65,7 +65,7 @@ const Cart = () => {
     const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.post(
-        "http://127.0.0.1:8080/api/v1/payments",
+        "http://localhost:8080/api/v1/payments",
         {
           transactionAmount: final,
           transactionGoods: arr.map((el) => el._id),
@@ -108,7 +108,7 @@ const Cart = () => {
     try {
       console.log(curr.target?.dataset?.id);
       const { data } = await axios.delete(
-        `http://127.0.0.1:8080/api/v1/users/addCartProduct/${curr.target?.dataset?.id}`,
+        `http://localhost:8080/api/v1/users/addCartProduct/${curr.target?.dataset?.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -130,7 +130,7 @@ const Cart = () => {
     } else {
       try {
         const data = await axios.post(
-          `http://127.0.0.1:8080/api/v1/users/addWishlistProduct/${el.target.dataset?.id}`,
+          `http://localhost:8080/api/v1/users/addWishlistProduct/${el.target.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

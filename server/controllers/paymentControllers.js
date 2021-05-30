@@ -6,6 +6,7 @@ const formidable = require("formidable");
 const formidableMiddleware = require("express-formidable");
 
 const Product = require("./../models/productModel");
+const User = require("../models/userModel");
 const Booking = require("./../models/bookingModel");
 const PaytmChecksum = require("./../utils/PaytmChecksum");
 const AppError = require("./../utils/AppError");
@@ -136,7 +137,7 @@ exports.verifyTransaction = async (req, res, next) => {
     );
     if (!isVerifySignature) {
       return res.redirect(
-        `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
+        `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
       );
     }
 
@@ -169,7 +170,7 @@ exports.verifyTransaction = async (req, res, next) => {
       //   new AppError(404, "Sorry, the transaction was not successfull")
       // );
       return res.redirect(
-        `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
+        `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
       );
     }
     // console.log("fuck you", JSON.parse(req.query.products));
@@ -190,7 +191,7 @@ exports.verifyTransaction = async (req, res, next) => {
       console.log(err);
     }
     res.redirect(
-      `http://127.0.0.1:3000/conformation/${newPaytmTransactionParams.ORDERID}`
+      `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
     );
   } catch (err) {
     next(err);

@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 const AppError = require("../utils/AppError");
 const Email = require("./../utils/Email");
 
@@ -253,7 +253,7 @@ exports.createCookie = (req, res, next) => {
   );
   res.cookie("jwt", jwtToken, cookieOptions);
   if (cookieInfo.provider === "google" || cookieInfo.provider === "github") {
-    res.redirect(`http://127.0.0.1:3000/getToken/${jwtToken}`);
+    res.redirect(`http://localhost:3000/getToken/${jwtToken}`);
   } else {
     res.status(200).json({
       status: "success",

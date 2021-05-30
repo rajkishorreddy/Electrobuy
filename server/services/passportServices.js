@@ -5,7 +5,7 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 
-const User = require("./../models/UserModel");
+const User = require("../models/userModel");
 
 var extractTokenFn = function (req) {
   let jwt = null;
@@ -83,7 +83,10 @@ passport.use(
           console.log(
             "The user is already authenticated, but trying to add the google details to his user profile"
           );
-
+          const prevConnectedGoogle = User.findOne({ googleId: profile.id });
+          if (prevConnectedGoogle) {
+            return cb(error, false);
+          }
           const user = await User.findById(req.user._id);
           console.log("the current already authenticated user is", user);
           if (!user.googleId) {
@@ -106,10 +109,10 @@ passport.use(
           // throw new Error(
           //   "Trying to change the googleId of an existing authenticated user"
           // );
-          cb(error, false);
+          return cb(error, false);
         }
       } catch (error) {
-        cb(error, false);
+        return cb(error, false);
       }
     }
   )

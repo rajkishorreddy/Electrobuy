@@ -47,14 +47,14 @@ const Myaccount = () => {
       const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
-          `http://127.0.0.1:8080/api/v1/users/getMyProfile`,
+          `http://localhost:8080/api/v1/users/getMyProfile`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log(data);
+        console.log("my account", data);
         const orders = await axios.get(
-          `http://127.0.0.1:8080/api/v1/users/orders `,
+          `http://localhost:8080/api/v1/users/orders `,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -108,7 +108,7 @@ const Myaccount = () => {
     const token = window.localStorage.getItem("token");
     const uploadDp = async () => {
       const { data } = await axios.patch(
-        `http://127.0.0.1:8080/api/v1/users/updateMyProfilePic`,
+        `http://localhost:8080/api/v1/users/updateMyProfilePic`,
         {
           avatar: dp,
         },
@@ -116,8 +116,8 @@ const Myaccount = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setAvatar(data.data.avatar);
       console.log(data);
+      setAvatar(data.data.avatar);
     };
     uploadDp();
   }, [dp]);
@@ -127,7 +127,7 @@ const Myaccount = () => {
     const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.patch(
-        `http://127.0.0.1:8080/api/v1/users/updateMyProfile`,
+        `http://localhost:8080/api/v1/users/updateMyProfile`,
         {
           name: `${FirstName} ${LastName}`,
           email: Email,
@@ -155,7 +155,7 @@ const Myaccount = () => {
     const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.patch(
-        `http://127.0.0.1:8080/api/v1/users/updateMyPassword`,
+        `http://localhost:8080/api/v1/users/updateMyPassword`,
         {
           currentPassword: currPass,
           password: newPass,

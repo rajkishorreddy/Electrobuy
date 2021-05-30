@@ -1,33 +1,33 @@
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Carousel } from 'react-responsive-carousel';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { useSnackbar } from 'react-simple-snackbar';
-import { fetchProductInfo } from '../../actions';
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { Carousel } from "react-responsive-carousel";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useSnackbar } from "react-simple-snackbar";
+import { fetchProductInfo } from "../../actions";
 
-import Header from '../Header';
-import Footer from '../Footer';
+import Header from "../Header";
+import Footer from "../Footer";
 
-import loader from '../../assets/loading.gif';
-import { ReactComponent as WishlistProdInfo } from '../../assets/wishlistProdInfo.svg';
+import loader from "../../assets/loading.gif";
+import { ReactComponent as WishlistProdInfo } from "../../assets/wishlistProdInfo.svg";
 
-import './ProductInfo.scss';
+import "./ProductInfo.scss";
 
 const ProductInfo = (props) => {
   const options = {
-    position: 'top-left',
+    position: "top-left",
     style: {
       // backgroundColor: '#930696',
-      background: 'linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)',
-      color: 'white',
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '16px',
-      textAlign: 'center',
+      background: "linear-gradient(180deg, #5e3173 0.31%, #000000 102.17%)",
+      color: "white",
+      fontFamily: "Montserrat, sans-serif",
+      fontSize: "16px",
+      textAlign: "center",
     },
     closeStyle: {
-      color: 'black',
-      fontSize: '10px',
+      color: "black",
+      fontSize: "10px",
     },
   };
   const [openSnackbar] = useSnackbar(options);
@@ -39,20 +39,20 @@ const ProductInfo = (props) => {
   const history = useHistory();
 
   const addWishlist = async (el) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     if (!token) {
-      history.push('/login');
+      history.push("/login");
     } else {
       try {
         const data = await axios.post(
-          `http://127.0.0.1:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
+          `http://localhost:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        if (data.data.status === 'success') {
-          openSnackbar('item added successfully to wishlist');
+        if (data.data.status === "success") {
+          openSnackbar("item added successfully to wishlist");
         }
       } catch (err) {
         console.log(err);
@@ -61,21 +61,21 @@ const ProductInfo = (props) => {
   };
 
   const addCart = async (el) => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem("token");
     if (!token) {
-      history.push('/login');
+      history.push("/login");
     } else {
       try {
         const data = await axios.post(
-          `http://127.0.0.1:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
+          `http://localhost:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         console.log(data);
-        if (data.data.status === 'success') {
-          openSnackbar('item added successfully to Cart');
+        if (data.data.status === "success") {
+          openSnackbar("item added successfully to Cart");
         }
       } catch (err) {
         console.log(err);

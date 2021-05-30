@@ -28,6 +28,7 @@ const App = () => {
               <Route path="/wishlist" exact component={Wishlist} />
               <Route path="/cart" exact component={Cart} />
               <Route path="/myaccount" exact component={Myaccount} />
+              <Route path="/conformation/:id" exact component={Conformation} />
               <Route path="/getToken/:token" exact component={GetToken} />
               {/* <Route path="/results/:id" exact component={SearchResults} /> */}
               {/* <Route path="/productInfo/:id" exact component={ProductInfo} /> */}

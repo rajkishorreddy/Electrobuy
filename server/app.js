@@ -41,7 +41,7 @@ app.use(passport.initialize());
 // });
 app.use(
   cors({
-    origin: ["http://127.0.0.1:3000", "http://localhost:3000"], // allow to server to accept request from different origin
+    origin: ["http://localhost:3000", "http://localhost:3000"], // allow to server to accept request from different origin
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // allow session cookie from browser to pass through
   })
@@ -115,11 +115,11 @@ app.use((req, res, next) => {
   next();
 });
 // app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:3000/login");
+//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/login");
 //   next();
 // });
 app.use((req, res, next) => {
-  res.setHeader("Acces-Control-Allow-Origin", "http://127.0.0.1:3000");
+  res.setHeader("Acces-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Acces-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
   res.setHeader("Acces-Contorl-Allow-Methods", "Content-Type", "Authorization");
   next();

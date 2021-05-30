@@ -42,8 +42,8 @@ const Header = () => {
     history.push("/");
   };
   const googletry = async () => {
-    // await axios.get('http://127.0.0.1:8080/api/v1/users/google');
-    window.open("http://127.0.0.1:8080/api/v1/users/google", "_self");
+    // await axios.get('http://localhost:8080/api/v1/users/google');
+    window.open("http://localhost:8080/api/v1/users/google", "_self");
   };
   const SearchSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const Header = () => {
     let timeout1 = setTimeout(async () => {
       try {
         const res = await axios.post(
-          "http://127.0.0.1:8080/api/v1/products/searchText",
+          "http://localhost:8080/api/v1/products/searchText",
           {
             searchText: value,
           }

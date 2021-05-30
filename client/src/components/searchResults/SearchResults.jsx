@@ -38,12 +38,13 @@ const SearchResults = (props) => {
     } else {
       try {
         const data = await axios.post(
-          `http://127.0.0.1:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
+          `http://localhost:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+        console.log("the products are:", data.data);
         if (data.data.status === "success") {
           openSnackbar("item added to wishlist");
         }
@@ -59,7 +60,7 @@ const SearchResults = (props) => {
     } else {
       try {
         const data = await axios.post(
-          `http://127.0.0.1:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
+          `http://localhost:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

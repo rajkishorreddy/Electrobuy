@@ -3,7 +3,7 @@ const util = require("util");
 const sgMail = require("@sendgrid/mail");
 
 const AppError = require("./AppError");
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 
 class Email {
   constructor(user, url = "null") {

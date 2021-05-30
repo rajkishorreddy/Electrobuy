@@ -29,7 +29,7 @@ const Signup = () => {
     try {
       const { data } = await axios({
         method: "post",
-        url: "http://127.0.0.1:8080/api/v1/users/login-basic",
+        url: "http://localhost:8080/api/v1/users/login-basic",
         data: {
           email: Email,
           password: Password,
