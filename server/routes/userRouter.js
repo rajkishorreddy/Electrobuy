@@ -109,6 +109,18 @@ router.get(
 );
 router.get(
   "/google/redirect",
+  (req, res, next) => {
+    console.log(
+      "the req.params is prior to connecting to google is",
+      req.params
+    );
+    console.log("the req.user is prior to connecting to google is", req.user);
+    if (req && req.params && req.params.jwt) {
+      req.headers.authorization = `Bearer ${req.params.jwt}`;
+      return next();
+    }
+    next();
+  },
   authController.passportWrapperMiddleware,
   passport.authenticate("google", {
     session: false,

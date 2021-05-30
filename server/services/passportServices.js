@@ -7,34 +7,32 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 const User = require("./../models/UserModel");
 
-var extractCookieFn = function (req) {
+var extractTokenFn = function (req) {
   let jwt = null;
-  console.log("req.headers", req.headers.authorization);
-  // console.log("req.cookies", req.cookies);
-  // if (req && req.cookies["jwt"]) {
-  //   console.log("all cokkies present now are", req.cookies);
-  //   jwt = req.cookies["jwt"];
-  //   console.log("cookies from passport-jwt callback", req.cookies["jwt"]);
-  //   return jwt;
-  // }
+  console.log("the req.headers are", req.headers.authorization);
+  console.log("the req.query are", req.query);
+  if (req.query && req.query.state) {
+    jwt = req.query.state;
+    console.log("jwt recovered from req.query is ", jwt);
+    return jwt;
+  }
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer ")
   ) {
     //THE JAVASCRIPT IS with let and const is BLOCK SCOPED, NOT FUNCTION SCOPED
-    console.log("oh yeahhh");
     jwt = req.headers.authorization.split(" ")[1];
-    console.log("jwt is ", jwt);
+    console.log("jwt recovered from req.headers is ", jwt);
     return jwt;
   }
-  console.log("jwt is ", jwt);
+  console.log("jwt recovered is ", jwt);
   return jwt;
 };
 passport.use(
   new JwtStrategy(
     {
       // As the token can be either in the form of a cookie or a auth header, we use a custom token extractor fn
-      jwtFromRequest: extractCookieFn,
+      jwtFromRequest: extractTokenFn,
       secretOrKey: process.env.JWT_SECRET,
       algorithms: ["HS256"],
       // passReqToCallback: true,

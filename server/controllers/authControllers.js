@@ -275,9 +275,9 @@ exports.getAuthTokenInfo = (req, res, next) => {
   if (!req.user.googleId) {
     availableMethodstoConnect.push("google");
   }
-  if (!req.user.email) {
-    availableMethodstoConnect.push("local");
-  }
+  // if (!req.user.email) {
+  //   availableMethodstoConnect.push("local");
+  // }
   if (!req.user.githubId) {
     availableMethodstoConnect.push("github");
   }
