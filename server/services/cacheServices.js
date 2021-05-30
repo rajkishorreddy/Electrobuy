@@ -82,7 +82,7 @@ mongoose.Query.prototype.exec = async function () {
     ...this.splObj,
     collection: this.mongooseCollection.name,
   };
-  console.log("redisQueryKey", redisQueryKey);
+  // console.log("redisQueryKey", redisQueryKey);
 
   const cacheData = await get(JSON.stringify(redisQueryKey));
 

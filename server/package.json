@@ -18,6 +18,7 @@
     "formidable": "^1.2.2",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
+    "mailgen": "^2.0.14",
     "mongoose": "^5.12.7",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
