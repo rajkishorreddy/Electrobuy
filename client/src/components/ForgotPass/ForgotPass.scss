@@ -1,0 +1,18 @@
+.fp {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    #000000 -3.48%,
+    #2e2e2e -3.47%,
+    rgba(109, 43, 148, 0.81) 20.54%,
+    rgba(109, 43, 148, 0.81) 78.21%,
+    #000000 99.03%
+  );
+}
+.margin-btm {
+  margin-bottom: 1rem;
+}

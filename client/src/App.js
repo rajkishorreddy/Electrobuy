@@ -12,6 +12,7 @@ import Wishlist from "./components/Wishlist/Wishlist.jsx";
 import Cart from "./components/Cart/Cart.jsx";
 import Conformation from "./components/Conformation/Conformation.jsx";
 import Myaccount from "./components/Myaccount/Myaccount.jsx";
+import ForgotPass from "./components/ForgotPass/ForgotPass.jsx";
 import GetToken from "./components/GetToken/GetToken.jsx";
 import "./App.scss";
 
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/myaccount" exact component={Myaccount} />
               <Route path="/conformation/:id" exact component={Conformation} />
               <Route path="/getToken/:token" exact component={GetToken} />
+              <Route path="/forgotPass/:token" exact component={ForgotPass} />
               {/* <Route path="/results/:id" exact component={SearchResults} /> */}
               {/* <Route path="/productInfo/:id" exact component={ProductInfo} /> */}
               <Route
