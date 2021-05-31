@@ -14,7 +14,7 @@ import Header from "../Header";
 
 const Conformation = (props) => {
   const [transaction, setTransaction] = useState({});
-  const [status, setStatus] = useState("cancel");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     const check = async () => {
@@ -28,24 +28,23 @@ const Conformation = (props) => {
         setTransaction(data.data);
       } catch (err) {
         console.log(err.response?.data);
+        // eslint-disable-next-line no-unused-expressions
+        (err?.response?.data?.status === 'fail') ? setStatus("cancel") : null;
       }
     };
 
     check();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    // <div>{props.match.params.id}</div>
     <div>
       <Header />
       <div className="confirmation">
         <div className="confirmation-success">
-          {status === "success" ? (
-            <img src={success} alt="success" />
-          ) : (
-            <img src={cancel} alt="cancel" />
-          )}
+          {status === "success" && <img src={success} alt="success" />}
+          {status === "cancel" && <img src={cancel} alt="cancel" />}
         </div>
-        {status === "success" ? (
+        {status === "success" && (
           <div className="confirmation-content">
             <div className="confirmation-content__container">
               <p className="confirmation-content__container-order">
@@ -91,7 +90,8 @@ const Conformation = (props) => {
               </div>
             </div>
           </div>
-        ) : (
+        )}
+        {status === 'cancel' && (
           <div className="error">
             <h4>Transaction is failed ❌, due to any of the below reasons: </h4>
             <div>
