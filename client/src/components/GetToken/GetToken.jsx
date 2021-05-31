@@ -26,6 +26,7 @@ const GetToken = (props) => {
       history.push("/");
     } else {
       window.localStorage.setItem("token", props.match.params.token);
+      openSnackbar("Login successfull!");
       history.push("/");
     }
   }, []);
