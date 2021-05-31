@@ -26,6 +26,13 @@ const Signup = () => {
     },
   };
   const [openSnackbar] = useSnackbar(options);
+  const forgotPass = () => {
+    if (!Email) {
+      openSnackbar("Please enter your email address and try again!");
+    } else {
+      console.log("clicked");
+    }
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -122,6 +129,9 @@ const Signup = () => {
             <Link to={"/signup"} className="signup-already-link">
               sign up! →
             </Link>
+          </div>
+          <div className="forgotPass" onClick={forgotPass}>
+            forgot password?
           </div>
         </div>
       </div>
