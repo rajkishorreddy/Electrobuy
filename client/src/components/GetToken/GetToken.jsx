@@ -29,6 +29,7 @@ const GetToken = (props) => {
       openSnackbar("Login successfull!");
       history.push("/");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <div>{props.match.params.token}</div>;
 };

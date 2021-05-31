@@ -106,12 +106,14 @@ const ProductInfo = (props) => {
                 transitionTime={800}
                 showArrows={false}
               >
-                {props.data.imageArr.map((el) => {
+                {props.data.imageArr.map((el, index) => {
                   return (
-                    <div className="img">
+                    <div className="img" key={index}>
                       <img src={el} alt="img-1" />
                     </div>
                   );
+
+
                 })}
               </Carousel>
             </div>
@@ -156,8 +158,8 @@ const ProductInfo = (props) => {
                 <div className="product-display--content__heading-description">
                   <p>Description:</p>
                   <ul>
-                    {props.data.description.map((el) => {
-                      return <li>{el}</li>;
+                    {props.data.description.map((el, index) => {
+                      return <li key={index}>{el}</li>;
                     })}
                   </ul>
                 </div>
@@ -169,9 +171,9 @@ const ProductInfo = (props) => {
               <h1>Technical Details</h1>
               <hr className="hr" />
               <div className="tech-detials--list">
-                {props.data.technicalDetails.map((el) => {
+                {props.data.technicalDetails.map((el, index) => {
                   return (
-                    <div className="tech-details--list__item">
+                    <div className="tech-details--list__item" key={index}>
                       <p className="tech-details--list__item-key">
                         {el.detail}
                       </p>
@@ -187,9 +189,9 @@ const ProductInfo = (props) => {
               <h1>Additional Details</h1>
               <hr className="hr" />
               <div className="additional-details--list">
-                {props.data.additionalDetails.map((el) => {
+                {props.data.additionalDetails.map((el, index) => {
                   return (
-                    <div className="tech-details--list__item">
+                    <div className="tech-details--list__item" key={index}>
                       <p className="tech-details--list__item-key">
                         {el.detail}
                       </p>
@@ -205,9 +207,9 @@ const ProductInfo = (props) => {
               <h1>Reviews</h1>
               <hr className="hr" />
               <div className="reviews-list">
-                {props.data.reviewArr.map((el) => {
+                {props.data.reviewArr.map((el, index) => {
                   return (
-                    <div className="reviews-item">
+                    <div className="reviews-item" key={index}>
                       <div className="reviews-item__top">
                         <h3 className="reviews-item__top--title">{el.title}</h3>
                         <div className="reviews-item__top--subtitle">

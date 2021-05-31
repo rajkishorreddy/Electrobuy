@@ -75,6 +75,7 @@ const Myaccount = () => {
     };
 
     getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resizeFile = (event) => {

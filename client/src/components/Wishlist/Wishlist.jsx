@@ -41,6 +41,7 @@ const Wishlist = () => {
       }
     };
     getdata();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const removeitem = async (curr) => {
     const token = window.localStorage.getItem("token");

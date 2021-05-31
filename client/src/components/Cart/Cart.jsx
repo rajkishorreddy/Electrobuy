@@ -57,6 +57,7 @@ const Cart = () => {
       }
     };
     getdata();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const loginclick = () => {
     history.push("/login");

@@ -9,7 +9,7 @@ export const fetchCategoryProducts = (categoryName, page) => {
         sort: "-finalPrice",
       },
     });
-    console.log("the products are:", data.data);
+    // console.log("the products are:", data.data);
     dispatch({ type: "PRODUCT", payload: data.data.products });
   };
 };
