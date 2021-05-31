@@ -5,6 +5,7 @@ const axios = require("axios");
 const formidable = require("formidable");
 const formidableMiddleware = require("express-formidable");
 
+const User = require("./../models/UserModel");
 const Product = require("./../models/productModel");
 const Booking = require("./../models/bookingModel");
 const PaytmChecksum = require("./../utils/PaytmChecksum");
@@ -185,7 +186,7 @@ exports.verifyTransaction = async (req, res, next) => {
 
     try {
       const currentUser = await User.findById(req.query.userId);
-      await Email(currentUser).successOrder();
+      await new Email(currentUser).successOrder();
     } catch (err) {
       console.log(err);
     }
