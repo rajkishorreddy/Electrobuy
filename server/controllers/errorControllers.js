@@ -11,6 +11,17 @@ module.exports = (err, req, res, next) => {
     err.statusCode = 404;
     err.status = "fail";
   }
+  //1)Mongo Error
+  if (err.name === "MongoError" && err.code === 11000) {
+    err.isOperational = true;
+    err.message = `The value at ${Object.keys(
+      err.keyValue
+    )} that is ${Object.values(
+      err.keyValue
+    )}, is used already. Please use another one`;
+    err.statusCode = 404;
+    err.status = "fail";
+  }
   //2)wrong validator error or 3)Duplicate Database feild
   if (err.name === "ValidationError") {
     err.isOperational = true;

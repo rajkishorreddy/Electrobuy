@@ -7,8 +7,7 @@ const User = require("../models/userModel");
 
 class Email {
   constructor(user, url = "null") {
-    //NOTE: Please change the email address
-    this.to = "solipuram42@gmail.com";
+    this.to = user.email;
     this.name = user.name;
     this.url = url;
     this.from = `ElectroBuy Team <${process.env.SENDGRID_EMAIL}>`;
