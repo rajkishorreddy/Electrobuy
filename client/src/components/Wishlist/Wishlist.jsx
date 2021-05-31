@@ -45,7 +45,7 @@ const Wishlist = () => {
   const removeitem = async (curr) => {
     const token = window.localStorage.getItem("token");
     try {
-      console.log(curr.target?.dataset?.id);
+      // console.log(curr.target?.dataset?.id);
       const { data } = await axios.delete(
         `http://localhost:8080/api/v1/users/addWishlistProduct/${curr.target?.dataset?.id}`,
         {
@@ -55,7 +55,7 @@ const Wishlist = () => {
       setArr(data.data);
       openSnackbar("item removed");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   const loginclick = () => {
@@ -74,12 +74,12 @@ const Wishlist = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log(data);
+        // console.log(data);
         if (data.data.status === "success") {
           openSnackbar("item added successfully to Cart");
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   };

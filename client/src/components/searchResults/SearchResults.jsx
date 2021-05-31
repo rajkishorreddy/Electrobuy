@@ -44,7 +44,7 @@ const SearchResults = (props) => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log("the products are:", data.data);
+        // console.log("the products are:", data.data);
         if (data.data.status === "success") {
           openSnackbar("item added to wishlist");
         }

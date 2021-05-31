@@ -55,7 +55,7 @@ const ProductInfo = (props) => {
           openSnackbar("item added successfully to wishlist");
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   };
@@ -73,12 +73,12 @@ const ProductInfo = (props) => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log(data);
+        // console.log(data);
         if (data.data.status === "success") {
           openSnackbar("item added successfully to Cart");
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   };

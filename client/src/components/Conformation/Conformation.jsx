@@ -22,12 +22,12 @@ const Conformation = (props) => {
         const { data } = await axios.get(
           `http://localhost:8080/api/v1/payments/checkOrder/${props.match.params.id}`
         );
-        console.log(data);
+        // console.log(data);
         // eslint-disable-next-line no-unused-expressions
         data?.message === "success" ? setStatus("success") : null;
         setTransaction(data.data);
       } catch (err) {
-        console.log(err.response?.data);
+        // console.log(err.response?.data);
         // eslint-disable-next-line no-unused-expressions
         (err?.response?.data?.status === 'fail') ? setStatus("cancel") : null;
       }
