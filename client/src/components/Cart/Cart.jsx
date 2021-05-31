@@ -100,7 +100,7 @@ const Cart = () => {
       form.submit();
       form.remove();
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err?.response?.data);
     }
   };
   const removeitem = async (curr) => {
