@@ -269,3 +269,35 @@
     
   }
 }
+
+.error {
+  background: rgba(237, 237, 237, 0.37);
+  border-radius: 2rem;
+  margin: 2rem;
+  height: 22rem;
+
+  & > h4 {
+    position: relative;
+    left: 5%;
+    top: 15%;
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: Montserrat, 'monospace';
+    color: white;
+    width: 55rem;
+  }
+  
+  & div {
+    width: 68rem;
+    position: relative;
+    left: 5%;
+    top: 15%;
+    padding: 1rem 0 0 1rem;    
+    
+    p {
+      color: white;
+      font-size: 1.6rem;
+      font-family: Montserrat, 'monospace';
+    }
+  }
+}
