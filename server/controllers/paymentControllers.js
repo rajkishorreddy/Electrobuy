@@ -5,7 +5,6 @@ const axios = require("axios");
 const formidable = require("formidable");
 const formidableMiddleware = require("express-formidable");
 
-const User = require("./../models/UserModel");
 const Product = require("./../models/productModel");
 const User = require("../models/userModel");
 const Booking = require("./../models/bookingModel");
