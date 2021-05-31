@@ -26,11 +26,23 @@ const Signup = () => {
     },
   };
   const [openSnackbar] = useSnackbar(options);
-  const forgotPass = () => {
+  const forgotPass = async () => {
     if (!Email) {
       openSnackbar("Please enter your email address and try again!");
     } else {
-      console.log("clicked");
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8080/api/v1/users/forgetPassword",
+          {
+            email: Email,
+          }
+        );
+        if (data.status === "success") {
+          openSnackbar("Password reset link is sent to your mail id.");
+        }
+      } catch (err) {
+        openSnackbar(err.response?.data?.message);
+      }
     }
   };
   const onSubmit = async (e) => {

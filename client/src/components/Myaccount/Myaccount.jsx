@@ -24,6 +24,7 @@ const Myaccount = () => {
   const [orders, setOrders] = useState(null);
   const [dp, setDp] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [googleId, setGoogleId] = useState(null);
 
   console.log(orders);
   const options = {
@@ -52,7 +53,7 @@ const Myaccount = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log("my account", data);
+        console.log("my account", data.data.googleId);
         const orders = await axios.get(
           `http://localhost:8080/api/v1/users/orders `,
           {
@@ -67,8 +68,9 @@ const Myaccount = () => {
         setEmail(data.data.email);
         setAddress(data.data.address);
         setAvatar(data.data.avatar);
+        setGoogleId(data.data.googleId);
       } catch (err) {
-        console.log(err.response);
+        openSnackbar(err.response?.data?.message);
       }
     };
 
@@ -355,17 +357,23 @@ const Myaccount = () => {
                 autoComplete="off"
               />
               <button className="myac-form-left-btn">change password</button>
-              <a
-                className="googlec"
-                href={`http://localhost:8080/api/v1/users/connect/google/${window.localStorage.getItem(
-                  "token"
-                )}`}
-              >
-                <div className="googlec-img-cont">
-                  <img src={google} alt="google" className="googlec-img"></img>
-                </div>
-                <div className="googlec-name">connect with google</div>
-              </a>
+              {!googleId ? (
+                <a
+                  className="googlec"
+                  href={`http://localhost:8080/api/v1/users/connect/google/${window.localStorage.getItem(
+                    "token"
+                  )}`}
+                >
+                  <div className="googlec-img-cont">
+                    <img
+                      src={google}
+                      alt="google"
+                      className="googlec-img"
+                    ></img>
+                  </div>
+                  <div className="googlec-name">connect with google</div>
+                </a>
+              ) : null}
             </form>
           </div>
         </div>

@@ -50,7 +50,7 @@ const Signup = () => {
       }, 1000);
     } catch (err) {
       console.log(err);
-      alert(err.response?.data.message);
+      openSnackbar(err.response?.data.message);
     }
   };
   return (
