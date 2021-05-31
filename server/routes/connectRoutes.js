@@ -35,7 +35,6 @@ router.get(
         state: req.params.jwt,
       },
       async (err, user, info) => {
-        console.log(err);
         return next();
       }
     )(req, res, next);

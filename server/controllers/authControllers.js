@@ -40,7 +40,18 @@ exports.basicSignup = async (req, res, next) => {
     //3) Send a welcome email to the user email
     // const url = `${req.protocol}://${req.get("host")}/me`;
     try {
-      const emailStatus = await new Email(newUser).sendWelcomeEmail();
+      let emailStatus;
+      if (process.env.NODE_ENV === "development") {
+        emailStatus = await new Email(
+          newUser,
+          process.env.DEVELOPMENT_CLIENT_URL
+        ).sendWelcomeEmail();
+      } else if (process.env.NODE_ENV === "production") {
+        emailStatus = await new Email(
+          newUser,
+          process.env.PRODUCTION_CLIENT_URL
+        ).sendWelcomeEmail();
+      }
       console.log("emailStatus is ", emailStatus);
     } catch (err) {
       console.log(err);
@@ -151,12 +162,25 @@ exports.basicForgetPassword = async (req, res, next) => {
     updatedUser.password = undefined;
 
     try {
-      console.log(resetToken);
-      const emailStatus = await new Email(
-        updatedUser,
-        resetToken
-      ).sendResetPasswordEmail();
-      console.log(emailStatus);
+      let emailStatus;
+      if (process.env.NODE_ENV === "development") {
+        emailStatus = await new Email(
+          updatedUser,
+          process.env.DEVELOPEMENT_RESET_PASSWORD_URL.replace(
+            "<RESETTOKEN>",
+            resetToken
+          )
+        ).sendResetPasswordEmail();
+      } else if (process.env.NODE_ENV === "production") {
+        emailStatus = await new Email(
+          updatedUser,
+          process.env.PRODUCTION_RESET_PASSWORD_URL.replace(
+            "<RESETTOKEN>",
+            resetToken
+          )
+        ).sendResetPasswordEmail();
+      }
+      console.log("emailStatus is ", emailStatus);
     } catch (err) {
       console.log(err);
     }

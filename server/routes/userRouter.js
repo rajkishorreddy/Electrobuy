@@ -98,7 +98,7 @@ router.get(
       console.log(
         "You have already connected to google. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000");
+      return res.redirect("http://localhost:3000getToken/error1");
     }
     next();
   },
@@ -142,23 +142,35 @@ router.get(
       console.log(
         "You have already connected to facebook. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000");
+      return res.redirect("http://localhost:3000getToken/error1");
     }
     next();
   },
   passport.authenticate("facebook", {
     session: false,
-    scope: ["profile", "email"],
+    scope: ["public_profile", "email"],
   })
 );
 router.get(
   "/facebook/redirect",
+  (req, res, next) => {
+    console.log(
+      "the req.params is prior to connecting to facebook is",
+      req.params
+    );
+    console.log("the req.user is prior to connecting to facebook is", req.user);
+    if (req && req.params && req.params.jwt) {
+      req.headers.authorization = `Bearer ${req.params.jwt}`;
+      return next();
+    }
+    next();
+  },
   authController.passportWrapperMiddleware,
   passport.authenticate("facebook", {
     session: false,
     // display: "popup",
     scope: ["profile", "email"],
-    failureRedirect: "/",
+    failureRedirect: "http://localhost:3000/getToken/error",
   }),
   // middleware for sending the cookie back to the browser
   authController.createCookie
@@ -184,12 +196,24 @@ router.get(
 );
 router.get(
   "/github/redirect",
+  (req, res, next) => {
+    console.log(
+      "the req.params is prior to connecting to github is",
+      req.params
+    );
+    console.log("the req.user is prior to connecting to github is", req.user);
+    if (req && req.params && req.params.jwt) {
+      req.headers.authorization = `Bearer ${req.params.jwt}`;
+      return next();
+    }
+    next();
+  },
   authController.passportWrapperMiddleware,
   passport.authenticate("github", {
     session: false,
     // display: "popup",
     scope: ["profile", "email"],
-    failureRedirect: "/",
+    failureRedirect: "http://localhost:3000/getToken/error",
   }),
   // middleware for sending the cookie back to the browser
   authController.createCookie

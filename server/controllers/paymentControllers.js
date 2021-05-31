@@ -173,7 +173,7 @@ exports.verifyTransaction = async (req, res, next) => {
         `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
       );
     }
-    // console.log("fuck you", JSON.parse(req.query.products));
+    // console.log("fuck you");
     const booking = await Booking.create({
       transactionId: checkTransactionStatus.data.body.txnId,
       orderId: checkTransactionStatus.data.body.orderId,
@@ -184,12 +184,31 @@ exports.verifyTransaction = async (req, res, next) => {
     });
     console.log("booking successfully created", booking);
 
+    const currentUser = await User.findById(req.query.userId);
     try {
-      const currentUser = await User.findById(req.query.userId);
-      await new Email(currentUser).successOrder();
+      let emailStatus;
+      if (process.env.NODE_ENV === "development") {
+        emailStatus = await new Email(
+          currentUser,
+          process.env.DEVELOPMENT_SUCCESS_TRANSACTION_URL.replace(
+            "<ORDER-ID>",
+            booking.orderId
+          )
+        ).successOrder();
+      } else if (process.env.NODE_ENV === "production") {
+        emailStatus = await new Email(
+          currentUser,
+          process.env.PRODUCTION_SUCCESS_TRANSACTION_URL.replace(
+            "<ORDER-ID>",
+            booking.orderId
+          )
+        ).successOrder();
+      }
+      console.log("emailStatus is ", emailStatus);
     } catch (err) {
       console.log(err);
     }
+
     res.redirect(
       `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
     );

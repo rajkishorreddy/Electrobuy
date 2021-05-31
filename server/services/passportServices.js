@@ -85,7 +85,13 @@ passport.use(
           );
           const prevConnectedGoogle = User.findOne({ googleId: profile.id });
           if (prevConnectedGoogle) {
-            return cb(null, false);
+            console.log(
+              "This Account has been previously used to connect with another account"
+            );
+            return cb(null, false, {
+              message:
+                "This Account has been previously used to connect with another account",
+            });
           }
           const user = await User.findById(req.user._id);
           console.log("the current already authenticated user is", user);
@@ -155,6 +161,16 @@ passport.use(
           console.log(
             "The user is already authenticated, but trying to add the github details to his user profile"
           );
+          const prevConnectedGithub = User.findOne({ githubId: profile.id });
+          if (prevConnectedGithub) {
+            console.log(
+              "This Account has been previously used to connect with another account"
+            );
+            return cb(null, false, {
+              message:
+                "This Account has been previously used to connect with another account",
+            });
+          }
 
           const user = await User.findById(req.user._id);
 
@@ -186,22 +202,6 @@ passport.use(
     }
   )
 );
-
-// cant use facbook right now
-// passport.use(
-//   new facebookStrategy(
-//     {
-//       clientID: process.env.FACEBOOK_CLIENT_ID,
-//       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-//       callbackURL: process.env.FACEBOOK_CALLBACK_URL,
-//       passReqToCallback: true,
-//     },
-//     (req, accessToken, refreshToken, profile, cb) => {
-//       console.log(profile, accessToken);
-//       cb(null, profile);
-//     }
-//   )
-// );
 
 passport.use(
   new FacebookStrategy(
@@ -241,6 +241,18 @@ passport.use(
           console.log(
             "The user is already authenticated, but trying to add the facebook details to his user profile"
           );
+          const prevConnectedFacebook = User.findOne({
+            facebookId: profile.id,
+          });
+          if (prevConnectedFacebook) {
+            console.log(
+              "This Account has been previously used to connect with another account"
+            );
+            return cb(null, false, {
+              message:
+                "This Account has been previously used to connect with another account",
+            });
+          }
 
           const user = await User.findById(req.user._id);
 
