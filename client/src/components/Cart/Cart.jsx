@@ -138,7 +138,7 @@ const Cart = () => {
         );
         console.log(data);
         if (data.data.status === "success") {
-          openSnackbar("item added successfully to Cart");
+          openSnackbar("item added successfully to Wishlist");
         }
       } catch (err) {
         console.log(err);
