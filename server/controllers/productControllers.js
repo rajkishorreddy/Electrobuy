@@ -110,6 +110,7 @@ exports.getProducts = async (req, res, next) => {
 
 exports.getSingleProduct = async (req, res, next) => {
   // 1) Get the product based on the id in the params
+  console.log("from this", req.params.productId);
   const product = await Product.findById(req.params.productId);
   if (!product) {
     return next(new AppError(404, "Product not found"));

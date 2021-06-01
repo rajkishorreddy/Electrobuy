@@ -93,6 +93,6 @@ mongoose.Query.prototype.exec = async function () {
   return exec.apply(this, arguments);
 };
 
-// addProductsToCache();
+addProductsToCache();
 
 module.exports = redisClient;
