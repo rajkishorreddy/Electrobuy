@@ -44,13 +44,22 @@ const Devs = () => {
             <div className="dev-item-right-name">Sujay</div>
             <div className="dev-item-right-std">Final year student</div>
             <div className="dev-item-right-nav">
-              <a href="/" className="dev-item-right-nav-item">
+              <a
+                href="https://github.com/Sujay99999/"
+                className="dev-item-right-nav-item"
+              >
                 <Git className="dev-item-right-nav-item-icon" />
               </a>
-              <a href="/" className="dev-item-right-nav-item">
+              <a
+                href="https://www.linkedin.com/in/sujayjami99999/"
+                className="dev-item-right-nav-item"
+              >
                 <Linkedin className="dev-item-right-nav-item-icon" />
               </a>
-              <a href="/" className="dev-item-right-nav-item">
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=sujayjami99999@gmail.com"
+                className="dev-item-right-nav-item"
+              >
                 <Gmail className="dev-item-right-nav-item-icon" />
               </a>
             </div>
