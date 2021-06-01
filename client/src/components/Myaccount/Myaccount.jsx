@@ -26,7 +26,7 @@ const Myaccount = () => {
   const [avatar, setAvatar] = useState("");
   const [googleId, setGoogleId] = useState(null);
 
-  console.log(orders);
+  // console.log(orders);
   const options = {
     position: "top-left",
     style: {
@@ -53,7 +53,7 @@ const Myaccount = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log("my account", data.data.googleId);
+        // console.log("my account", data.data.googleId);
         const orders = await axios.get(
           `http://localhost:8080/api/v1/users/orders `,
           {
@@ -75,6 +75,7 @@ const Myaccount = () => {
     };
 
     getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resizeFile = (event) => {
@@ -101,7 +102,7 @@ const Myaccount = () => {
           200
         );
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   };
@@ -118,7 +119,7 @@ const Myaccount = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(data);
+      // console.log(data);
       setAvatar(data.data.avatar);
     };
     uploadDp();
@@ -139,7 +140,7 @@ const Myaccount = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(data);
+      // console.log(data);
       const [first, last] = data.data.user.name.split(" ");
       setFirstName(first);
       setLastName(last);

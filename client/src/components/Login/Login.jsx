@@ -63,14 +63,14 @@ const Signup = () => {
         credentials: "include",
         // withCredentials: true,
       });
-      console.log(data.data);
+      // console.log(data.data);
       window.localStorage.setItem("token", data.jwtToken);
       openSnackbar("Login successfull!");
       setTimeout(() => {
         history.push("/");
       }, 1000);
     } catch (err) {
-      console.log(err.response?.data);
+      // console.log(err.response?.data);
       openSnackbar(err.response?.data.message);
     }
   };

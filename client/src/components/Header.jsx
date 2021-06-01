@@ -70,7 +70,7 @@ const Header = () => {
         setSearchResults(res.data.searchResults);
         // console.log(data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }, 500);
     settimeout1(timeout1);

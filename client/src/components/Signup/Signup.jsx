@@ -31,7 +31,7 @@ const Signup = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("assasas");
+      // console.log("assasas");
       const { data } = await axios({
         method: "post",
         url: "http://localhost:8080/api/v1/users/signup-basic",
@@ -42,14 +42,14 @@ const Signup = () => {
           confirmPassword: CnPassword,
         },
       });
-      console.log(data);
+      // console.log(data);
       window.localStorage.setItem("token", data.jwtToken);
       openSnackbar("Account created successfully!");
       setTimeout(() => {
         history.push("/");
       }, 1000);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       openSnackbar(err.response?.data.message);
     }
   };
