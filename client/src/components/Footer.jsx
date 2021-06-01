@@ -1,7 +1,7 @@
-import './footer.scss';
-
-import { ReactComponent as Payment } from '../assets/Payments.svg';
-import { ReactComponent as Logo } from '../assets/Logo.svg';
+import "./footer.scss";
+import { Link } from "react-router-dom";
+import { ReactComponent as Payment } from "../assets/Payments.svg";
+import { ReactComponent as Logo } from "../assets/Logo.svg";
 
 const Footer = () => {
   return (
@@ -11,7 +11,9 @@ const Footer = () => {
       </div>
       <div className="footer-content">
         <Payment className="footer-content__payments" />
-        <p>developed with 💙 by <span className="footer-content-devs">devs</span> →</p>
+        <Link to={"/devs"} className="footer-content-devs">
+          developed with 💙 by <span>devs</span> →
+        </Link>
       </div>
     </div>
   );

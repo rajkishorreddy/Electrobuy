@@ -14,6 +14,7 @@ import Conformation from "./components/Conformation/Conformation.jsx";
 import Myaccount from "./components/Myaccount/Myaccount.jsx";
 import ForgotPass from "./components/ForgotPass/ForgotPass.jsx";
 import GetToken from "./components/GetToken/GetToken.jsx";
+import Devs from "./components/Devs/Devs.jsx";
 import "./App.scss";
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
               <Route path="/conformation/:id" exact component={Conformation} />
               <Route path="/getToken/:token" exact component={GetToken} />
               <Route path="/forgotPass/:token" exact component={ForgotPass} />
+              <Route path="/devs" exact component={Devs} />
               {/* <Route path="/results/:id" exact component={SearchResults} /> */}
               {/* <Route path="/productInfo/:id" exact component={ProductInfo} /> */}
               <Route
