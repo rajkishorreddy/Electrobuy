@@ -21,7 +21,7 @@ class Email {
     console.log("process.env.SENDGRID_KEY", process.env.SENDGRID_KEY);
     sgMail.setApiKey(process.env.SENDGRID_KEY);
     const mailOptions = {
-      to: "rajakishorbeeravalli@gmail.com",
+      to: "solipuram42@gmail.com",
       // to: this.to,
       from: {
         name: "ELECTROBUY",
@@ -45,18 +45,6 @@ class Email {
             height: 100%;
             margin: 0;
             -webkit-text-size-adjust: none;
-          }
-    
-          a {
-            color: #3869d4;
-            text-decoration: none;
-          }
-          a:hover{
-            text-decoration: underline;
-          }
-    
-          a img {
-            border: none;
           }
     
           td {
@@ -162,7 +150,8 @@ class Email {
     
           .email-masthead {
             padding: 25px 0;
-            text-align: center;
+
+            background: linear-gradient(180deg, #74F062 0%, #2E2E2E 0.01%, rgba(88, 30, 122, 0.79) 100%);
           }
     
           .email-masthead_logo {
@@ -229,6 +218,9 @@ class Email {
           .content-cell {
             padding: 35px;
           }
+          .content-cell:last-child{
+            padding-bottom: 0px;
+          }
           /*Media Queries ------------------------------ */
     
           @media only screen and (max-width: 600px) {
@@ -275,6 +267,13 @@ class Email {
           .padding-2{
             padding-bottom: 20px;
           }
+          .hyperlink{
+            color:white;
+            text-decoration: underline;
+          }
+          .hyperlink:hover{
+            color:#999999;
+          }
         </style>
         <!--[if mso]>
           <style type="text/css">
@@ -293,14 +292,14 @@ class Email {
           role="presentation"
         >
           <tr>
-            <td class="email-masthead">
-              <img src=${process.env.SENDGRID_IMAGE} alt="Group-57" border="0" />
+            <td class="email-masthead align-left">
+              <img src=${process.env.SENDGRID_IMAGE} alt="Group-57" border="0" style="height: 30px;padding-left: 35px;" />
             </td>
           </tr>
           <!-- Email Body -->
           <tr>
             <td class="content-cell" align="center">
-              <h1 class="align-left">${text}</h1>
+              <h1 class="align-left" style="margin: 30px 0 40px;">${text}</h1>
               <a
                 href=${this.url}
                 class="f-fallback button"
@@ -311,20 +310,17 @@ class Email {
             </td>
           </tr>
           <tr>
-            <td class="content-cell" style="padding-bottom: 0;" align="center">
-              <p style="font-size: 14px;" class="align-left">
-                Thank you for shopping with ElectroBuy! &emsp;
-                Got Questions? Feel free to <a href="https://www.youtube.com/">contact us</a></p>
-            </td>
-          </tr>
-          <tr>
             <td class="content-cell" align="center">
               <p class="f-fallback sub align-center">
                 &copy; 2021 ElectroBuy. All rights reserved.
               </p>
               <p class="f-fallback sub align-center">
-                Made with ❤ by <a href="https://www.youtube.com/" target="_blank">Devs</a>
+                Made with ❤ by <a class="hyperlink" href="https://www.youtube.com/" target="_blank">Devs</a>
               </p>
+              <div style="display:flex;justify-content:space-between;padding-bottom: 0;" align="center">
+                <p style="font-size: 14px;" >Thank you for shopping with ElectroBuy!</p>
+                <p style="font-size: 14px" >Got Questions? Feel free to <a class="hyperlink" href="https://www.youtube.com/">contact us</a></p>
+              </div>
             </td>
           </tr>
         </table>
