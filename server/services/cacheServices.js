@@ -6,8 +6,6 @@ const mongoose = require("mongoose");
 const Product = require("./../models/productModel");
 const APIFeatures = require("./../utils/APIFeatures");
 
-// const productController = require('./../controllers/productControllers')
-
 const redisClient = redis.createClient({
   host: process.env.REDIS_DATABASE_URL.split(":")[0],
   port: process.env.REDIS_DATABASE_URL.split(":")[1],
@@ -37,11 +35,6 @@ const addProductsToCache = async () => {
   // flush out the cache
   await redisClient.flushall();
   console.log("data is flushed");
-
-  // allCategories.forEach(async (category, i) => {
-  //   console.log(JSON.stringify(category._id));
-  //   redisClient.set(i, JSON.stringify(category._id));
-  // });
 
   // should not use foreach
   for (let i = 0; i < allCategories.length; i++) {
@@ -96,10 +89,10 @@ mongoose.Query.prototype.exec = async function () {
   }
   // console.log(this.schema.options.toJSON());
   // 2) Else pass on the query to the mongodb instance
-  console.log("Data is fetched from the mongodb instance");
+  // console.log("Data is fetched from the mongodb instance");
   return exec.apply(this, arguments);
 };
 
-// addProductsToCache();
+addProductsToCache();
 
 module.exports = redisClient;

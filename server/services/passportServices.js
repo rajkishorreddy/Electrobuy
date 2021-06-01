@@ -9,11 +9,11 @@ const User = require("../models/userModel");
 
 var extractTokenFn = function (req) {
   let jwt = null;
-  console.log("the req.headers are", req.headers.authorization);
-  console.log("the req.query are", req.query);
+  // console.log("the req.headers are", req.headers.authorization);
+  // console.log("the req.query are", req.query);
   if (req.query && req.query.state) {
     jwt = req.query.state;
-    console.log("jwt recovered from req.query is ", jwt);
+    // console.log("jwt recovered from req.query is ", jwt);
     return jwt;
   }
   if (
@@ -22,10 +22,10 @@ var extractTokenFn = function (req) {
   ) {
     //THE JAVASCRIPT IS with let and const is BLOCK SCOPED, NOT FUNCTION SCOPED
     jwt = req.headers.authorization.split(" ")[1];
-    console.log("jwt recovered from req.headers is ", jwt);
+    // console.log("jwt recovered from req.headers is ", jwt);
     return jwt;
   }
-  console.log("jwt recovered is ", jwt);
+  // console.log("jwt recovered is ", jwt);
   return jwt;
 };
 passport.use(
@@ -50,7 +50,10 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      callbackURL:
+        process.env.NODE_ENV === "development"
+          ? process.env.GOOGLE_DVELOPEMENT_CALLBACK_URL
+          : process.env.GOOGLE_PRODUCTION_CALLBACK_URL,
       passReqToCallback: true,
       proxy: true,
     },
@@ -58,8 +61,8 @@ passport.use(
       try {
         if (!req.user) {
           // Case where the user signsup/ logsin  for the first time
-          console.log("there is no req.user present");
-          console.log(profile, accessToken);
+          // console.log("there is no req.user present");
+          // console.log(profile, accessToken);
 
           const user = await User.findOne({ googleId: profile.id });
           if (!user) {
@@ -94,7 +97,7 @@ passport.use(
             });
           }
           const user = await User.findById(req.user._id);
-          console.log("the current already authenticated user is", user);
+          // console.log("the current already authenticated user is", user);
           if (!user.googleId) {
             const updatedUser = await User.findByIdAndUpdate(
               req.user._id,
@@ -129,15 +132,18 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: process.env.GITHUB_CALLBACK_URL,
+      callbackURL:
+        process.env.NODE_ENV === "development"
+          ? process.env.GITHUB_DVELOPEMENT_CALLBACK_URL
+          : process.env.GITHUB_PRODUCTION_CALLBACK_URL,
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, cb) => {
       try {
         if (!req.user) {
           // Case where the user signsup/ logsin  for the first time
-          console.log("there is no req.user present");
-          console.log(profile, accessToken);
+          // console.log("there is no req.user present");
+          // console.log(profile, accessToken);
 
           const user = await User.findOne({ githubId: profile.id });
           if (!user) {
@@ -208,7 +214,10 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+      callbackURL:
+        process.env.NODE_ENV === "development"
+          ? process.env.FACEBOOK_DVELOPEMENT_CALLBACK_URL
+          : process.env.FACEBOOK_PRODUCTION_CALLBACK_URL,
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, cb) => {
@@ -216,8 +225,8 @@ passport.use(
       try {
         if (!req.user) {
           // Case where the user signsup/ logsin  for the first time
-          console.log("there is no req.user present");
-          console.log(profile, accessToken);
+          // console.log("there is no req.user present");
+          // console.log(profile, accessToken);
 
           const user = await User.findOne({ facebookId: profile.id });
           if (!user) {

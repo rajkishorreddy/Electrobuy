@@ -25,18 +25,6 @@ exports.initiateTransaction = async (req, res, next) => {
     // Make sure to conver the integer value to the string
     transactionAmount = JSON.stringify(transactionAmount);
     transactionGoods = JSON.stringify(transactionGoods);
-    console.log(transactionGoods);
-    // transactionGoods = transactionGoods.map((good) => {
-    //   return {
-    //     merchantGoodsId: good,
-    //   };
-    // });
-
-    console.log("the goods are ", transactionGoods);
-    // console.log(
-    //   "the goods are ",
-    //   transactionGoods.map((el) => JSON.stringify(el))
-    // );
 
     // 3) Get all the details required for the transaction
     let paytmTransactionParams = {};
@@ -60,13 +48,13 @@ exports.initiateTransaction = async (req, res, next) => {
         lastName: req.user.name.split(" ")[1],
       },
     };
-    console.log(paytmTransactionParams);
+    // console.log(paytmTransactionParams);
     const paytmChecksumResultHash = await PaytmChecksum.generateSignature(
       JSON.stringify(paytmTransactionParams.body),
       process.env.PAYTM_MERCHANT_KEY
     );
 
-    console.log("cjeck this", paytmChecksumResultHash);
+    // console.log("cjeck this", paytmChecksumResultHash);
     paytmTransactionParams.head = {
       signature: paytmChecksumResultHash,
     };
@@ -88,7 +76,7 @@ exports.initiateTransaction = async (req, res, next) => {
 
     //NOTE: change the error handling
     if (transactionResponse.data.body.resultInfo.resultStatus !== "S") {
-      console.log(transactionResponse.data.body.resultInfo);
+      // console.log(transactionResponse.data.body.resultInfo);
       return next(new AppError(400, "Some internal error"));
     }
     res.status(200).json({
@@ -122,8 +110,7 @@ exports.verifyTransaction = async (req, res, next) => {
         resolve(fields);
       });
     });
-    console.log(formfields);
-    // console.log(formfields.CHECKSUMHASH);
+
     paytmCheckSum = formfields.CHECKSUMHASH;
     delete formfields.CHECKSUMHASH;
     newPaytmTransactionParams = formfields;
@@ -136,9 +123,15 @@ exports.verifyTransaction = async (req, res, next) => {
       paytmCheckSum
     );
     if (!isVerifySignature) {
-      return res.redirect(
-        `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
-      );
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(
+          `${process.env.DEVELOPMENT_CLIENT_URL}/conformation/${newPaytmTransactionParams.ORDERID}`
+        );
+      } else {
+        return res.redirect(
+          `${process.env.PRODUCTION_CLIENT_URL}/conformation/${newPaytmTransactionParams.ORDERID}`
+        );
+      }
     }
 
     const newParamsBody = {
@@ -161,7 +154,7 @@ exports.verifyTransaction = async (req, res, next) => {
         },
       },
     });
-    console.log("final stuff is ", checkTransactionStatus.data);
+    // console.log("final stuff is ", checkTransactionStatus.data);
 
     if (
       checkTransactionStatus.data.body.resultInfo.resultStatus !== "TXN_SUCCESS"
@@ -169,9 +162,15 @@ exports.verifyTransaction = async (req, res, next) => {
       // return next(
       //   new AppError(404, "Sorry, the transaction was not successfull")
       // );
-      return res.redirect(
-        `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
-      );
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(
+          `${process.env.DEVELOPMENT_CLIENT_URL}/conformation/${newPaytmTransactionParams.ORDERID}`
+        );
+      } else {
+        return res.redirect(
+          `${process.env.PRODUCTION_CLIENT_URL}/conformation/${newPaytmTransactionParams.ORDERID}`
+        );
+      }
     }
     // console.log("fuck you");
     const booking = await Booking.create({
@@ -182,7 +181,7 @@ exports.verifyTransaction = async (req, res, next) => {
       userRef: req.query.userId,
       products: JSON.parse(req.query.products),
     });
-    console.log("booking successfully created", booking);
+    // console.log("booking successfully created", booking);
 
     const currentUser = await User.findById(req.query.userId);
     try {
@@ -208,10 +207,15 @@ exports.verifyTransaction = async (req, res, next) => {
     } catch (err) {
       console.log(err);
     }
-
-    res.redirect(
-      `http://localhost:3000/conformation/${newPaytmTransactionParams.ORDERID}`
-    );
+    if (process.env.NODE_ENV === "developement") {
+      return res.redirect(
+        `${process.env.DEVELOPMENT_CLIENT_URL}/conformation/${newPaytmTransactionParams.ORDERID}`
+      );
+    } else {
+      return res.redirect(
+        `${process.env.PRODUCTION_CLIENT_URL}/conformation/${newPaytmTransactionParams.ORDERID}`
+      );
+    }
   } catch (err) {
     next(err);
   }
@@ -249,10 +253,10 @@ exports.checkOrder = async (req, res, next) => {
   try {
     // get the order id from the req.body
     const { orderId } = req.params;
-    console.log(req.params, orderId);
+    // console.log(req.params, orderId);
     // check if the order is present or not
     const order = await Booking.findOne({ orderId });
-    console.log("orderis ", order);
+    // console.log("orderis ", order);
     if (!order) {
       return next(
         new AppError(404, "No Order found with the provided orderId")

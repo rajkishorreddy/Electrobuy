@@ -8,17 +8,16 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
-const compression = require("compression");
 const passport = require("passport");
+const compression = require("compression");
 const cors = require("cors");
-const AppError = require("./utils/AppError");
 
 const productRouter = require("./routes/productRouter");
 const userRouter = require("./routes/userRouter");
 const paymentRouter = require("./routes/paymentRouter");
+const AppError = require("./utils/AppError");
 const globalErrorHandler = require("./controllers/errorControllers");
 require("./services/passportServices");
-
 const redisClient = require("./services/cacheServices");
 
 const app = express();
@@ -31,17 +30,12 @@ const app = express();
 app.use(passport.initialize());
 
 //Adding CORS support
-// app.use("*", function (req, res, next) {
-//   //replace localhost:8080 to the ip address:port of your server
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   res.header("Access-Control-Allow-Headers", "Content-Type");
-//   res.header("Access-Control-Allow-Credentials", true);
-//   next();
-// });
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3000"], // allow to server to accept request from different origin
+    origin: [
+      process.env.DEVELOPMENT_CLIENT_URL,
+      process.env.PRODUCTION_CLIENT_URL,
+    ], // allow to server to accept request from different origin
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // allow session cookie from browser to pass through
   })
@@ -108,27 +102,13 @@ app.use(
 app.use(compression());
 
 //Custom middleware function
-app.use((req, res, next) => {
-  console.log("this is the middleware function talking");
-  console.log("the cookies attached to this req is");
-  console.log(req.cookies);
-  next();
-});
 // app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/login");
+//   console.log("this is the middleware function talking");
+//   console.log("the cookies attached to this req is");
+//   console.log(req.cookies);
 //   next();
 // });
-app.use((req, res, next) => {
-  res.setHeader("Acces-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Acces-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
-  res.setHeader("Acces-Contorl-Allow-Methods", "Content-Type", "Authorization");
-  next();
-});
-app.get("/", (req, res, next) => {
-  res.status(200).json({
-    data: "this is basic route",
-  });
-});
+
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/payments", paymentRouter);

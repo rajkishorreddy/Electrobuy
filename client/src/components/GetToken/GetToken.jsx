@@ -21,7 +21,7 @@ const GetToken = (props) => {
   useEffect(() => {
     if (props.match.params.token === "error") {
       openSnackbar(
-        "This Goole account has been previously authenticated already.Please use another google account!"
+        "This Google account has been previously used already. Please use another google account to authenticate !"
       );
       history.push("/");
     } else {
@@ -29,7 +29,7 @@ const GetToken = (props) => {
       openSnackbar("Login successfull!");
       history.push("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <div>{props.match.params.token}</div>;
 };
