@@ -18,7 +18,7 @@ exports.getAllWishlistItems = async (req, res, next) => {
     // console.log(req.user._id, req.params.productId);
 
     const { wishlistArr } = await User.findById(req.user._id);
-    console.log(wishlistArr);
+    // console.log(wishlistArr);
     // 3) Send back the response
     res.status(200).json({
       status: "success",
@@ -44,7 +44,7 @@ exports.addWishlistItem = async (req, res, next) => {
         new AppError(400, "Please provide the product id in the url")
       );
     }
-    console.log(req.user._id, req.params.productId);
+    // console.log(req.user._id, req.params.productId);
 
     let { wishlistArr } = await User.findById(req.user._id);
 
@@ -103,7 +103,7 @@ exports.deleteWishlistItem = async (req, res, next) => {
         new AppError(400, "Please provide the product id in the url")
       );
     }
-    console.log(req.user._id, req.params.productId);
+    // console.log(req.user._id, req.params.productId);
 
     let { wishlistArr } = await User.findById(req.user._id);
 

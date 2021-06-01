@@ -52,7 +52,7 @@ class APIFeatures {
 
   filterSpecific() {
     if (this.queryObj.brand) {
-      console.log(this.queryObj.brand);
+      // console.log(this.queryObj.brand);
       this.query = this.query
         .find({
           technicalDetails: { $exists: true, $ne: [] },

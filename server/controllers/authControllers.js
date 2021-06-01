@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
 
 const User = require("../models/userModel");
 const AppError = require("../utils/AppError");
@@ -127,6 +128,11 @@ exports.basicForgetPassword = async (req, res, next) => {
     const { email } = req.body;
     if (!email) {
       return next(new AppError(400, "Please provide the email address"));
+    }
+
+    // 1) Validate the email address
+    if (!validator.isEmail(email)) {
+      return next(new AppError(400, "Please provide a valid email address"));
     }
 
     // 2) Get the user from the DB
@@ -277,7 +283,15 @@ exports.createCookie = (req, res, next) => {
   );
   res.cookie("jwt", jwtToken, cookieOptions);
   if (cookieInfo.provider === "google" || cookieInfo.provider === "github") {
-    res.redirect(`http://localhost:3000/getToken/${jwtToken}`);
+    if (process.env.NODE_ENV === "developement") {
+      return res.redirect(
+        `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/${jwtToken}`
+      );
+    } else {
+      return res.redirect(
+        `${process.env.PRODUCTION_CLIENT_URL}/getToken/${jwtToken}`
+      );
+    }
   } else {
     res.status(200).json({
       status: "success",
@@ -335,7 +349,7 @@ exports.passportWrapperMiddleware = (req, res, next) => {
         }
         let verifiedUser;
         // 1) Get the decoded payload value from the cookie
-        console.log("jwtpayload extracted is", jwtPayload);
+        // console.log("jwtpayload extracted is", jwtPayload);
 
         // 2) If the provider is google, verify if the verifiedUser really exists in the DB, and add it
         // directly to the verifiedUser
@@ -351,7 +365,7 @@ exports.passportWrapperMiddleware = (req, res, next) => {
             );
           }
           req.user = verifiedUser;
-          console.log("the user added to the req", req.user);
+          // console.log("the user added to the req", req.user);
           return next();
         }
         // 2) If the provider is github, verify if the verifiedUser really exists in the DB, and add it
@@ -368,7 +382,7 @@ exports.passportWrapperMiddleware = (req, res, next) => {
             );
           }
           req.user = verifiedUser;
-          console.log("the user added to the req", req.user);
+          // console.log("the user added to the req", req.user);
           return next();
         }
         // 3) If the provider is the local strategy, veify the verifiedUser and also check for the password
@@ -394,7 +408,7 @@ exports.passportWrapperMiddleware = (req, res, next) => {
             );
           }
           req.user = verifiedUser;
-          console.log("the user added to the req", req.user);
+          // console.log("the user added to the req", req.user);
           return next();
         }
       } catch (error) {

@@ -13,12 +13,11 @@ class Email {
     this.from = `ElectroBuy Team <${process.env.SENDGRID_EMAIL}>`;
   }
 
-  async send(subject, text) {
+  async send(subject, text, buttonText) {
     // const response = await util.promisify(sgMail.send)(msg);
     // console.log('mf', this.url, this.to);
 
     // Define email options
-    console.log("process.env.SENDGRID_KEY", process.env.SENDGRID_KEY);
     sgMail.setApiKey(process.env.SENDGRID_KEY);
     const mailOptions = {
       to: this.to,
@@ -306,7 +305,7 @@ class Email {
                 href=${this.url}
                 class="f-fallback button"
                 target="_blank"
-                >Do this Next</a
+                >${buttonText}</a
               >
               
             </td>
@@ -329,8 +328,7 @@ class Email {
         </table>
       </body>
     </html>
-
-`,
+      `,
     };
 
     // Create a trnasport and send the email
@@ -340,7 +338,8 @@ class Email {
   async sendWelcomeEmail() {
     await this.send(
       "Welcome To ELECTROBUY",
-      "Welcome to the ElectroBuy family!. We hope that you find what you are searching for. HAPPY SHOPPING !"
+      "Welcome to the ElectroBuy family!. We hope that you find what you are searching for. HAPPY SHOPPING !",
+      "CONTINUE SHOPPING"
     );
   }
 
@@ -350,14 +349,16 @@ class Email {
       "Reset Password Email",
       `Your Password Reset Token (Valid for ${
         parseInt(process.env.RESET_PASSWORD_EXPIRY_TIME) / (1000 * 60 * 60)
-      }) hours is ${this.url}`
+      }) hours is ${this.url}`,
+      "CLICK THIS TO RESET"
     );
   }
 
   async successOrder() {
     await this.send(
       "Order Successfull",
-      `Your Order has been successfully placed. To view your orders, please click here.`
+      `Your Order has been successfully placed. To view your orders, please click here.`,
+      "CLICK HERE TO VIEW ALL ORDERS"
     );
   }
 }

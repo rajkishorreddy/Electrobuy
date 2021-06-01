@@ -2,7 +2,6 @@ const express = require("express");
 const passport = require("passport");
 
 const connectRouter = require("./../routes/connectRoutes");
-
 const authController = require("../controllers/authControllers");
 const userController = require("../controllers/userControllers");
 const wishlistController = require("../controllers/wishlistControllers");
@@ -10,8 +9,6 @@ const cartController = require("../controllers/cartControllers");
 const paymentController = require("../controllers/paymentControllers");
 
 const router = express.Router();
-
-// const passportJWTCustomCallback = ()
 
 router.use("/connect", connectRouter);
 
@@ -26,12 +23,16 @@ router.post(
   authController.passportWrapperMiddleware,
   (req, res, next) => {
     // This returns a error, if the user is trying to connect his google again
-    console.log("checking purpose of user", req.user);
+    // console.log("checking purpose of user", req.user);
     if (req.user && req.user.email) {
       console.log(
         "You have already connected via local method. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000");
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(process.env.DEVELOPMENT_CLIENT_URL);
+      } else {
+        return res.redirect(process.env.PRODUCTION_CLIENT_URL);
+      }
     }
     next();
   },
@@ -44,12 +45,16 @@ router.post(
   authController.passportWrapperMiddleware,
   (req, res, next) => {
     // This returns a error, if the user is trying to connect his google again
-    console.log("checking purpose of user", req.user);
+    // console.log("checking purpose of user", req.user);
     if (req.user && req.user.email) {
       console.log(
         "You have already connected via local method. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000");
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(process.env.DEVELOPMENT_CLIENT_URL);
+      } else {
+        return res.redirect(process.env.PRODUCTION_CLIENT_URL);
+      }
     }
     next();
   },
@@ -93,12 +98,20 @@ router.get(
   authController.passportWrapperMiddleware,
   (req, res, next) => {
     // This returns a error, if the user is trying to connect his google again
-    console.log("checking purpose of user", req.user);
+    // console.log("checking purpose of user", req.user);
     if (req.user && req.user.googleId) {
       console.log(
         "You have already connected to google. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000getToken/error1");
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(
+          `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error1`
+        );
+      } else {
+        return res.redirect(
+          `${process.env.PRODUCTION_CLIENT_URL}/getToken/error1`
+        );
+      }
     }
     next();
   },
@@ -110,11 +123,11 @@ router.get(
 router.get(
   "/google/redirect",
   (req, res, next) => {
-    console.log(
-      "the req.params is prior to connecting to google is",
-      req.params
-    );
-    console.log("the req.user is prior to connecting to google is", req.user);
+    // console.log(
+    //   "the req.params is prior to connecting to google is",
+    //   req.params
+    // );
+    // console.log("the req.user is prior to connecting to google is", req.user);
     if (req && req.params && req.params.jwt) {
       req.headers.authorization = `Bearer ${req.params.jwt}`;
       return next();
@@ -124,9 +137,11 @@ router.get(
   authController.passportWrapperMiddleware,
   passport.authenticate("google", {
     session: false,
-    // display: "popup",
     scope: ["profile", "email"],
-    failureRedirect: "http://localhost:3000/getToken/error",
+    failureRedirect:
+      process.env.NODE_ENV === "development"
+        ? `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error`
+        : `${process.env.PRODUCTION_CLIENT_URL}/getToken/error`,
   }),
   // middleware for sending the cookie back to the browser
   authController.createCookie
@@ -137,12 +152,20 @@ router.get(
   authController.passportWrapperMiddleware,
   (req, res, next) => {
     // This returns a error, if the user is trying to connect his facebook again
-    console.log("checking purpose of user", req.user);
+    // console.log("checking purpose of user", req.user);
     if (req.user && req.user.facebookId) {
       console.log(
         "You have already connected to facebook. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000getToken/error1");
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(
+          `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error1`
+        );
+      } else {
+        return res.redirect(
+          `${process.env.PRODUCTION_CLIENT_URL}/getToken/error1`
+        );
+      }
     }
     next();
   },
@@ -154,11 +177,11 @@ router.get(
 router.get(
   "/facebook/redirect",
   (req, res, next) => {
-    console.log(
-      "the req.params is prior to connecting to facebook is",
-      req.params
-    );
-    console.log("the req.user is prior to connecting to facebook is", req.user);
+    // console.log(
+    //   "the req.params is prior to connecting to facebook is",
+    //   req.params
+    // );
+    // console.log("the req.user is prior to connecting to facebook is", req.user);
     if (req && req.params && req.params.jwt) {
       req.headers.authorization = `Bearer ${req.params.jwt}`;
       return next();
@@ -170,7 +193,10 @@ router.get(
     session: false,
     // display: "popup",
     scope: ["profile", "email"],
-    failureRedirect: "http://localhost:3000/getToken/error",
+    failureRedirect:
+      process.env.NODE_ENV === "development"
+        ? `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error`
+        : `${process.env.PRODUCTION_CLIENT_URL}/getToken/error`,
   }),
   // middleware for sending the cookie back to the browser
   authController.createCookie
@@ -185,7 +211,15 @@ router.get(
       console.log(
         "You have already connected to Github. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000");
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(
+          `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error1`
+        );
+      } else {
+        return res.redirect(
+          `${process.env.PRODUCTION_CLIENT_URL}/getToken/error1`
+        );
+      }
     }
     next();
   },
@@ -197,11 +231,11 @@ router.get(
 router.get(
   "/github/redirect",
   (req, res, next) => {
-    console.log(
-      "the req.params is prior to connecting to github is",
-      req.params
-    );
-    console.log("the req.user is prior to connecting to github is", req.user);
+    // console.log(
+    //   "the req.params is prior to connecting to github is",
+    //   req.params
+    // );
+    // console.log("the req.user is prior to connecting to github is", req.user);
     if (req && req.params && req.params.jwt) {
       req.headers.authorization = `Bearer ${req.params.jwt}`;
       return next();
@@ -213,18 +247,13 @@ router.get(
     session: false,
     // display: "popup",
     scope: ["profile", "email"],
-    failureRedirect: "http://localhost:3000/getToken/error",
+    failureRedirect:
+      process.env.NODE_ENV === "development"
+        ? `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error`
+        : `${process.env.PRODUCTION_CLIENT_URL}/getToken/error`,
   }),
   // middleware for sending the cookie back to the browser
   authController.createCookie
-);
-
-router.use(
-  "/protected",
-  authController.passportWrapperMiddleware,
-  (req, res, next) => {
-    res.send(req.user);
-  }
 );
 
 router.get(

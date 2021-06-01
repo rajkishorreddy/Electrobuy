@@ -22,7 +22,15 @@ router.get(
       console.log(
         "You have already connected to Google. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000");
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(
+          `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error1`
+        );
+      } else {
+        return res.redirect(
+          `${process.env.PRODUCTION_CLIENT_URL}/getToken/error1`
+        );
+      }
     }
     next();
   },
@@ -52,7 +60,15 @@ router.get(
       console.log(
         "You have already connected to Github. Please contact admin to change account"
       );
-      return res.redirect("http://localhost:3000");
+      if (process.env.NODE_ENV === "developement") {
+        return res.redirect(
+          `${process.env.DEVELOPMENT_CLIENT_URL}/getToken/error1`
+        );
+      } else {
+        return res.redirect(
+          `${process.env.PRODUCTION_CLIENT_URL}/getToken/error1`
+        );
+      }
     }
     next();
   },
@@ -72,30 +88,6 @@ router.get(
   authController.createCookie
 );
 
-// router.get(
-//   "/local",
-//   (req, res, next) => {
-//     console.log(
-//       "the req.user prior to connecting with other acc is ",
-//       req.user
-//     );
-//     next();
-//   },
-//   (req, res, next) => {
-//     // Assuming that this route is only called in the case, where the user is already authenticated via
-//     // google of github, and now wants to add his local auth details
-//     if (req.user && req.user.email) {
-//       console.log(
-//         "You have already connected via local method. Please contact admin to change account"
-//       );
-//       return res.redirect("http://localhost:3000");
-//     }
-//     next();
-//   },
-//   (req, res, next) => {
-//     //BUG:BUG:BUG:BUG:BUG:BUG:BUG:BUG:
-//     //NOTE: Need to connect with the new email and password to the existing account
-//   }
-// );
+//NOTE: NO SUPPORT FOR FACEBOOK
 
 module.exports = router;
