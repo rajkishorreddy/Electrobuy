@@ -125,15 +125,6 @@ const Signup = () => {
               </div>
               <div className="google-name">Sign up with google</div>
             </a>
-            <a
-              className="facebook"
-              href="http://localhost:8080/api/v1/users/facebook"
-            >
-              <div className="facebook-img-cont">
-                {/* <img src={facebook} alt={facebook} className="facebook-img"></img> */}
-              </div>
-              <div className="facebook-name">Sign up with facebook</div>
-            </a>
           </form>
 
           <div className="signup-already">

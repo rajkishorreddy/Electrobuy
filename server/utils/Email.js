@@ -21,7 +21,7 @@ class Email {
     console.log("process.env.SENDGRID_KEY", process.env.SENDGRID_KEY);
     sgMail.setApiKey(process.env.SENDGRID_KEY);
     const mailOptions = {
-      to: "rajakishorbeeravalli@gmail.com",
+      to: "solipuram42@gmail.com",
       // to: this.to,
       from: {
         name: "ELECTROBUY",
@@ -274,6 +274,9 @@ class Email {
           .hyperlink:hover{
             color:#999999;
           }
+          .text-content a{
+            color:white !important;
+          }
         </style>
         <!--[if mso]>
           <style type="text/css">
@@ -293,13 +296,13 @@ class Email {
         >
           <tr>
             <td class="email-masthead align-left">
-              <img src=${process.env.SENDGRID_IMAGE} alt="Group-57" border="0" style="height: 30px;padding-left: 35px;" />
+              <img src='https://i.ibb.co/HtZg66s/Logo-1.png' alt="Group-57" border="0" style="height: 30px;padding-left: 35px;" />
             </td>
           </tr>
           <!-- Email Body -->
           <tr>
             <td class="content-cell" align="center">
-              <h1 class="align-left" style="margin: 30px 0 40px;">${text}</h1>
+              <h1 class="align-left text-content" style="margin: 30px 0 40px;">${text}</h1>
               <a
                 href=${this.url}
                 class="f-fallback button"
@@ -310,16 +313,17 @@ class Email {
             </td>
           </tr>
           <tr>
-            <td class="content-cell" align="center">
+            <td class="content-cell" style="padding-bottom: 0;" align="center">
               <p class="f-fallback sub align-center">
                 &copy; 2021 ElectroBuy. All rights reserved.
               </p>
               <p class="f-fallback sub align-center">
                 Made with ❤ by <a class="hyperlink" href="https://www.youtube.com/" target="_blank">Devs</a>
               </p>
-              <div style="display:flex;justify-content:space-between;padding-bottom: 0;" align="center">
-                <p style="font-size: 14px;" >Thank you for shopping with ElectroBuy!</p>
-                <p style="font-size: 14px" >Got Questions? Feel free to <a class="hyperlink" href="https://www.youtube.com/">contact us</a></p>
+              <div class="">
+                <p style="font-size: 14px;display: inline-block;" align="left" >Thank you for shopping with ElectroBuy!</p>
+                <p style="font-size: 14px;display: inline-block;padding-left: 40px" align="right">Got Questions? Feel free to <a class="hyperlink" href="https://www.youtube.com/">contact us</a></p>
+                <br><br>
               </div>
             </td>
           </tr>
