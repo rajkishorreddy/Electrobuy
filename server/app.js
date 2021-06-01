@@ -113,7 +113,7 @@ app.use("/api/v1/products", productRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/payments", paymentRouter);
 app.get("/", (req, res) => {
-  res.send("Hello from Electrobuy backend");
+  res.send("Hello from Electrobuy api");
 });
 // error handler
 app.all(
