@@ -21,8 +21,7 @@ class Email {
     console.log("process.env.SENDGRID_KEY", process.env.SENDGRID_KEY);
     sgMail.setApiKey(process.env.SENDGRID_KEY);
     const mailOptions = {
-      to: "solipuram42@gmail.com",
-      // to: this.to,
+      to: this.to,
       from: {
         name: "ELECTROBUY",
         email: process.env.SENDGRID_EMAIL,

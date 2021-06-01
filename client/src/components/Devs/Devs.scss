@@ -19,6 +19,9 @@
     // background-color: red;
     height: 25rem;
     margin: 2rem 0;
+    @media only screen and (max-width: 372px) {
+      width: 48rem;
+    }
     // margin: 1rem;
     &-img {
       &-1 {
