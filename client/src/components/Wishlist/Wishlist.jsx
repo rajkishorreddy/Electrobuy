@@ -30,7 +30,7 @@ const Wishlist = () => {
       const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/api/v1/users/getAllWishlistProduct`,
+          `https://electrobuy.herokuapp.com/api/v1/users/getAllWishlistProduct`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -41,14 +41,14 @@ const Wishlist = () => {
       }
     };
     getdata();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const removeitem = async (curr) => {
     const token = window.localStorage.getItem("token");
     try {
       // console.log(curr.target?.dataset?.id);
       const { data } = await axios.delete(
-        `http://localhost:8080/api/v1/users/addWishlistProduct/${curr.target?.dataset?.id}`,
+        `https://electrobuy.herokuapp.com/api/v1/users/addWishlistProduct/${curr.target?.dataset?.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -69,7 +69,7 @@ const Wishlist = () => {
     } else {
       try {
         const data = await axios.post(
-          `http://localhost:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
+          `https://electrobuy.herokuapp.com/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

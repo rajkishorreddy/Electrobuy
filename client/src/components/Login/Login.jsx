@@ -32,7 +32,7 @@ const Signup = () => {
     } else {
       try {
         const { data } = await axios.post(
-          "http://localhost:8080/api/v1/users/forgetPassword",
+          "https://electrobuy.herokuapp.com/api/v1/users/forgetPassword",
           {
             email: Email,
           }
@@ -50,7 +50,7 @@ const Signup = () => {
     try {
       const { data } = await axios({
         method: "post",
-        url: "http://localhost:8080/api/v1/users/login-basic",
+        url: "https://electrobuy.herokuapp.com/api/v1/users/login-basic",
         data: {
           email: Email,
           password: Password,
@@ -118,7 +118,7 @@ const Signup = () => {
             <button className="signup-form-btn">Log in</button>
             <a
               className="google"
-              href="http://localhost:8080/api/v1/users/google"
+              href="https://electrobuy.herokuapp.com/api/v1/users/google"
             >
               <div className="google-img-cont">
                 <img src={google} alt={google} className="google-img"></img>

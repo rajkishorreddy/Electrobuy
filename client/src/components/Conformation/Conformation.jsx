@@ -20,7 +20,7 @@ const Conformation = (props) => {
     const check = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/api/v1/payments/checkOrder/${props.match.params.id}`
+          `https://electrobuy.herokuapp.com/api/v1/payments/checkOrder/${props.match.params.id}`
         );
         // console.log(data);
         // eslint-disable-next-line no-unused-expressions
@@ -29,12 +29,12 @@ const Conformation = (props) => {
       } catch (err) {
         // console.log(err.response?.data);
         // eslint-disable-next-line no-unused-expressions
-        (err?.response?.data?.status === 'fail') ? setStatus("cancel") : null;
+        err?.response?.data?.status === "fail" ? setStatus("cancel") : null;
       }
     };
 
     check();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -91,7 +91,7 @@ const Conformation = (props) => {
             </div>
           </div>
         )}
-        {status === 'cancel' && (
+        {status === "cancel" && (
           <div className="error">
             <h4>Transaction is failed ❌, due to any of the below reasons: </h4>
             <div>

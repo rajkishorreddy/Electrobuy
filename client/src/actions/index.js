@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:8080/api/v1/products";
+const baseUrl = "https://electrobuy.herokuapp.com/api/v1/products";
 
 export const fetchCategoryProducts = (categoryName, page) => {
   return async (dispatch) => {

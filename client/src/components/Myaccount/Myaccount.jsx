@@ -48,14 +48,14 @@ const Myaccount = () => {
       const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/api/v1/users/getMyProfile`,
+          `https://electrobuy.herokuapp.com/api/v1/users/getMyProfile`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         // console.log("my account", data.data.googleId);
         const orders = await axios.get(
-          `http://localhost:8080/api/v1/users/orders `,
+          `https://electrobuy.herokuapp.com/api/v1/users/orders `,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -111,7 +111,7 @@ const Myaccount = () => {
     const token = window.localStorage.getItem("token");
     const uploadDp = async () => {
       const { data } = await axios.patch(
-        `http://localhost:8080/api/v1/users/updateMyProfilePic`,
+        `https://electrobuy.herokuapp.com/api/v1/users/updateMyProfilePic`,
         {
           avatar: dp,
         },
@@ -130,7 +130,7 @@ const Myaccount = () => {
     const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.patch(
-        `http://localhost:8080/api/v1/users/updateMyProfile`,
+        `https://electrobuy.herokuapp.com/api/v1/users/updateMyProfile`,
         {
           name: `${FirstName} ${LastName}`,
           email: Email,
@@ -158,7 +158,7 @@ const Myaccount = () => {
     const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.patch(
-        `http://localhost:8080/api/v1/users/updateMyPassword`,
+        `https://electrobuy.herokuapp.com/api/v1/users/updateMyPassword`,
         {
           currentPassword: currPass,
           password: newPass,
@@ -361,7 +361,7 @@ const Myaccount = () => {
               {!googleId ? (
                 <a
                   className="googlec"
-                  href={`http://localhost:8080/api/v1/users/connect/google/${window.localStorage.getItem(
+                  href={`https://electrobuy.herokuapp.com/api/v1/users/connect/google/${window.localStorage.getItem(
                     "token"
                   )}`}
                 >

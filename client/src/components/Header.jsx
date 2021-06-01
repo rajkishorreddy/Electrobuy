@@ -62,7 +62,7 @@ const Header = () => {
     let timeout1 = setTimeout(async () => {
       try {
         const res = await axios.post(
-          "http://localhost:8080/api/v1/products/searchText",
+          "https://electrobuy.herokuapp.com/api/v1/products/searchText",
           {
             searchText: value,
           }

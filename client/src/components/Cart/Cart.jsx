@@ -42,7 +42,7 @@ const Cart = () => {
       const token = window.localStorage.getItem("token");
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/api/v1/users/getAllCartProduct`,
+          `https://electrobuy.herokuapp.com/api/v1/users/getAllCartProduct`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -57,7 +57,7 @@ const Cart = () => {
       }
     };
     getdata();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const loginclick = () => {
     history.push("/login");
@@ -66,7 +66,7 @@ const Cart = () => {
     const token = window.localStorage.getItem("token");
     try {
       const { data } = await axios.post(
-        "http://localhost:8080/api/v1/payments",
+        "https://electrobuy.herokuapp.com/api/v1/payments",
         {
           transactionAmount: final,
           transactionGoods: arr.map((el) => el._id),
@@ -109,7 +109,7 @@ const Cart = () => {
     try {
       // console.log(curr.target?.dataset?.id);
       const { data } = await axios.delete(
-        `http://localhost:8080/api/v1/users/addCartProduct/${curr.target?.dataset?.id}`,
+        `https://electrobuy.herokuapp.com/api/v1/users/addCartProduct/${curr.target?.dataset?.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -131,7 +131,7 @@ const Cart = () => {
     } else {
       try {
         const data = await axios.post(
-          `http://localhost:8080/api/v1/users/addWishlistProduct/${el.target.dataset?.id}`,
+          `https://electrobuy.herokuapp.com/api/v1/users/addWishlistProduct/${el.target.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

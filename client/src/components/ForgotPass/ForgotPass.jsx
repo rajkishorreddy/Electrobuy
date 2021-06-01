@@ -26,7 +26,7 @@ const ForgotPass = (props) => {
     e.preventDefault();
     try {
       const { data } = await axios.patch(
-        `http://localhost:8080/api/v1/users/basicResetPassword/${props.match.params.token}`,
+        `https://electrobuy.herokuapp.com/api/v1/users/basicResetPassword/${props.match.params.token}`,
         {
           password: pass,
           confirmPassword: cnPass,

@@ -45,7 +45,7 @@ const ProductInfo = (props) => {
     } else {
       try {
         const data = await axios.post(
-          `http://localhost:8080/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
+          `https://electrobuy.herokuapp.com/api/v1/users/addWishlistProduct/${el.target.parentElement?.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -67,7 +67,7 @@ const ProductInfo = (props) => {
     } else {
       try {
         const data = await axios.post(
-          `http://localhost:8080/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
+          `https://electrobuy.herokuapp.com/api/v1/users/addCartProduct/${el.target.dataset?.id}`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -112,8 +112,6 @@ const ProductInfo = (props) => {
                       <img src={el} alt="img-1" />
                     </div>
                   );
-
-
                 })}
               </Carousel>
             </div>
