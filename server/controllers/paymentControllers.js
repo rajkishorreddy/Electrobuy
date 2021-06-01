@@ -6,7 +6,7 @@ const formidable = require("formidable");
 const formidableMiddleware = require("express-formidable");
 
 const Product = require("./../models/productModel");
-const User = require("../models/userModel");
+const User = require("../models/UserModel");
 const Booking = require("./../models/bookingModel");
 const PaytmChecksum = require("./../utils/PaytmChecksum");
 const AppError = require("./../utils/AppError");

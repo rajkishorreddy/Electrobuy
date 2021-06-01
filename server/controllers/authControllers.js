@@ -3,7 +3,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 
-const User = require("../models/userModel");
+const User = require("../models/UserModel");
 const AppError = require("../utils/AppError");
 const Email = require("./../utils/Email");
 

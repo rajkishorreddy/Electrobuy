@@ -5,7 +5,7 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 
-const User = require("../models/userModel");
+const User = require("../models/UserModel");
 
 var extractTokenFn = function (req) {
   let jwt = null;
