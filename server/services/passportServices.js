@@ -94,7 +94,9 @@ passport.use(
           console.log(
             "The user is already authenticated, but trying to add the google details to his user profile"
           );
-          const prevConnectedGoogle = User.findOne({ googleId: profile.id });
+          const prevConnectedGoogle = await User.findOne({
+            googleId: profile.id,
+          });
           console.log(prevConnectedGoogle);
           if (prevConnectedGoogle) {
             console.log(
