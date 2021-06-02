@@ -105,10 +105,10 @@ userSchema.pre("save", function (next) {
     );
   }
   console.log("this.email is", this.email);
-  if (this.email && !validator.isEmail(this.email)) {
-    console.log("coming from here ...check for email validity");
-    return next(new AppError(400, "Please provide proper email address"));
-  }
+  // if (this.email && !validator.isEmail(this.email)) {
+  //   console.log("coming from here ...check for email validity");
+  //   return next(new AppError(400, "Please provide proper email address"));
+  // }
   next();
 });
 
