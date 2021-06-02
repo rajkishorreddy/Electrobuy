@@ -65,10 +65,11 @@ passport.use(
           console.log(profile, accessToken);
 
           const user = await User.findOne({ googleId: profile.id });
-          console.log(
-            "there is no previous google user by this email id::new log"
-          );
+          console.log(user);
           if (!user) {
+            console.log(
+              "there is no previous google user by this email id::new log"
+            );
             // Case where the user signs up for the first times
             const newUser = await User.create({
               name: profile.displayName,
