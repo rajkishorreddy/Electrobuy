@@ -98,13 +98,16 @@ const userSchema = mongoose.Schema(
 // Prior to creating the user, he must either have atleast one of the feilds present
 userSchema.pre("save", function (next) {
   // ensuring that atleast one of the feilds is present
+  console.log(this.googleId);
   if (!this.email && !this.githubId && !this.googleId) {
+    console.log("coming from here ...check for three items");
     return next(
       new AppError(400, "Please provide atleast one unique identifier")
     );
   }
   console.log("this.email is", this.email);
   if (this.email && !validator.isEmail(this.email)) {
+    console.log("coming from here ...check for email validity");
     return next(new AppError(400, "Please provide proper email address"));
   }
   next();
@@ -115,7 +118,8 @@ userSchema.pre("save", async function (next) {
   // 1) Make sure that the current document has both feilds password and the confirm password, so that, we can
   // be sure that this hook only gets executed, when the user creates the profile thorugh the basic method
   if (!this.password || !this.confirmPassword) {
-    next();
+    console.log("coming from here ...encrypting the pass if there");
+    return next();
   }
 
   // 2) Now encypt the passowrd and save to the passowrd feild
@@ -123,6 +127,7 @@ userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     //2)update/create the password with the encrypted one
     this.password = await bcrypt.hash(this.password, 12);
+
     //3)we must remove the confirmPassword feild from saving onto the database
     this.confirmPassword = undefined;
   }
@@ -134,6 +139,7 @@ userSchema.pre("save", function (next) {
   //we should skip the middleware if the document that is saved is new one or in the other case
   //where we are only updating feilds other than the password field
   if (this.isNew || !this.isModified("password")) {
+    console.log("coming from here ...its new user");
     next();
   } else {
     this.passwordChangedAt = Date.now() - 1000;

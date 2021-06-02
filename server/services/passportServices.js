@@ -71,16 +71,20 @@ passport.use(
               "there is no previous google user by this email id::new log"
             );
             // Case where the user signs up for the first times
-            const newUser = await User.create({
-              name: profile.displayName,
-              // NOTE: Make sure to only save the verified email address
-              // email: profile.emails[0].value,
-              avatar: profile.photos[0].value,
-              googleId: profile.id,
-            });
-            console.log("we have create new user ", newUser);
-            console.log("A new user is created and saved onto the DB");
-            return cb(null, { user: newUser, provider: "google" });
+            try {
+              const newUser = await User.create({
+                name: profile.displayName,
+                // NOTE: Make sure to only save the verified email address
+                // email: profile.emails[0].value,
+                avatar: profile.photos[0].value,
+                googleId: profile.id,
+              });
+              console.log("we have create new user ", newUser);
+              console.log("A new user is created and saved onto the DB");
+              return cb(null, { user: newUser, provider: "google" });
+            } catch (err) {
+              console.log(err);
+            }
           }
 
           console.log("An existing user is trying to log in");
