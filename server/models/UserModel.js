@@ -13,8 +13,9 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: false,
-      default: null,
+    index:true,
+    unique:true,
+    sparse:true
     },
     avatar: {
       type: String,
@@ -112,30 +113,7 @@ userSchema.pre("save", function (next) {
   }
   next();
 });
-UserSchema.path("email").validate(function (value, next) {
-  if (!value) {
-    return next();
-  }
-  // I assueme your model name is User
-  mongoose.models["User"].findOne({ email: value }, function (err, found) {
-    if (err) {
-      return next(
-        new AppError(
-          400,
-          "something has gone wrong with find oe validation for email"
-        )
-      );
-    }
 
-    if (found && found.email) {
-      return next(
-        new AppError(404, "account with this email is already peresent")
-      );
-    } else {
-      return next();
-    }
-  });
-});
 // Encyprting the password in the case, when the user signs up using the basic method
 userSchema.pre("save", async function (next) {
   // 1) Make sure that the current document has both feilds password and the confirm password, so that, we can
