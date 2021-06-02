@@ -13,11 +13,8 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      trim: true,
-      index: {
-        unique: true,
-        partialFilterExpression: { email: { $type: "string" } },
-      },
+      required: false,
+      default: null,
     },
     avatar: {
       type: String,
@@ -98,10 +95,11 @@ const userSchema = mongoose.Schema(
 
 // Pre Save Hooks
 // Prior to creating the user, he must either have atleast one of the feilds present
+
 userSchema.pre("save", function (next) {
   // ensuring that atleast one of the feilds is present
   console.log(this.googleId);
-  if (!this.email && !this.githubId && !this.googleId) {
+  if (!this.email && !this.googleId) {
     console.log("coming from here ...check for three items");
     return next(
       new AppError(400, "Please provide atleast one unique identifier")
@@ -114,7 +112,30 @@ userSchema.pre("save", function (next) {
   }
   next();
 });
+UserSchema.path("email").validate(function (value, next) {
+  if (!value) {
+    return next();
+  }
+  // I assueme your model name is User
+  mongoose.models["User"].findOne({ email: value }, function (err, found) {
+    if (err) {
+      return next(
+        new AppError(
+          400,
+          "something has gone wrong with find oe validation for email"
+        )
+      );
+    }
 
+    if (found && found.email) {
+      return next(
+        new AppError(404, "account with this email is already peresent")
+      );
+    } else {
+      return next();
+    }
+  });
+});
 // Encyprting the password in the case, when the user signs up using the basic method
 userSchema.pre("save", async function (next) {
   // 1) Make sure that the current document has both feilds password and the confirm password, so that, we can
