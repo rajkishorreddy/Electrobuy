@@ -61,12 +61,15 @@ passport.use(
       try {
         if (!req.user) {
           // Case where the user signsup/ logsin  for the first time
-          // console.log("there is no req.user present");
-          // console.log(profile, accessToken);
+          console.log("there is no req.user present");
+          console.log(profile, accessToken);
 
           const user = await User.findOne({ googleId: profile.id });
+          console.log(
+            "there is no previous google user by this email id::new log"
+          );
           if (!user) {
-            // Case where the user signs up for the first time
+            // Case where the user signs up for the first times
             const newUser = await User.create({
               name: profile.displayName,
               // NOTE: Make sure to only save the verified email address
@@ -74,15 +77,18 @@ passport.use(
               avatar: profile.photos[0].value,
               googleId: profile.id,
             });
+            console.log("we have create new user ", newUser);
             console.log("A new user is created and saved onto the DB");
             return cb(null, { user: newUser, provider: "google" });
           }
+
           console.log("An existing user is trying to log in");
           return cb(null, { user: user, provider: "google" });
         } else {
           // the case where, he is trying to connect with other account
           // NOTE: there is some inconsistency while logging with other google account, when the cookie is already present.
           // It is replacing the googleId, which must not be done
+          console.log("this req.user is present");
           console.log(
             "The user is already authenticated, but trying to add the google details to his user profile"
           );
