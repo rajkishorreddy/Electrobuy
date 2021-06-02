@@ -13,9 +13,7 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-    index:true,
-    unique:true,
-    sparse:true
+      unique: true,
     },
     avatar: {
       type: String,

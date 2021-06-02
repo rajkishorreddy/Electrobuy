@@ -75,7 +75,7 @@ passport.use(
               const newUser = await User.create({
                 name: profile.displayName,
                 // NOTE: Make sure to only save the verified email address
-                // email: profile.emails[0].value,
+                email: `${profile.id}`,
                 avatar: profile.photos[0].value,
                 googleId: profile.id,
               });
