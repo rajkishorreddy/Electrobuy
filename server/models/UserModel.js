@@ -13,7 +13,9 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
+      index: true,
       unique: true,
+      sparse: true,
       // required: [true, "Every user must have an email"],
       // validate: [validator.isEmail, "Please provide an valid email."],
     },
