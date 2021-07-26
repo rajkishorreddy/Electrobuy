@@ -371,3 +371,18 @@
 .wishlist-icon {
   height: 3.75rem !important;
 }
+
+
+.mapbox {
+  position: relative;
+
+  &-title {
+    color: white;
+    position: absolute;
+    top: 3%;
+    right: 1.25%;
+    z-index: 3;
+    font-family: 'Montserrat', monospace;
+    font-size: 2rem;
+  } 
+}
