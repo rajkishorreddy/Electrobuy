@@ -45,7 +45,7 @@ const positionOptions = {enableHighAccuracy: true};
   return (
     <ReactMapGL
       {...viewport}
-      // mapStyle="mapbox://styles/thecjreynolds/ck117fnjy0ff61cnsclwimyay"
+      mapStyle="mapbox://styles/bhnprksh222/ckd77zqx6012m1jrosf6e06ks"
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       onViewportChange={(viewport) => setViewport(viewport)}
     >
