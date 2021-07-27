@@ -14,8 +14,6 @@ const positionOptions = {enableHighAccuracy: true};
 
   useEffect(() =>{
     navigator.geolocation.getCurrentPosition(function(position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
       setViewport({
         ...viewport, 
         latitude: position.coords.latitude,
@@ -47,7 +45,7 @@ const positionOptions = {enableHighAccuracy: true};
   return (
     <ReactMapGL
       {...viewport}
-      mapStyle="mapbox://styles/thecjreynolds/ck117fnjy0ff61cnsclwimyay"
+      // mapStyle="mapbox://styles/thecjreynolds/ck117fnjy0ff61cnsclwimyay"
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       onViewportChange={(viewport) => setViewport(viewport)}
     >
