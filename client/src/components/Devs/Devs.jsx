@@ -93,34 +93,34 @@ const Devs = () => {
             </div>
           </div>
         </div>
-        <div className="dev-item">
-          <img src={venu} alt="pic" className="dev-item-img-4" />
-          <div className="dev-item-right">
-            <div className="dev-item-right-name">Venu</div>
-            <div className="dev-item-right-std">Final year student</div>
-
-            <div className="dev-item-right-nav">
-              <a
-                href="https://github.com/venu-42"
-                className="dev-item-right-nav-item"
-              >
-                <Git className="dev-item-right-nav-item-icon" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/venugopal04"
-                className="dev-item-right-nav-item"
-              >
-                <Linkedin className="dev-item-right-nav-item-icon" />
-              </a>
-              <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=solipuram42@gmail.com"
-                className="dev-item-right-nav-item"
-              >
-                <Gmail className="dev-item-right-nav-item-icon" />
-              </a>
-            </div>
-          </div>
-        </div>
+        {/*<div className="dev-item">
+           <img src={venu} alt="pic" className="dev-item-img-4" />
+           <div className="dev-item-right">
+             <div className="dev-item-right-name">Venu</div>
+             <div className="dev-item-right-std">Final year student</div>
+ 
+             <div className="dev-item-right-nav">
+               <a
+                 href="https://github.com/venu-42"
+                 className="dev-item-right-nav-item"
+               >
+                 <Git className="dev-item-right-nav-item-icon" />
+               </a>
+               <a
+                 href="https://www.linkedin.com/in/venugopal04"
+                 className="dev-item-right-nav-item"
+               >
+                 <Linkedin className="dev-item-right-nav-item-icon" />
+               </a>
+               <a
+                 href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=solipuram42@gmail.com"
+                 className="dev-item-right-nav-item"
+               >
+                 <Gmail className="dev-item-right-nav-item-icon" />
+               </a>
+             </div>
+           </div>
+          </div>*/}
       </div>
     </div>
   );

@@ -6,6 +6,8 @@
     #330d49 0%,
     rgba(110, 94, 119, 0.52) 100%
   );
+  display: flex;
+  align-items: center;
   &-cont {
     display: flex;
     flex-wrap: wrap;
