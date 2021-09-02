@@ -59,10 +59,10 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, cb) => {
       try {
+        console.log(profile, accessToken);
         if (!req.user) {
           // Case where the user signsup/ logsin  for the first time
           console.log("there is no req.user present");
-          console.log(profile, accessToken);
 
           const user = await User.findOne({ googleId: profile.id });
           console.log(user);
@@ -94,7 +94,10 @@ passport.use(
           console.log(
             "The user is already authenticated, but trying to add the google details to his user profile"
           );
-          const prevConnectedGoogle = User.findOne({ googleId: profile.id });
+          const prevConnectedGoogle = await User.findOne({
+            googleId: profile.id,
+          });
+          console.log(prevConnectedGoogle);
           if (prevConnectedGoogle) {
             console.log(
               "This Account has been previously used to connect with another account"

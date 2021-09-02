@@ -1,0 +1,43 @@
+.cities {
+  display: flex;
+  justify-content: flex-end;
+  width: 100vw;
+  padding: 8% 5rem 0 0;
+
+  &-main {
+    background: rgba(193, 189, 189, 0.07);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(9px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    padding: 2rem;
+    border-radius: 1rem;
+
+    &--title {
+      font-family: "Montserrat", sans-serif;
+      padding-bottom: 4px;
+      color: white;
+    }
+
+    &--city {
+      color: white;
+      font-family: "Cabin", sans-serif;
+      font-size: 1.25rem;
+      display: flex;
+
+      &:not(:last-child) {
+        margin-bottom: 3px;
+      }
+
+      &__input {
+        
+      }
+      
+      &__label {
+        padding-left: 1rem;
+      }
+    }
+  }
+}

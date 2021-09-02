@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "react-simple-snackbar";
 import { fetchProductInfo } from "../../actions";
+import Mapbox from '../Mapbox';
 
 import Header from "../Header";
 import Footer from "../Footer";
@@ -163,6 +164,10 @@ const ProductInfo = (props) => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="mapbox">
+            <h4 className="mapbox-title">Store Locator</h4>
+            <Mapbox className="mapbox-map" />
           </div>
           <div className="product-content">
             <div className="tech-details">
