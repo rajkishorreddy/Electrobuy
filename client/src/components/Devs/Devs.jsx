@@ -93,7 +93,7 @@ const Devs = () => {
             </div>
           </div>
         </div>
-        {/*<div className="dev-item">
+        <div className="dev-item">
            <img src={venu} alt="pic" className="dev-item-img-4" />
            <div className="dev-item-right">
              <div className="dev-item-right-name">Venu</div>
@@ -120,7 +120,7 @@ const Devs = () => {
                </a>
              </div>
            </div>
-          </div>*/}
+          </div>
       </div>
     </div>
   );
