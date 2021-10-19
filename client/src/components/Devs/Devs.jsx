@@ -2,7 +2,7 @@ import React from "react";
 import kishor from "../../assets/kishor.png";
 import bhanu from "../../assets/bhanu.png";
 import sujay from "../../assets/sujay.png";
-// import venu from "../../assets/venu.png";
+import venu from "../../assets/venu.png";
 import { ReactComponent as Gmail } from "../../assets/gmail.svg";
 import { ReactComponent as Linkedin } from "../../assets/linkedin.svg";
 import { ReactComponent as Git } from "../../assets/git.svg";
