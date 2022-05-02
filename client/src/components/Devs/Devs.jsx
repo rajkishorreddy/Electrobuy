@@ -80,13 +80,13 @@ const Devs = () => {
                  <Git className="dev-item-right-nav-item-icon" />
                </a>
                <a
-                 href="https://www.linkedin.com/in/venugopal04"
+                 href="https://www.linkedin.com/in/vasanth-gentela-aa4412175"
                  className="dev-item-right-nav-item"
                >
                  <Linkedin className="dev-item-right-nav-item-icon" />
                </a>
                <a
-                 href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=solipuram42@gmail.com"
+                 href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=vasanthkzoomin@gmail.com"
                  className="dev-item-right-nav-item"
                >
                  <Gmail className="dev-item-right-nav-item-icon" />
