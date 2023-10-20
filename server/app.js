@@ -18,7 +18,7 @@ const paymentRouter = require("./routes/paymentRouter");
 const AppError = require("./utils/AppError");
 const globalErrorHandler = require("./controllers/errorControllers");
 require("./services/passportServices");
-const redisClient = require("./services/cacheServices");
+// const redisClient = require("./services/cacheServices");
 
 const app = express();
 
